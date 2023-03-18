@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+import app from '../app';
+import http from 'http';
+
+const PORT = normalizePort(3000);
+app.set('port', PORT);
+http.createServer(app);
