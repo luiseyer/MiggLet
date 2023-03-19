@@ -1,7 +1,6 @@
 {
   "name": "migglet",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.js",
   "workspaces": [
     "api",
@@ -10,7 +9,8 @@
   "scripts": {
     "build": "",
     "start": "",
-    "dev:api": "",
+    "start:api": "npm run start --workspace=api",
+    "dev:api": "npm run dev --workspace=api",
     "dev:app": ""
   },
   "devDependencies": {
