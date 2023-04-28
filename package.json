@@ -2,16 +2,19 @@
   "name": "migglet",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "npm": ">= 7.9.0",
+    "node": ">= 18.11.0"
+  },
   "workspaces": [
     "api",
     "app"
   ],
   "scripts": {
-    "build": "",
-    "start": "",
-    "start:api": "npm run start --workspace=api",
-    "dev:api": "npm run dev --workspace=api",
-    "dev:app": ""
+    "build": "npm run build --workspace=app",
+    "start": "npm run start --workspace=app",
+    "app": "npm run dev --workspace=app",
+    "api": "npm run dev --workspace=api"
   },
   "devDependencies": {
     "standard": "17.0.0"

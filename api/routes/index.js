@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import medic from '../components/medic/routes.js'
+import user from '../components/user/routes.js'
 
 const router = Router()
 
-router.use('/medic', medic)
+router.use('/users', user)
 
 export default router

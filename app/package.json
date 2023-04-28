@@ -1,9 +1,13 @@
 {
-  "name": "migglet_client",
+  "name": "migglet_app",
   "version": "1.0.0",
   "type": "module",
   "private": "true",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "build": "",
+    "start": "node ./index.js",
+    "dev": "node --watch ./index.js"
+  },
   "proxy": "http://localhost:3001"
 }
