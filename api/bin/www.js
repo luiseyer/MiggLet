@@ -1,7 +1,7 @@
-import http from 'http'
+import { createServer } from 'http'
 import app from '../app.js'
 
-const PORT = 3001
-const server = http.createServer(app)
+const PORT = process.env.PORT
+const server = createServer(app.attach)
 
-server.listen(PORT)
+server.listen(PORT, () => console.log(`Server running in http://localhost:${PORT}`))

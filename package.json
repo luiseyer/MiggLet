@@ -11,10 +11,9 @@
     "app"
   ],
   "scripts": {
-    "build": "npm run build --workspace=app",
-    "start": "npm run start --workspace=app",
-    "app": "npm run dev --workspace=app",
-    "api": "npm run dev --workspace=api"
+    "build": "",
+    "dev:app": "npm run dev --workspace=app",
+    "dev:api": "npm run dev --workspace=api"
   },
   "devDependencies": {
     "standard": "17.0.0"

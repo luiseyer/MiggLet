@@ -1,11 +1,12 @@
-import { Router } from 'express'
+import { App } from '@tinyhttp/app'
+import userController from './controller.js'
 
-const router = Router()
+const router = new App()
 
-router.get('/', (req, res) => res.send('Fetching All Users'))
-router.post('/', () => { })
-router.get('/:id', (req, res) => res.send('Fetching User By Id ' + req.params.id))
-router.patch('/:id', () => { })
-router.delete('/:id', () => { })
+router.get('/', userController.getAll)
+router.get('/:id', userController.getOne)
+router.post('/', userController.create)
+router.patch('/:id', userController.update)
+router.delete('/:id', userController.delete)
 
 export default router
