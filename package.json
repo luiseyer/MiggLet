@@ -2,6 +2,7 @@
   "name": "migglet",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "engines": {
     "npm": ">= 7.9.0",
     "node": ">= 18.11.0"
@@ -12,13 +13,16 @@
   ],
   "scripts": {
     "build": "",
-    "dev:app": "npm run dev --workspace=app",
-    "dev:api": "npm run dev --workspace=api"
+    "dev:api": "clear && npm run dev --workspace=api",
+    "test:api": "clear && npm run test --workspace=api"
   },
   "devDependencies": {
     "standard": "17.0.0"
   },
   "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json"
+    "extends": "./node_modules/standard/eslintrc.json",
+    "env": {
+      "jest": true
+    }
   }
 }
