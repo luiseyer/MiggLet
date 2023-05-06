@@ -5,14 +5,13 @@
   "private": "true",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=pro node -r dotenv/config ./bin/www",
-    "dev"  : "NODE_ENV=dev DOTENV_CONFIG_PATH=./.env.dev node -r dotenv/config --no-warnings --watch ./bin/www",
-    "test" : "NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test NODE_OPTIONS='--experimental-vm-modules -r dotenv/config --no-warnings' jest"
+    "start": "cross-env NODE_ENV=pro node -r dotenv/config ./bin/www",
+    "dev"  : "cross-env NODE_ENV=dev DOTENV_CONFIG_PATH=./.env.dev node -r dotenv/config --no-warnings --watch ./bin/www",
+    "test" : "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test NODE_OPTIONS='--experimental-vm-modules -r dotenv/config --no-warnings' jest"
   },
   "dependencies": {
     "@tinyhttp/app": "2.0.29",
     "@tinyhttp/cors": "2.0.0",
-    "@tinyhttp/dotenv": "2.0.5",
     "bcrypt": "5.1.0",
     "body-parser": "1.20.2",
     "dotenv": "16.0.3",
@@ -21,7 +20,6 @@
   },
   "devDependencies": {
     "jest": "29.5.0",
-    "mocha": "10.2.0",
     "supertest": "6.3.3"
   },
   "jest": {

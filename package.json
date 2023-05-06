@@ -13,10 +13,11 @@
   ],
   "scripts": {
     "build": "",
-    "dev:api": "clear && npm run dev --workspace=api",
-    "test:api": "clear && npm run test --workspace=api"
+    "dev:api": "npm run dev --workspace=api",
+    "test:api": "npm run test --workspace=api"
   },
   "devDependencies": {
+    "cross-env": "7.0.3",
     "standard": "17.0.0"
   },
   "eslintConfig": {
