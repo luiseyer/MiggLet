@@ -14,6 +14,7 @@
   "scripts": {
     "build": "",
     "dev:api": "npm run dev --workspace=api",
+    "dev:app": "npm run dev --workspace=app",
     "test:api": "npm run test --workspace=api"
   },
   "devDependencies": {
@@ -22,6 +23,9 @@
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json",
+    "rules" :{
+      "import/no-absolute-path": "off"
+    },
     "env": {
       "jest": true
     }

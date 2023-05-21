@@ -1,14 +1,12 @@
-/* eslint-disable object-shorthand */
-import { User } from './model.js'
+import User from './model.js'
 import * as DTO from './dto.js'
+import bcrypt from 'bcrypt'
 
-const getUsers = async (req, res, next) => {
+const getUsers = async (_, res, next) => {
   try {
     const users = await User.find({})
     return res.json(DTO.multiple(users))
-  } catch (error) {
-    return next(error)
-  }
+  } catch (error) { next(error) }
 }
 
 const getUser = async (req, res, next) => {
@@ -18,28 +16,85 @@ const getUser = async (req, res, next) => {
     return user
       ? res.json(DTO.single(user))
       : res.sendStatus(404)
-  } catch (error) { return next(error) }
+  } catch (error) { next(error) }
 }
 
 const createUser = async (req, res, next) => {
   try {
-    const { dni, password } = req.body
-    await User.validate({ dni, password })
-    const newUser = new User({ dni, password })
+    const { dni, code, email, password } = req.body
+
+    await User.validate({ dni, code, email, password })
+
+    const passwordHash = await bcrypt.hash(password, 10)
+
+    const newUser = new User({
+      dni,
+      code,
+      email,
+      password: passwordHash
+    })
+
     const savedUser = await newUser.save()
+
     return res.status(201).json(DTO.single(savedUser))
-  } catch (error) { return next(error) }
+  } catch (error) { next(error) }
 }
 
-const updateUser = async (req, res) => {
-  return res.json({ message: 'this feature is under development' })
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params
+
+    const {
+      email,
+      password,
+      phone,
+      firstnames,
+      lastnames,
+      profilePictureURL,
+      specialty
+    } = req.body
+
+    let passwordHash
+
+    if (password) {
+      await User.validate({ password }, ['password'])
+      passwordHash = await bcrypt.hash(password, 10)
+    }
+
+    await User.findByIdAndUpdate(id, {
+      $set: {
+        email,
+        password: passwordHash,
+        phone,
+        firstnames,
+        lastnames,
+        profilePictureURL,
+        specialty
+      }
+    })
+
+    const updatedUser = await User.findById(id)
+
+    return res.status(201).json(DTO.single(updatedUser))
+  } catch (error) { next(error) }
 }
 
 const deleteUser = async (req, res, next) => {
   try {
-    await User.findByIdAndDelete(req.params.id)
+    const { id } = req.params
+    await User.findByIdAndDelete(id)
     return res.sendStatus(204)
   } catch (error) { next(error) }
 }
 
-export { getUsers, getUser, createUser, updateUser, deleteUser }
+const setRemoveAdmin = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { isAdmin } = req.body
+    await User.findByIdAndUpdate(id, { $set: { isAdmin } })
+    const updatedUser = await User.findById(id)
+    return res.status(201).json(DTO.single(updatedUser))
+  } catch (error) { next(error) }
+}
+
+export { getUsers, getUser, createUser, updateUser, deleteUser, setRemoveAdmin }

@@ -1,11 +1,10 @@
-import { api } from './helpers.js'
-import { User } from '../components/user/model.js'
+import { api, users } from './helpers.js'
+import User from '../components/user/model.js'
 
 describe('Test del componente de usuarios', () => {
   beforeAll(async () => {
     await User.deleteMany({})
-    const user = new User({ _id: '64502948553e8f158d93235a', dni: '29979243', password: 'pswd1234' })
-    await user.save()
+    await new User(users[0]).save()
   })
 
   describe('Obteniendo usuarios', () => {
@@ -18,7 +17,7 @@ describe('Test del componente de usuarios', () => {
 
     test('Obteniendo usuario por ID', async () => {
       await api
-        .get('/api/users/64502948553e8f158d93235a')
+        .get(`/api/users/${users[0]._id}`)
         .expect(200)
         .expect('Content-Type', /application\/json/)
     })
@@ -39,31 +38,28 @@ describe('Test del componente de usuarios', () => {
 
   describe('Creando usuarios', () => {
     test('Creando un usuario', async () => {
-      const user = JSON.stringify({ dni: '28522135', password: 'pwsd1234' })
       await api
         .post('/api/users')
         .set('Content-Type', 'application/json')
-        .send(user)
+        .send(users[1])
         .expect(201)
         .expect('Content-Type', /application\/json/)
     })
 
     test('Creando usuario que ya existe', async () => {
-      const user = JSON.stringify({ dni: '29979243', password: 'pwsd1234' })
       await api
         .post('/api/users')
         .set('Content-Type', 'application/json')
-        .send(user)
+        .send(users[1])
         .expect(400)
         .expect('Content-Type', /application\/json/)
     })
 
     test('Creando usuario con datos invalidos', async () => {
-      const user = JSON.stringify({ password: '1' })
       await api
         .post('/api/users')
         .set('Content-Type', 'application/json')
-        .send(user)
+        .send({})
         .expect(400)
         .expect('Content-Type', /application\/json/)
     })
@@ -72,7 +68,7 @@ describe('Test del componente de usuarios', () => {
   describe('Borrando usuarios', () => {
     test('Borrando usuario por ID', async () => {
       await api
-        .delete('/api/users/64502948553e8f158d93235a')
+        .delete(`/api/users/${users[1]._id}`)
         .expect(204)
     })
 

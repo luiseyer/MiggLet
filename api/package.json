@@ -1,13 +1,12 @@
 {
   "name": "migglet_api",
-  "version": "1.0.0",
+  "private": true,
+  "version": "0.0.1",  
   "type": "module",
-  "private": "true",
-  "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=pro node -r dotenv/config ./bin/www",
-    "dev"  : "cross-env NODE_ENV=dev DOTENV_CONFIG_PATH=./.env.dev node -r dotenv/config --no-warnings --watch ./bin/www",
-    "test" : "cross-env NODE_ENV=test DOTENV_CONFIG_PATH=./.env.test NODE_OPTIONS='--experimental-vm-modules -r dotenv/config --no-warnings' jest"
+    "start": "cross-env NODE_ENV=pro node ./bin/www",
+    "dev": "cross-env NODE_ENV=dev node --no-warnings --watch ./bin/www",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest"
   },
   "dependencies": {
     "@tinyhttp/app": "2.0.29",
@@ -26,6 +25,8 @@
     "testEnvironment": "node",
     "transform": {},
     "verbose": true,
+    "silent": true,
+    "detectOpenHandles":true,
     "forceExit": true
   }
 }

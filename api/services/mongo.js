@@ -1,11 +1,12 @@
+import dotenv from 'dotenv'
 import { createConnection } from 'mongoose'
 
-const conn = (() => {
-  const URI = process.env.MONGO_URI
-  const options = { autoIndex: true }
-  const connection = createConnection(URI, options)
-  return connection
-})()
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+
+const URI = process.env.MONGO_URI
+const options = { autoIndex: true }
+
+const conn = createConnection(URI, options)
 
 /**
  * Verifica los campos marcados como únicos en un Modelo
@@ -15,26 +16,25 @@ const conn = (() => {
  * @param next - Función `next`
  */
 const verifyUniqueKeys = async (keys, entity, doc, next) => {
+  const errors = {}
   let hasError = false
-  let errors = {}
   let messages = ''
-  const entities = await conn.model(entity).find({}).lean()
 
   for (const key of keys) {
-    const uniqueKeys = entities.map(ent => ent[key])
-    if (uniqueKeys.includes(doc[key])) {
+    const isMatch = await conn.model(entity).findOne({ [key]: doc[key] })
+    if (isMatch) {
       hasError = true
-      errors = {
-        [key]: {
-          name: 'UniqueKeyViolation',
-          message: `Path \`${key}\` (\`${doc[key]}\`) is not unique.`,
-          kind: 'unique',
-          path: key
-        }
+      errors[key] = {
+        name: 'UniqueKeyViolation',
+        message: `Path \`${key}\` (\`${doc[key]}\`) is not unique.`,
+        kind: 'unique',
+        path: key
       }
+
       messages += ` ${key}: ${errors[key].message}`
     }
   }
+
   if (hasError) {
     const error = new Error()
     error.name = 'UniqueKeyViolation'

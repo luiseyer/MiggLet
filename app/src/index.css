@@ -1,0 +1,9 @@
+body {
+    background-color: hsl(0, 0%, 96%)
+}
+
+#app-container {
+    display: grid; 
+    grid-template-columns: auto 1fr; 
+    min-height: 100dvh
+}
