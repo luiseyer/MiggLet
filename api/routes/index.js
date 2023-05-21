@@ -1,6 +1,6 @@
 import { App } from '@tinyhttp/app'
 import userRoutes from '../components/user/routes.js'
-import { login } from '../middleware/auth.js'
+import { login } from '../middlewares/auth.js'
 
 const router = new App()
 

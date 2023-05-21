@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=pro node ./bin/www",
-    "dev": "cross-env NODE_ENV=dev node --no-warnings --watch ./bin/www",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest"
+    "dev": "cross-env NODE_ENV=dev node --watch ./bin/www",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
     "@tinyhttp/app": "2.0.29",

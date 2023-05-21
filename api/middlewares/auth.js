@@ -4,9 +4,13 @@ import User from '../components/user/model.js'
 
 const login = async (req, res, next) => {
   try {
-    const { dni, code, email, password } = req.body
-    const query = dni ? { dni } : code ? { code } : email ? { email } : null
-    const user = await User.findOne(query)
+    const { userData, password } = req.body
+
+    const user = await Promise.allSettled([
+      User.findOne({ dni: userData }),
+      User.findOne({ email: userData }),
+      User.findOne({ code: userData })
+    ]).then(results => results.find(result => result.value).value)
 
     const isMatch = !(user && password)
       ? false
