@@ -7,7 +7,7 @@ import {
   deleteUser,
   setRemoveAdmin
 } from './controller.js'
-// import { hasToken, isAdmin } from '../../middleware/auth.js'
+// import { hasToken, isAdmin } from '../../middlewares/auth.js'
 
 const router = new App()
 
