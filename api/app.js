@@ -15,3 +15,4 @@ app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }))
 app.use('/api', routes)
 
 export default app
+//yo tambien te odio
