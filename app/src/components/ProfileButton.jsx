@@ -1,11 +1,8 @@
-// BASICS
 import { useEffect, useRef, useState } from 'react'
-// MUI COMPONENTS
 import { Avatar, ClickAwayListener, Grow, IconButton, ListItemIcon, MenuItem, MenuList, Paper, Popper } from '@mui/material'
-// ICONS
 import { LogoutOutlined, AccountCircleOutlined } from '@mui/icons-material'
-// HELPERS
-import { useIsMobile } from '../helpers'
+import { useIsMobile } from '@helpers'
+import { useLogout } from '@hooks'
 
 const mobileStyles = {
   bgcolor: 'secondary.main'
@@ -20,9 +17,9 @@ const desktopStyles = {
   borderColor: '#FFF'
 }
 
-const ProfileButton = function (props) {
-  const { user } = props
-  const userInitials = user.name.split(' ').map(name => name[0]).join('')
+const ProfileButton = function () {
+  const { logout } = useLogout()
+  const userInitials = 'JY'
   const [open, setOpen] = useState(false)
   const anchorRef = useRef(null)
 
@@ -60,8 +57,8 @@ const ProfileButton = function (props) {
     <>
       <IconButton ref={anchorRef} onClick={handleToggle}>
         <Avatar
-          alt={user.name}
-          src={user.picture}
+          alt=''
+          src=''
           sx={(isMobile ? mobileStyles : desktopStyles)}
         >
           {userInitials}
@@ -96,7 +93,7 @@ const ProfileButton = function (props) {
                     </ListItemIcon>
                     Perfil
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>
+                  <MenuItem onClick={logout}>
                     <ListItemIcon>
                       <LogoutOutlined fontSize='small' />
                     </ListItemIcon>

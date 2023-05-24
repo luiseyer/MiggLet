@@ -2,8 +2,8 @@ import { memo } from 'react'
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { Paper, Tabs, Tab, Box, IconButton } from '@mui/material'
 import { Dashboard, LocalHospital, People, Settings } from '@mui/icons-material'
-import ProfileButton from './ProfileButton'
-import { useIsMobile } from '../helpers'
+import { ProfileButton } from '@components'
+import { useIsMobile } from '@helpers'
 
 const navItems = [
   {
@@ -105,7 +105,7 @@ const NavigationMenu = function () {
 
         <Box>
           <IconButton component={Link} to='/settings'><Settings /></IconButton>
-          <ProfileButton user={{ name: 'Joseilys Yanez', picture: '' }} />
+          <ProfileButton />
         </Box>
       </Paper>
     </>

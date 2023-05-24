@@ -1,16 +1,19 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../components/user/model.js'
+import * as DTO from '../components/user/dto.js'
 
 const login = async (req, res, next) => {
   try {
-    const { userData, password } = req.body
+    const { username, password } = req.body
 
     const user = await Promise.allSettled([
-      User.findOne({ dni: userData }),
-      User.findOne({ email: userData }),
-      User.findOne({ code: userData })
-    ]).then(results => results.find(result => result.value).value)
+      User.findOne({ dni: username }),
+      User.findOne({ email: username }),
+      User.findOne({ code: username })
+    ])
+      .then(results => results.find(result => result.value).value)
+      .catch(() => null)
 
     const isMatch = !(user && password)
       ? false
@@ -25,7 +28,7 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign(userForToken, process.env.JWT_SECRET)
 
-    res.status(200).json({ token })
+    res.status(200).json({ id: DTO.single(user).id, token })
   } catch (error) { return next(error) }
 }
 
