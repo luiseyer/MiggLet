@@ -1,15 +1,10 @@
-import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
-import { Paper, Tabs, Tab, Box, IconButton } from '@mui/material'
-import { Dashboard, Home, LocalHospital, People, Settings } from '@mui/icons-material'
-import { ProfileButton } from '@components'
-import { useIsMobile } from '@helpers'
+import { Link, useLocation } from 'react-router-dom'
+import { useScrollTrigger, BottomNavigation, BottomNavigationAction, AppBar, Toolbar, Slide } from '@mui/material'
+import { Dashboard, LocalHospital, People } from '@mui/icons-material'
+import { AppTitle, ProfileButton } from '@components'
+import { useBreakpoint } from '@hooks'
 
 const navItems = [
-  {
-    text: 'inicio',
-    path: '/',
-    icon: <Home />
-  },
   {
     text: 'dashboard',
     path: '/dashboard',
@@ -27,91 +22,43 @@ const navItems = [
   }
 ]
 
-const styles = ({ breakpoints }) => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  '& .MuiBox-root': {
-    gap: '0.5rem',
-    display: 'flex'
-  },
-  [breakpoints.down('md')]: {
-    position: 'fixed',
-    bottom: 0,
-    left: '50%',
-    transform: 'translateX(-50%)',
-    '& .MuiTab-root': {
-      fontSize: '0.5rem'
-    },
-    '& .MuiBox-root': {
-      px: 1
-    }
-  },
-  [breakpoints.up('md')]: {
-    maxHeight: '100dvh',
-    flexDirection: 'column',
-    position: 'sticky',
-    top: 0,
-    pb: 1,
-    bgcolor: 'dark.main',
-    '& .MuiTabs-indicator': {
-      display: 'none'
-    },
-    '& .MuiTab-root': {
-      fontSize: '0.5rem',
-      py: 2,
-      color: 'neutral.dark',
-      '& .MuiTab-iconWrapper': {
-        width: 40,
-        height: 40
-      }
-    },
-    '& .MuiTab-root.Mui-selected': {
-      py: 2,
-      color: 'primary.main'
-    },
-    '& .MuiBox-root': {
-      py: 1,
-      flexDirection: 'column',
-      '& .MuiIconButton-root': {
-        color: 'neutral.dark'
-      }
-    }
-  }
-})
-
 const NavigationMenu = function () {
+  const breakpoint = useBreakpoint()
   const { pathname } = useLocation()
-  const activeItem = navItems.find((item) => !!matchPath(pathname, item.path))
-  const isMobile = useIsMobile()
+  const activeItem = '/' + pathname.split('/')[1]
+  const trigger = useScrollTrigger({ target: window })
+
+  if (breakpoint.up('sm')) {
+    return (
+      <h1 style={{ padding: '1rem', color: 'red' }}>
+        Por ahora solo está disponible el menú movil, reduce el tamaño de la ventana para verlo
+      </h1>
+    )
+  }
 
   return (
     <>
-      <Paper id='navigation-menu' square elevation={2} sx={styles}>
-        <Tabs
-          value={activeItem?.text}
-          variant='scrollable'
-          scrollButtons={false}
-          orientation={isMobile ? 'horizontal' : 'vertical'}
-        >
-          {navItems.map(item =>
-            <Tab
-              key={item.text}
-              value={item.text}
-              label={item.text}
-              icon={item.icon}
-              component={NavLink}
-              to={item.path}
-            />
-          )}
-        </Tabs>
+      <Slide appear={false} direction='down' in={!trigger}>
+        <AppBar position='sticky' color='light' variant='outlined' elevation={0}>
+          <Toolbar>
+            <AppTitle />
+            <ProfileButton />
+          </Toolbar>
+        </AppBar>
+      </Slide>
 
-        <Box>
-          <IconButton component={Link} to='#'><Settings /></IconButton>
-          <ProfileButton />
-        </Box>
-      </Paper>
+      <BottomNavigation component='nav' showLabels value={activeItem} sx={{ position: 'sticky', bottom: 0, order: 1 }}>
+        {navItems.map(({ text, path, label, icon }) => (
+          <BottomNavigationAction
+            key={text}
+            value={path}
+            label={text}
+            icon={icon}
+            component={Link}
+            to={path}
+          />
+        ))}
+      </BottomNavigation>
     </>
   )
 }
