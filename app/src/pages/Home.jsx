@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@mui/material'
 import { Section } from '@components'
-import AnimatedLogo from '../assets/logo.gif'
-import SVGLogo from '../assets/logo.svg'
+import AnimatedLogo from '@assets/logo.gif'
+import SVGLogo from '@assets/logo.svg'
 
 const HomePage = function () {
   const [logo, setLogo] = useState(SVGLogo)
