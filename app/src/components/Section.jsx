@@ -6,7 +6,7 @@ const Section = function ({ children, bg }) {
       maxWidth='xl'
       component='section'
       className='section'
-      sx={{ bgcolor: `${bg}.surface` ?? 'neutral.dark' }}
+      sx={{ bgcolor: bg }}
     >
       {children}
     </Container>

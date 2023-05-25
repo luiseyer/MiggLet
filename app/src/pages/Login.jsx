@@ -1,21 +1,25 @@
-import { memo } from 'react'
-import { Container } from '@mui/material'
+import { Navigate } from 'react-router-dom'
+import { Box } from '@mui/material'
 import { LoginForm } from '@components'
+import { useAuthContext } from '@hooks'
 
 function LoginPage () {
+  const { user } = useAuthContext()
+  if (user) return (<Navigate to='/dashboard' replace />)
   return (
-    <Container sx={{
+    <Box sx={{
       p: 4,
-      gridColumn: 'span 2',
       minHeight: '100dvh',
       display: 'grid',
       placeItems: 'center',
+      placeContent: 'center',
+      gap: 4,
       bgcolor: 'secondary.light'
     }}
     >
       <LoginForm />
-    </Container>
+    </Box>
   )
 }
 
-export default memo(LoginPage)
+export default LoginPage

@@ -1,4 +1,3 @@
-import { memo } from 'react'
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { Paper, Tabs, Tab, Box, IconButton } from '@mui/material'
 import { Dashboard, LocalHospital, People, Settings } from '@mui/icons-material'
@@ -112,4 +111,4 @@ const NavigationMenu = function () {
   )
 }
 
-export default memo(NavigationMenu)
+export default NavigationMenu

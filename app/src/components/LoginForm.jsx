@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Container, Link, Paper, TextField, Typography } from '@mui/material'
+import { Alert, Backdrop, Box, Button, CircularProgress, Container, Link, Paper, TextField, Typography } from '@mui/material'
 import { useLogin } from '@hooks'
 
 const LoginForm = function () {
@@ -13,24 +13,18 @@ const LoginForm = function () {
 
   return (
     <>
-      {error && <Alert severity='error'>{error}</Alert>}
+      <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={isLoading}>
+        <CircularProgress color='inherit' />
+      </Backdrop>
 
-      <Container
-        component={Paper}
-        maxWidth='xs'
-        sx={{
-          p: 4,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 1
-        }}
-      >
-        <Typography className='app-title' component='h1' variant='h4' sx={{ fontWeight: 'bold' }}>
+      <Container component={Paper} maxWidth='xs' sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Typography className='app-title' component='h1' variant='h4' sx={{ fontWeight: 'bold', pb: 1 }}>
           <Box component='span' color='secondary.main'>Mi</Box>
           <Box component='span' color='primary.main'>gg</Box>
           <Box component='span' color='tertiary.main'>Let</Box>
         </Typography>
+
+        {error && <Alert severity='error'>{error}</Alert>}
 
         <Box component='form' onSubmit={handleSubmit}>
           <TextField
@@ -63,6 +57,7 @@ const LoginForm = function () {
           >
             Iniciar
           </Button>
+
         </Box>
       </Container>
     </>
