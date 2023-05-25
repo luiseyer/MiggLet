@@ -11,7 +11,7 @@ const App = function () {
         <Route path='/dashboard' element={<PrivateRoute page={<DashboardPage />} />} />
         <Route path='/emrs' element={<PrivateRoute />}>
           <Route index element={<EMRsPage />} />
-          <Route path=':id' element={<h1>Single EMR</h1>} />
+          <Route path=':id' element={<EMRsPage />} />
         </Route>
         <Route path='/users' element={<PrivateRoute />}>
           <Route index element={<UsersPage />} />
