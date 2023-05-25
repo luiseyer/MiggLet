@@ -19,14 +19,6 @@ const AuthContextProvider = ({ children }) => {
     user: JSON.parse(window.localStorage.getItem('user')) ?? null
   })
 
-  // ESTO ESTABA ANTES NO SE POR QUÉ
-  // useEffect(() => {
-  //   const user = JSON.parse(window.localStorage.getItem('user'))
-  //   if (user) dispatch({ type: 'LOGIN', payload: user })
-  // }, [])
-
-  console.log('AuthContext state: ', state)
-
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>
       {children}
