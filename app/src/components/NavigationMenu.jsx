@@ -1,12 +1,17 @@
 import { Link, NavLink, matchPath, useLocation } from 'react-router-dom'
 import { Paper, Tabs, Tab, Box, IconButton } from '@mui/material'
-import { Dashboard, LocalHospital, People, Settings } from '@mui/icons-material'
+import { Dashboard, Home, LocalHospital, People, Settings } from '@mui/icons-material'
 import { ProfileButton } from '@components'
 import { useIsMobile } from '@helpers'
 
 const navItems = [
   {
     text: 'inicio',
+    path: '/',
+    icon: <Home />
+  },
+  {
+    text: 'dashboard',
     path: '/dashboard',
     icon: <Dashboard />
   },
