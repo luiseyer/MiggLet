@@ -18,9 +18,9 @@ const useLogin = () => {
 
     const json = await response.json()
 
-    if (!response.ok) {
+    if (response.status === 401) {
       setIsLoading(false)
-      setError('Usuarios o contraseña incorrectos')
+      setError(json.error.message)
     }
 
     if (response.ok) {

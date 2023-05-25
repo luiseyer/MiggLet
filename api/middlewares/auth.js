@@ -19,7 +19,7 @@ const login = async (req, res, next) => {
       ? false
       : await bcrypt.compare(password, user.password)
 
-    if (!isMatch) return next(new jwt.JsonWebTokenError('invalid user or password'))
+    if (!isMatch) return next(new jwt.JsonWebTokenError('Usuario o contraseña incorrectos'))
 
     const userForToken = {
       id: user.id,
@@ -38,7 +38,7 @@ const hasToken = async (req, res, next) => {
     const decodedToken = jwt.verify(token.substring(7), process.env.JWT_SECRET)
     const user = await User.findById(decodedToken.id)
 
-    if (!user) return next(new jwt.JsonWebTokenError('user does exist'))
+    if (!user) return next(new jwt.JsonWebTokenError('No existe este usuario'))
 
     req.user = decodedToken
     next()
