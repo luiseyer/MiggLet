@@ -7,26 +7,31 @@ const useLogin = () => {
   const { dispatch } = useAuthContext()
 
   const login = async (username, password) => {
-    setIsLoading(true)
-    setError(null)
+    try {
+      setIsLoading(true)
+      setError(null)
 
-    const response = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    })
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
 
-    const json = await response.json()
+      const json = await response.json()
 
-    if (response.status === 401) {
+      if (response.status === 401) {
+        setIsLoading(false)
+        setError(json.error.message)
+      }
+
+      if (response.ok) {
+        window.localStorage.setItem('user', JSON.stringify(json))
+        dispatch({ type: 'LOGIN', payload: json })
+        setIsLoading(false)
+      }
+    } catch (error) {
       setIsLoading(false)
-      setError(json.error.message)
-    }
-
-    if (response.ok) {
-      window.localStorage.setItem('user', JSON.stringify(json))
-      dispatch({ type: 'LOGIN', payload: json })
-      setIsLoading(false)
+      setError('No se puede conectar con el servidor')
     }
   }
 
