@@ -103,7 +103,7 @@ const NavigationMenu = function () {
         </Tabs>
 
         <Box>
-          <IconButton component={Link} to='/settings'><Settings /></IconButton>
+          <IconButton component={Link} to='#'><Settings /></IconButton>
           <ProfileButton />
         </Box>
       </Paper>
