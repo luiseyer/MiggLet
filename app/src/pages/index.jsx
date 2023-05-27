@@ -1,7 +1,7 @@
 import HomePage from './Home'
 import DashboardPage from './Dashboard'
 import UsersPage from './Users'
-import EMRsPage from './EMRs'
+import PatientsPage from './Patients'
 import LoginPage from './Login'
 
-export { HomePage, DashboardPage, UsersPage, EMRsPage, LoginPage }
+export { HomePage, DashboardPage, UsersPage, PatientsPage, LoginPage }

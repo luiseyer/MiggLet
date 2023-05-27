@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'coiny';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/Coiny-Regular.ttf") format("TrueType");
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+img {
+    width: 100%;
+}

@@ -5,7 +5,7 @@ import { Section } from '@components'
 import AnimatedLogo from '@assets/logo.gif'
 import SVGLogo from '@assets/logo.svg'
 
-const HomePage = function () {
+const HomePage = () => {
   const [logo, setLogo] = useState(SVGLogo)
 
   useEffect(() => {
@@ -14,18 +14,16 @@ const HomePage = function () {
   }, [])
 
   return (
-    <>
-      <main id='Home-Container'>
-        <Section bg='light.main'>
-          <img src={logo} />
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
-            <Button size='large' variant='contained' component={Link} to='/login'>
-              Comenzar
-            </Button>
-          </div>
-        </Section>
-      </main>
-    </>
+    <main style={{ minHeight: '100%', display: 'grid', placeItems: 'center' }}>
+      <Section bg='light.main'>
+        <img src={logo} />
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+          <Button size='large' variant='contained' component={Link} to='/login'>
+            Comenzar
+          </Button>
+        </div>
+      </Section>
+    </main>
   )
 }
 

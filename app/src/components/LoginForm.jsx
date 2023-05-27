@@ -1,8 +1,9 @@
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Link, Paper, TextField } from '@mui/material'
+import { Link } from 'react-router-dom'
+import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, TextField } from '@mui/material'
 import { AppTitle } from '@components'
 import { useLogin } from '@hooks'
 
-const LoginForm = function () {
+const LoginForm = () => {
   const { login, isLoading, error } = useLogin()
 
   const handleSubmit = async (event) => {
@@ -19,7 +20,7 @@ const LoginForm = function () {
       </Backdrop>
 
       <Container component={Paper} maxWidth='xs' sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <AppTitle />
+        <AppTitle variant='h4' style={{ marginBottom: '1rem' }} />
 
         {error && <Alert severity='error'>{error}</Alert>}
 
@@ -41,7 +42,7 @@ const LoginForm = function () {
             label='Contraseña'
           />
 
-          <Link href='#'>
+          <Link to='#'>
             Recuperar contraseña
           </Link>
 

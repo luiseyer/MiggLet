@@ -1,15 +1,13 @@
-import { Container } from '@mui/material'
+import { Box } from '@mui/material'
 
-const Section = function ({ children, bg }) {
+const Section = ({ children, bg, sx }) => {
   return (
-    <Container
-      maxWidth='xl'
+    <Box
       component='section'
-      className='section'
-      sx={{ bgcolor: bg }}
+      sx={{ bgcolor: bg, py: 4, px: 2, ...sx }}
     >
       {children}
-    </Container>
+    </Box>
   )
 }
 

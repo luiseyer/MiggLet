@@ -1,21 +1,21 @@
 import { Routes, Route } from 'react-router-dom'
-import { DashboardPage, EMRsPage, UsersPage, LoginPage, HomePage } from '@pages'
+import { DashboardPage, PatientsPage, UsersPage, LoginPage, HomePage } from '@pages'
 import { PrivateRoute } from '@components'
 
-const App = function () {
+const App = () => {
   return (
     <>
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/dashboard' element={<PrivateRoute page={<DashboardPage />} />} />
-        <Route path='/emrs' element={<PrivateRoute />}>
-          <Route index element={<EMRsPage />} />
-          <Route path=':id' element={<EMRsPage />} />
+        <Route path='/patients' element={<PrivateRoute />}>
+          <Route index element={<PatientsPage />} />
+          <Route path=':id' element={<PatientsPage />} />
         </Route>
         <Route path='/users' element={<PrivateRoute />}>
           <Route index element={<UsersPage />} />
-          <Route path=':id' element={<h1>Single User</h1>} />
+          <Route path=':id' element={<UsersPage />} />
         </Route>
       </Routes>
     </>

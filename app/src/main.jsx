@@ -1,5 +1,3 @@
-import 'modern-normalize'
-import '@assets/index.css'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from '@mui/material/styles'
