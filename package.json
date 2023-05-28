@@ -22,7 +22,11 @@
     "standard": "17.0.0"
   },
   "eslintConfig": {
-    "extends": "./node_modules/standard/eslintrc.json",
+    "plugins": ["react-hooks"],
+    "extends": [
+      "./node_modules/standard/eslintrc.json",
+      "plugin:react-hooks/recommended"
+    ],
     "rules" :{
       "import/no-absolute-path": "off"
     },

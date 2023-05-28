@@ -67,6 +67,7 @@ const theme = responsiveFontSizes(createTheme({
       contrastText: '#222222'
     },
     dark: {
+      light: '#444444',
       main: '#222222',
       contrastText: '#F5F5F5'
     },

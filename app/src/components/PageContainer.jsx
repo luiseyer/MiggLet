@@ -1,10 +1,23 @@
-import { Box } from '@mui/material'
+import { Container } from '@mui/material'
+import { useBreakpoint } from '@hooks'
 
 const PageContainer = ({ children }) => {
+  const breakpoint = useBreakpoint()
+
   return (
-    <Box component='main' sx={{ minHeight: '100dvh', display: 'grid' }}>
+    <Container
+      disableGutters
+      maxWidth='lg'
+      component='main'
+      sx={{
+        minHeight: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        ...(breakpoint.up('md') && { maxHeight: '100dvh' })
+      }}
+    >
       {children}
-    </Box>
+    </Container>
   )
 }
 

@@ -5,13 +5,8 @@ const ERROR_HANDLERS = {
   ValidationError: (res, { name, errors }) =>
     res.status(400).json({ error: { name, errors } }),
 
-  UniqueKeyViolation: (res, { name, errors }) =>
-    res.status(400).json({ error: { name, errors } }),
-
-  MongoServerError: (res, { name, code, message }) => {
-    if (code !== 11000) return res.sendStatus(500)
-    res.status(400).json({ error: { name, message } })
-  },
+  MongoServerError: (res, { name, message }) =>
+    res.status(500).json({ error: { name, message } }),
 
   JsonWebTokenError: (res, { name, message }) =>
     res.status(401).json({ error: { name, message } }),

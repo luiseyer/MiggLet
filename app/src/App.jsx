@@ -4,21 +4,19 @@ import { PrivateRoute } from '@components'
 
 const App = () => {
   return (
-    <>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/dashboard' element={<PrivateRoute page={<DashboardPage />} />} />
-        <Route path='/patients' element={<PrivateRoute />}>
-          <Route index element={<PatientsPage />} />
-          <Route path=':id' element={<PatientsPage />} />
-        </Route>
-        <Route path='/users' element={<PrivateRoute />}>
-          <Route index element={<UsersPage />} />
-          <Route path=':id' element={<UsersPage />} />
-        </Route>
-      </Routes>
-    </>
+    <Routes>
+      <Route path='/' element={<HomePage />} />
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/dashboard' element={<PrivateRoute page={<DashboardPage />} />} />
+      <Route path='/patients' element={<PrivateRoute />}>
+        <Route index element={<PatientsPage />} />
+        <Route path=':id' element={<PatientsPage />} />
+      </Route>
+      <Route path='/users' element={<PrivateRoute />}>
+        <Route index element={<UsersPage />} />
+        <Route path=':id' element={<UsersPage />} />
+      </Route>
+    </Routes>
   )
 }
 
