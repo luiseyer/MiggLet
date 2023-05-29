@@ -1,6 +1,4 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-
-// COLORS
 import { indigo, blue, purple, red } from '@mui/material/colors'
 
 // SETTINGS
@@ -25,7 +23,6 @@ const secondary = {
   dark: palette.secondary[600],
   surface: palette.secondary[50]
 }
-
 const tertiary = {
   light: palette.tertiary[100],
   main: palette.tertiary[200],
@@ -33,13 +30,7 @@ const tertiary = {
   surface: palette.tertiary[50]
 }
 
-// const error = {
-//   light: palette.error[300],
-//   main: palette.error[700],
-//   dark: palette.error[700]
-// }
-
-const theme = responsiveFontSizes(createTheme({
+const theme = createTheme({
   palette: {
     primary: {
       light: primary.light,
@@ -77,6 +68,6 @@ const theme = responsiveFontSizes(createTheme({
       contrastText: '#222222'
     }
   }
-}))
+})
 
-export default theme
+export default responsiveFontSizes(theme)

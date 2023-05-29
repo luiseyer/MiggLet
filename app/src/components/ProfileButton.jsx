@@ -7,7 +7,6 @@ const ProfileButton = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const { logout } = useLogout()
   const open = Boolean(anchorEl)
-  const userInitials = 'JY'
 
   const handleClick = ({ currentTarget }) => { setAnchorEl(currentTarget) }
   const handleClose = () => { setAnchorEl(null) }
@@ -19,9 +18,7 @@ const ProfileButton = () => {
           alt=''
           src=''
           sx={{ bgcolor: 'secondary.main' }}
-        >
-          {userInitials}
-        </Avatar>
+        />
       </IconButton>
 
       <Menu

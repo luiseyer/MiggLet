@@ -4,17 +4,11 @@ import { ChevronLeft as ChevronLeftIcon } from '@mui/icons-material'
 
 const SingleItemMenu = () => {
   return (
-    <>
-      <AppBar
-        position='sticky'
-        color='primary'
-        elevation={0}
-      >
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <IconButton component={Link} to='..'><ChevronLeftIcon /></IconButton>
-        </Toolbar>
-      </AppBar>
-    </>
+    <AppBar color='transparent' elevation={0}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <IconButton component={Link} to='..'><ChevronLeftIcon /></IconButton>
+      </Toolbar>
+    </AppBar>
   )
 }
 

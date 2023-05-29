@@ -6,17 +6,12 @@
     src: url("/Coiny-Regular.ttf") format("TrueType");
 }
 
-html, body, #root {
-    height: 100%
+:root {
+    --size-00: clamp(1.00rem, calc(0.20rem + 3.20vw), 2.00rem);
 }
 
 body{
     background-color: #000;
-}
-
-#root {
-    max-width: 1200px;
-    margin-inline: auto;
 }
 
 img {

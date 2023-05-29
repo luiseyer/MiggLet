@@ -1,38 +1,59 @@
-import { Link, useLocation, useParams } from 'react-router-dom'
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
-import { ChevronRight as ChevronRightIcon } from '@mui/icons-material'
+import { useLocation, useParams } from 'react-router-dom'
+import { Avatar, Box, List, ListItemSecondaryAction, ListItemAvatar, ListItemText, Toolbar, Typography, ListItemIcon, Stack, ListItemButton, Tabs } from '@mui/material'
+import { ChevronRight as ChevronRightIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, SingleItemMenu } from '@components'
-import { useBreakpoint } from '@hooks'
 
 import data from '@helpers/data'
+
+const ListActionButton = ({
+  children,
+  icon,
+  primary,
+  secondary,
+  onclick,
+  bg,
+  sx,
+  ...rest
+}) => {
+  return (
+    <ListItemButton
+      component='li'
+      sx={{
+        bgcolor: bg || 'light.main',
+        pr: 6,
+        gap: 2,
+        '& :is(.MuiListItemText-primary, .MuiListItemText-secondary)': {
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
+        },
+        ...sx
+      }} {...rest}
+    >
+      {children}
+      {icon && <ListItemIcon>{icon}</ListItemIcon>}
+      {(primary || secondary) && <ListItemText primary={primary} secondary={secondary} />}
+      <ListItemSecondaryAction>
+        <ChevronRightIcon />
+      </ListItemSecondaryAction>
+    </ListItemButton>
+  )
+}
 
 const ListUsers = ({ users }) => {
   const currentPage = '/' + useLocation().pathname.split('/')[1] + '/'
 
   return (
-    users.map((user, index) => (
-      <ListItem
-        key={index}
-        sx={{ bgcolor: 'secondary.surface' }}
-        secondaryAction={
-          <IconButton component={Link} to={currentPage + String(index)} sx={{ ml: 4 }}>
-            <ChevronRightIcon />
-          </IconButton>
-     }
-      >
-        <ListItemAvatar>
-          <Avatar variant='square' sx={{ bgcolor: 'primary.main' }} />
-        </ListItemAvatar>
-        <ListItemText
-          primary={user.firstnames.split(' ')[0] + ' ' + user.lastnames[0] + '.'}
-          secondary={user.dni}
-          sx={{
-            whiteSpace: 'nowrap',
-            '& .MuiListItemText-primary': { overflow: 'hidden', textOverflow: 'ellipsis' }
-          }}
-        />
-      </ListItem>
-    )
+    users.map((user, index) => {
+      const username = user.firstnames + ' ' + user.lastnames
+
+      return (
+        <ListActionButton key={index} hola={currentPage}>
+          <ListItemAvatar>
+            <Avatar sx={{ bgcolor: 'primary.main', width: 54, height: 54 }} />
+          </ListItemAvatar>
+          <ListItemText primary={username} secondary={user.dni} />
+        </ListActionButton>
+      )
+    }
     ))
 }
 
@@ -40,9 +61,10 @@ const RenderAllUsers = () => {
   return (
     <>
       <NavigationMenu />
-      <Section bg='secondary.light'>
+      <Section bg='light.main'>
+        <Toolbar /><Tabs />
         <Typography variant='h4'>USUARIOS</Typography>
-        <List sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(15rem, 1fr))', gap: '1rem' }}>
+        <List sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
           <ListUsers users={data.users} />
         </List>
       </Section>
@@ -50,13 +72,49 @@ const RenderAllUsers = () => {
   )
 }
 
-const RenderSingleUser = ({ id }) => {
-  const breakpoint = useBreakpoint()
+const RenderSingleUser = () => {
+  const { id } = useParams()
   return (
     <>
-      {breakpoint.down('md') && <SingleItemMenu />}
-      <Section bg='light.main'>
-        <Typography variant='h4'>{data.users[id].firstnames}</Typography>
+      <SingleItemMenu />
+      <Section bg='secondary.surface' sx={{ display: 'grid', justifyContent: 'center' }}>
+        <Toolbar />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '2rem'
+          }}
+        >
+          <Box sx={{ width: '60%' }}>
+            <Avatar
+              sx={{
+                bgcolor: 'secondary.main',
+                aspectRatio: '1',
+                width: '100%',
+                height: '100%'
+              }}
+            />
+          </Box>
+          <Typography variant='h3'>{data.users[id].firstnames}</Typography>
+          <Stack spacing='0.5rem' alignItems='flex-start'>
+            <Stack direction='row' alignItems='center' spacing='0.5rem'><LocalHospitalIcon /><Typography variant='h5'>Especialidad</Typography></Stack>
+            <Stack direction='row' alignItems='center' spacing='0.5rem'><BusinessIcon /><Typography variant='h5'>Departamento</Typography></Stack>
+          </Stack>
+          <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
+            <ListActionButton
+              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
+              primary='Teléfono'
+              secondary='0412-8934046'
+            />
+            <ListActionButton
+              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
+              primary='Correo'
+              secondary='email@email.com'
+            />
+          </List>
+        </Box>
       </Section>
     </>
   )
@@ -64,18 +122,10 @@ const RenderSingleUser = ({ id }) => {
 
 const UsersPage = () => {
   const { id } = useParams()
-  const breakpoint = useBreakpoint()
   return (
     <PageContainer>
-      {breakpoint.down('md') && !id && <RenderAllUsers />}
-
-      {breakpoint.down('md') && id && <RenderSingleUser id={id} />}
-
-      {breakpoint.up('md') &&
-        <Box style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr' }}>
-          <RenderAllUsers />
-          <RenderSingleUser id={id ?? 0} />
-        </Box>}
+      {id && <RenderSingleUser />}
+      {!id && <RenderAllUsers />}
     </PageContainer>
   )
 }

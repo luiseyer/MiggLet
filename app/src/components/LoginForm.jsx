@@ -15,12 +15,21 @@ const LoginForm = () => {
 
   return (
     <>
-      <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={isLoading}>
+      <Backdrop sx={{ color: '#fff', zIndex: 9999 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
 
-      <Container component={Paper} maxWidth='xs' sx={{ p: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <AppTitle variant='h4' style={{ marginBottom: '1rem' }} />
+      <Container
+        component={Paper}
+        maxWidth='xs'
+        sx={{
+          padding: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        <AppTitle variant='h4' sx={{ mb: '1rem' }} />
 
         {error && <Alert severity='error'>{error}</Alert>}
 
@@ -51,7 +60,7 @@ const LoginForm = () => {
             disabled={isLoading}
             type='submit'
             variant='contained'
-            sx={{ mt: 2 }}
+            sx={{ mt: '1rem' }}
           >
             Iniciar
           </Button>

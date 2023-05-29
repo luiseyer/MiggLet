@@ -1,27 +1,21 @@
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Container } from '@mui/material'
-import AccessibilityIcon from '@mui/icons-material/Accessibility'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import PeopleIcon from '@mui/icons-material/People'
+import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Collapse } from '@mui/material'
 import { AppTitle, ProfileButton } from '@components'
-import { useBreakpoint } from '@hooks'
 
 const pages = [
-  { text: 'inicio', path: '/dashboard', icon: <DashboardIcon /> },
-  { text: 'pacientes', path: '/patients', icon: <AccessibilityIcon /> },
-  { text: 'usuarios', path: '/users', icon: <PeopleIcon /> }
+  { text: 'inicio', path: '/dashboard' },
+  { text: 'pacientes', path: '/patients' },
+  { text: 'usuarios', path: '/users' }
 ]
 
 const TabsItems = ({ value }) => {
-  const breakpoint = useBreakpoint()
   return (
     <Tabs
       value={value}
-      variant={breakpoint.up('md') ? 'standard' : 'fullWidth'}
-      sx={{ ...(breakpoint.up('md') && { '& .MuiTabs-indicator': { display: 'none' } }) }}
+      variant='fullWidth'
     >
-      {pages.map(({ text, path, icon }) => (
+      {pages.map(({ text, path }) => (
         <Tab
           key={path}
           value={path}
@@ -37,32 +31,29 @@ const TabsItems = ({ value }) => {
 }
 
 const NavigationMenu = () => {
-  const ToolbarRef = useRef()
-  const trigger = useScrollTrigger()
+  const ref = useRef()
+  const [target, setTarget] = useState(window)
+  const trigger = useScrollTrigger({ target })
   const currentPage = '/' + useLocation().pathname.split('/')[1]
-  const breakpoint = useBreakpoint()
+  useEffect(() => { setTarget(ref?.current.nextSibling) }, [])
 
   return (
     <AppBar
-      position={breakpoint.down('md') ? 'sticky' : 'fixed'}
+      id='appbar'
+      ref={ref}
       color='light'
       elevation={0}
       sx={{
-        gridColumn: 'span 2',
-        transition: 'transform 0.3s ease',
-        ...(!trigger
-          ? { transform: 'translateY(0)' }
-          : { transform: `translateY(-${ToolbarRef?.current.clientHeight}px)` })
+        gridColumn: 'span 2'
       }}
     >
-      <Container disableGutters maxWidth='lg'>
-        <Toolbar ref={ToolbarRef} sx={{ justifyContent: 'space-between' }}>
-          <AppTitle variant='h4' />
-          {breakpoint.up('md') && <TabsItems value={currentPage} />}
+      <Collapse in={!trigger} timeout='auto' unmountOnExit>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <AppTitle variant='h5' />
           <ProfileButton />
         </Toolbar>
-        {breakpoint.down('md') && <TabsItems value={currentPage} />}
-      </Container>
+      </Collapse>
+      <TabsItems value={currentPage} />
     </AppBar>
   )
 }
