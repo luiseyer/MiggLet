@@ -43,6 +43,7 @@ const NavigationMenu = () => {
       ref={ref}
       color='light'
       elevation={0}
+      variant='outlined'
       sx={{
         gridColumn: 'span 2'
       }}

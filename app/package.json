@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview",
+    "preview": "vite build && vite preview --host",
     "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json --port 3001"
   },
   "dependencies": {

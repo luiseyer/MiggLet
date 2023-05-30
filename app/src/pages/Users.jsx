@@ -1,67 +1,16 @@
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Avatar, Box, List, ListItemSecondaryAction, ListItemAvatar, ListItemText, Toolbar, Typography, ListItemIcon, Stack, ListItemButton, Tabs } from '@mui/material'
-import { ChevronRight as ChevronRightIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, SingleItemMenu } from '@components'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs } from '@mui/material'
+import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
+import { PageContainer, Section, NavigationMenu, SingleItemMenu, ListActionButton, UserList } from '@components'
 
 import data from '@helpers/data'
 
-const ListActionButton = ({
-  children,
-  icon,
-  primary,
-  secondary,
-  onclick,
-  bg,
-  sx,
-  ...rest
-}) => {
-  return (
-    <ListItemButton
-      component='li'
-      sx={{
-        bgcolor: bg || 'light.main',
-        pr: 6,
-        gap: 2,
-        '& :is(.MuiListItemText-primary, .MuiListItemText-secondary)': {
-          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'
-        },
-        ...sx
-      }} {...rest}
-    >
-      {children}
-      {icon && <ListItemIcon>{icon}</ListItemIcon>}
-      {(primary || secondary) && <ListItemText primary={primary} secondary={secondary} />}
-      <ListItemSecondaryAction>
-        <ChevronRightIcon />
-      </ListItemSecondaryAction>
-    </ListItemButton>
-  )
-}
-
-const ListUsers = ({ users }) => {
-  const currentPage = '/' + useLocation().pathname.split('/')[1] + '/'
-  const navigate = useNavigate()
-
-  return (
-    users.map((user, index) => {
-      const username = user.firstnames + ' ' + user.lastnames
-
-      return (
-        <ListActionButton key={index} onClick={() => navigate(currentPage + index)}>
-          <ListItemAvatar>
-            <Avatar
-              src={user.profilePictureUrl}
-              sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
-            />
-          </ListItemAvatar>
-          <ListItemText primary={username} secondary={user.dni} />
-        </ListActionButton>
-      )
-    }
-    ))
-}
-
 const RenderAllUsers = () => {
+  const [users, setUsers] = useState(null)
+
+  useEffect(() => { setTimeout(() => setUsers(data.users), 3000) }, [])
+
   return (
     <>
       <NavigationMenu />
@@ -69,7 +18,7 @@ const RenderAllUsers = () => {
         <Toolbar /><Tabs />
         <Typography variant='h4' my={3} textAlign='center'>USUARIOS</Typography>
         <List sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
-          <ListUsers users={data.users} />
+          <UserList users={users} />
         </List>
       </Section>
     </>
@@ -79,6 +28,7 @@ const RenderAllUsers = () => {
 const RenderSingleUser = () => {
   const { id } = useParams()
   const user = data.users[id]
+
   return (
     <>
       <SingleItemMenu />
@@ -103,10 +53,14 @@ const RenderSingleUser = () => {
               }}
             />
           </Box>
-          <Typography variant='h3'>{user.firstnames}</Typography>
-          <Stack spacing='0.5rem' alignItems='flex-start'>
-            <Stack direction='row' alignItems='center' spacing='0.5rem'><LocalHospitalIcon /><Typography variant='h5'>{user.specialty}</Typography></Stack>
-            <Stack direction='row' alignItems='center' spacing='0.5rem'><BusinessIcon /><Typography variant='h5'>{user.department}</Typography></Stack>
+          <Typography variant='h4'>{`${user.firstnames} ${user.lastnames}`}</Typography>
+          <Stack spacing='0.5rem'>
+            <Stack direction='row' alignItems='center' spacing='0.5rem'>
+              <LocalHospitalIcon /><Typography variant='body2'>{user.specialty}</Typography>
+            </Stack>
+            <Stack direction='row' alignItems='center' spacing='0.5rem'>
+              <BusinessIcon /><Typography variant='body2'>{user.department}</Typography>
+            </Stack>
           </Stack>
           <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
             <ListActionButton
