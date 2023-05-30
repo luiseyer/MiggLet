@@ -5,7 +5,7 @@ const PageContainer = ({ children }) => {
     <Box
       component='main'
       sx={{
-        height: '100%',
+        minHeight: '100dvh',
         maxHeight: '100dvh',
         display: 'flex',
         flexDirection: 'column'

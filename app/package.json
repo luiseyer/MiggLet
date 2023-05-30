@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "json-server": "json-server --watch json-server/db.json --routes json-server/routes.json --port 3001"
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
@@ -21,7 +22,8 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@vitejs/plugin-react": "4.0.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "json-server": "0.17.3",
     "vite": "4.3.2"
   }
 }

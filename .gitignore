@@ -15,6 +15,7 @@ requests
 .env
 .env.*
 package-lock.json
+json-server
 
 # Editor directories and files
 .vscode/*

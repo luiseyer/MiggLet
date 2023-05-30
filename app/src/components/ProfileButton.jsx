@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Avatar, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material'
 import { LogoutOutlined, AccountCircleOutlined } from '@mui/icons-material'
-import { useLogout } from '@hooks'
+import { useLogout, useAuthContext } from '@hooks'
 
 const ProfileButton = () => {
   const [anchorEl, setAnchorEl] = useState(null)
+  const { user } = useAuthContext()
   const { logout } = useLogout()
   const open = Boolean(anchorEl)
 
@@ -15,12 +16,10 @@ const ProfileButton = () => {
     <>
       <IconButton onClick={handleClick}>
         <Avatar
-          alt=''
-          src=''
+          src={user.profilePictureUrl}
           sx={{ bgcolor: 'secondary.main' }}
         />
       </IconButton>
-
       <Menu
         anchorEl={anchorEl}
         open={open}
