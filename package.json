@@ -23,13 +23,16 @@
     "standard": "17.0.0"
   },
   "eslintConfig": {
-    "plugins": ["react-hooks"],
+    "plugins": [
+      "react-hooks"
+    ],
     "extends": [
       "./node_modules/standard/eslintrc.json",
       "plugin:react-hooks/recommended"
     ],
-    "rules" :{
-      "import/no-absolute-path": "off"
+    "rules": {
+      "import/no-absolute-path": "off",
+      "camelcase": "off"
     },
     "env": {
       "jest": true

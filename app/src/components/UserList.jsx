@@ -22,18 +22,16 @@ const UserList = ({ users }) => {
   return (
     users.map((user, i) => {
       const username = user.firstnames + ' ' + user.lastnames
-
       return (
-        <ListActionButton key={user.id} onClick={() => navigate(currentPage + i)} divider>
+        <ListActionButton key={user.id} onClick={() => navigate(currentPage + user.id)} divider>
           <ListItemAvatar>
             <Avatar
               src={user.profilePictureUrl}
               sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
             />
           </ListItemAvatar>
-          <ListItemText primary={username} secondary={user.dni} />
+          <ListItemText primary={username} secondary={user.specialty} />
         </ListActionButton>
-
       )
     })
   )

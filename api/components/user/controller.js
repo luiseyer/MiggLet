@@ -2,7 +2,7 @@ import User from './model.js'
 import * as DTO from './dto.js'
 import bcrypt from 'bcrypt'
 
-const getUsers = async (_, res, next) => {
+const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({})
     return res.json(DTO.multiple(users))

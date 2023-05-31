@@ -19,26 +19,28 @@ const login = async (req, res, next) => {
       ? false
       : await bcrypt.compare(password, user.password)
 
-    if (!isMatch) return next(new jwt.JsonWebTokenError('Usuario o contraseña incorrectos'))
+    if (!isMatch) return next(new jwt.JsonWebTokenError('Invalid user or password'))
 
     const userForToken = {
       id: user.id,
       dni: user.dni
     }
 
-    const token = jwt.sign(userForToken, process.env.JWT_SECRET)
+    const token = jwt.sign(userForToken, process.env.JWT_SECRET, { expiresIn: '12h' })
 
     res.status(200).json({ id: DTO.single(user).id, token })
   } catch (error) { return next(error) }
 }
 
-const hasToken = async (req, res, next) => {
+const verifyToken = async (req, _, next) => {
   try {
     const token = req.get('Authorization') ?? ''
     const decodedToken = jwt.verify(token.substring(7), process.env.JWT_SECRET)
     const user = await User.findById(decodedToken.id)
 
-    if (!user) return next(new jwt.JsonWebTokenError('No existe este usuario'))
+    if (!user) {
+      return next(new jwt.JsonWebTokenError('User does not exist'))
+    }
 
     req.user = decodedToken
     next()
@@ -48,10 +50,15 @@ const hasToken = async (req, res, next) => {
 const isAdmin = async (req, res, next) => {
   try {
     const { id } = req.user
-    const isAdmin = await User.findById(id, 'isAdmin').exec()
-    if (isAdmin) return next()
+    const user = await User.findById(id, { _id: 0, isAdmin: 1 }).exec()
+
+    console.log('isAdmin: ', user.isAdmin)
+    if (user && user.isAdmin) {
+      return next()
+    }
+
     return res.sendStatus(403)
   } catch (error) { next(error) }
 }
 
-export { login, hasToken, isAdmin }
+export { login, verifyToken, isAdmin }

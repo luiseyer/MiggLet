@@ -37,7 +37,7 @@ const data = {
       phone: '(788) 504-0182',
       profilePictureUrl: 'https://xsgames.co/randomusers/assets/avatars/male/12.jpg',
       department: 'Unidad Respiratoria',
-      specialty: 'Neumólogo'
+      specialty: 'Neumonólogo'
     },
     {
       id: '68332497',
@@ -50,7 +50,7 @@ const data = {
       phone: '(810) 999-2765',
       profilePictureUrl: 'https://xsgames.co/randomusers/assets/avatars/male/13.jpg',
       department: 'Unidad Respiratoria',
-      specialty: 'Neumólogo'
+      specialty: 'Neumonólogo'
     },
     {
       id: '83344953',
@@ -115,7 +115,7 @@ const data = {
       phone: '(059) 864-3449',
       profilePictureUrl: 'https://xsgames.co/randomusers/assets/avatars/male/18.jpg',
       department: 'Unidad Respiratoria',
-      specialty: 'Neumólogo'
+      specialty: 'Neumonólogo'
     },
     {
       id: '47709606',

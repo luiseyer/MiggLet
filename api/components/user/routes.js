@@ -7,7 +7,7 @@ import {
   deleteUser,
   setRemoveAdmin
 } from './controller.js'
-// import { hasToken, isAdmin } from '../../middlewares/auth.js'
+// import { isAdmin } from '../../middlewares/auth.js'
 
 const router = new App()
 
@@ -16,6 +16,6 @@ router.get('/:id', getUser)
 router.post('/', createUser)
 router.patch('/:id', updateUser)
 router.delete('/:id', deleteUser)
-router.patch('/admin/:id/', setRemoveAdmin)
+router.patch('/set-remove-admin/:id/', setRemoveAdmin)
 
 export default router

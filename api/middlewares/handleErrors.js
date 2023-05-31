@@ -11,13 +11,14 @@ const ERROR_HANDLERS = {
   JsonWebTokenError: (res, { name, message }) =>
     res.status(401).json({ error: { name, message } }),
 
-  DefaultError: res =>
-    res.sendStatus(500)
+  TokenExpiredError: (res, { name, message }) =>
+    res.status(401).json({ error: { name, message } }),
+
+  DefaultError: (res) => res.sendStatus(500)
 }
 
 function handleErrors (error, req, res, next) {
-  const { outError } = JSON.parse(JSON.stringify({ outError: { name: error.name, message: error.message } }))
-  if (outError.name) { console.error(outError) }
+  console.error(error)
 
   const handler = ERROR_HANDLERS[error.name] || ERROR_HANDLERS.DefaultError
   handler(res, error)

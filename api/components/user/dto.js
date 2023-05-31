@@ -3,11 +3,13 @@ const single = (resource, authUser) => ({
   dni: resource.dni,
   code: resource.code,
   email: resource.email,
-  isAdmin: resource.isAdmin,
   firstnames: resource.firstnames,
   lastnames: resource.lastnames,
+  profilePictureURL: resource.profilePictureURL,
+  department: resource.department,
   specialty: resource.specialty,
-  profilePictureURL: resource.profilePictureURL
+  isAdmin: resource.isAdmin,
+  isNew: resource.isNew
 })
 
 const multiple = (resources, authUser) =>

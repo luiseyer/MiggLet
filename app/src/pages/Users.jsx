@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs } from '@mui/material'
+import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs, TextField } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, SingleItemMenu, ListActionButton, UserList } from '@components'
 
@@ -9,15 +9,50 @@ import data from '@helpers/data'
 const RenderAllUsers = () => {
   const [users, setUsers] = useState(null)
 
-  useEffect(() => { setTimeout(() => setUsers(data.users), 3000) }, [])
+  useEffect(() => {
+    setUsers(null)
+    setTimeout(() => setUsers(data.users), 1000)
+  }, [])
+
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    const filterUsers = data.users.filter(user => {
+      if (query === '') return user
+
+      if (
+        user.firstnames.toLowerCase().includes(query.toLowerCase()) ||
+        user.lastnames.toLowerCase().includes(query.toLowerCase())
+      ) return user
+
+      return null
+    })
+
+    setUsers(filterUsers)
+  }, [query])
+
+  const handleSearch = ({ target }) => {
+    setQuery(target.value)
+  }
 
   return (
     <>
       <NavigationMenu />
       <Section bg='light.main'>
         <Toolbar /><Tabs />
+
         <Typography variant='h4' my={3} textAlign='center'>USUARIOS</Typography>
-        <List sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+
+        <TextField
+          fullWidth
+          id='search-user'
+          label='Buscar'
+          type='search'
+          size='small'
+          onChange={handleSearch}
+        />
+
+        <List sx={{ display: 'grid', gridTemplateColumns: '1fr', mt: '1rem' }}>
           <UserList users={users} />
         </List>
       </Section>
@@ -27,7 +62,7 @@ const RenderAllUsers = () => {
 
 const RenderSingleUser = () => {
   const { id } = useParams()
-  const user = data.users[id]
+  const user = data.users.find(user => user.id === id)
 
   return (
     <>
@@ -82,6 +117,7 @@ const RenderSingleUser = () => {
 
 const UsersPage = () => {
   const { id } = useParams()
+
   return (
     <PageContainer>
       {id && <RenderSingleUser />}
