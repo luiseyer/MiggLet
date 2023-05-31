@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs, TextField } from '@mui/material'
+import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs, TextField, TablePagination } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, SingleItemMenu, ListActionButton, UserList } from '@components'
 
@@ -8,13 +8,14 @@ import data from '@helpers/data'
 
 const RenderAllUsers = () => {
   const [users, setUsers] = useState(null)
+  const [query, setQuery] = useState('')
+  const [page, setPage] = useState(0)
+  const rowsPerPage = 10
 
   useEffect(() => {
     setUsers(null)
-    setTimeout(() => setUsers(data.users), 1000)
-  }, [])
-
-  const [query, setQuery] = useState('')
+    setTimeout(() => setUsers(data.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
+  }, [page])
 
   useEffect(() => {
     const filterUsers = data.users.filter(user => {
@@ -35,6 +36,10 @@ const RenderAllUsers = () => {
     setQuery(target.value)
   }
 
+  const handlePageChange = (_, newPage) => {
+    setPage(newPage)
+  }
+
   return (
     <>
       <NavigationMenu />
@@ -52,9 +57,54 @@ const RenderAllUsers = () => {
           onChange={handleSearch}
         />
 
-        <List sx={{ display: 'grid', gridTemplateColumns: '1fr', mt: '1rem' }}>
+        {/* <TablePagination
+          component='div'
+          count={data.users.length}
+          page={page}
+          onPageChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={() => {}}
+          labelRowsPerPage='por página'
+          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
+          sx={{
+            my: '0.5rem',
+            '& .MuiToolbar-root': { justifyContent: 'center' },
+            '& .MuiTablePagination-spacer': { display: 'none' }
+          }}
+        /> */}
+
+        <TablePagination
+          component='div'
+          count={data.users.length}
+          page={page}
+          onPageChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={() => {}}
+          sx={{
+            my: '0.5rem',
+            '& .MuiToolbar-root': { justifyContent: 'center' },
+            '& .MuiTablePagination-spacer': { display: 'none' }
+          }}
+        />
+
+        <List disablePadding sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
           <UserList users={users} />
         </List>
+
+        <TablePagination
+          component='div'
+          count={data.users.length}
+          page={page}
+          onPageChange={handlePageChange}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={() => {}}
+          sx={{
+            my: '0.5rem',
+            '& .MuiToolbar-root': { justifyContent: 'center' },
+            '& .MuiTablePagination-spacer': { display: 'none' }
+          }}
+        />
+
       </Section>
     </>
   )
