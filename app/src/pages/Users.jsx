@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Avatar, Box, List, Toolbar, Typography, Stack, Tabs, TextField, TablePagination } from '@mui/material'
+import { Avatar, Box, List, Typography, Stack, TextField, TablePagination } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, SingleItemMenu, ListActionButton, UserList } from '@components'
+import { PageContainer, Section, NavigationMenu, ListActionButton, UserList } from '@components'
 
 import data from '@helpers/data'
 
@@ -18,18 +18,20 @@ const RenderAllUsers = () => {
   }, [page])
 
   useEffect(() => {
-    const filterUsers = data.users.filter(user => {
-      if (query === '') return user
+    if (query !== '') {
+      const filterUsers = data.users.filter(user => {
+        if (query === '') return user
 
-      if (
-        user.firstnames.toLowerCase().includes(query.toLowerCase()) ||
-        user.lastnames.toLowerCase().includes(query.toLowerCase())
-      ) return user
+        if (
+          user.firstnames.toLowerCase().includes(query.toLowerCase()) ||
+          user.lastnames.toLowerCase().includes(query.toLowerCase())
+        ) return user
 
-      return null
-    })
+        return null
+      })
 
-    setUsers(filterUsers)
+      setUsers(filterUsers)
+    }
   }, [query])
 
   const handleSearch = ({ target }) => {
@@ -43,51 +45,19 @@ const RenderAllUsers = () => {
   return (
     <>
       <NavigationMenu />
-      <Section bg='light.main'>
-        <Toolbar /><Tabs />
-
-        <Typography variant='h4' my={3} textAlign='center'>USUARIOS</Typography>
-
+      <Section color='light.main'>
         <TextField
           fullWidth
+          variant='standard'
           id='search-user'
           label='Buscar'
           type='search'
           size='small'
           onChange={handleSearch}
+          sx={{ display: 'none' }}
         />
 
-        {/* <TablePagination
-          component='div'
-          count={data.users.length}
-          page={page}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={() => {}}
-          labelRowsPerPage='por página'
-          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
-          sx={{
-            my: '0.5rem',
-            '& .MuiToolbar-root': { justifyContent: 'center' },
-            '& .MuiTablePagination-spacer': { display: 'none' }
-          }}
-        /> */}
-
-        <TablePagination
-          component='div'
-          count={data.users.length}
-          page={page}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={() => {}}
-          sx={{
-            my: '0.5rem',
-            '& .MuiToolbar-root': { justifyContent: 'center' },
-            '& .MuiTablePagination-spacer': { display: 'none' }
-          }}
-        />
-
-        <List disablePadding sx={{ display: 'grid', gridTemplateColumns: '1fr' }}>
+        <List disablePadding sx={{ display: 'grid', gridTemplateColumns: '1fr', mt: 4 }}>
           <UserList users={users} />
         </List>
 
@@ -98,13 +68,14 @@ const RenderAllUsers = () => {
           onPageChange={handlePageChange}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={() => {}}
+          labelRowsPerPage='Usuarios por página'
+          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
           sx={{
             my: '0.5rem',
             '& .MuiToolbar-root': { justifyContent: 'center' },
             '& .MuiTablePagination-spacer': { display: 'none' }
           }}
         />
-
       </Section>
     </>
   )
@@ -116,9 +87,8 @@ const RenderSingleUser = () => {
 
   return (
     <>
-      <SingleItemMenu />
-      <Section bg='secondary.surface' sx={{ display: 'grid', justifyContent: 'center' }}>
-        <Toolbar />
+      <NavigationMenu variant='toolbar' />
+      <Section color='light.main' sx={{ display: 'grid', justifyContent: 'center' }}>
         <Box
           sx={{
             display: 'flex',
@@ -149,11 +119,13 @@ const RenderSingleUser = () => {
           </Stack>
           <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
             <ListActionButton
+              color='secondary.surface'
               icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
               primary={user.phone}
               secondary='Llamar'
             />
             <ListActionButton
+              color='secondary.surface'
               icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
               primary={user.email}
               secondary='Enviar correo'

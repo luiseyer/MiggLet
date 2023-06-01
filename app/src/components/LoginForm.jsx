@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, TextField } from '@mui/material'
+import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, TextField, Typography } from '@mui/material'
 import { AppTitle } from '@components'
 import { useLogin } from '@hooks'
 
@@ -51,10 +51,6 @@ const LoginForm = () => {
             label='Contraseña'
           />
 
-          <Link to='#'>
-            Recuperar contraseña
-          </Link>
-
           <Button
             fullWidth
             disabled={isLoading}
@@ -65,6 +61,9 @@ const LoginForm = () => {
             Iniciar
           </Button>
 
+          <Typography variant='caption' display='block' textAlign='center' mt={2}>
+            <Link to='#'>Recuperar contraseña</Link>
+          </Typography>
         </Box>
       </Container>
     </>

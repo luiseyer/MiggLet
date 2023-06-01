@@ -1,11 +1,11 @@
 import { Box } from '@mui/material'
 
-const Section = ({ children, bg, sx }) => {
+const Section = ({ children, color, sx }) => {
   return (
     <Box
       component='section'
       sx={{
-        bgcolor: bg,
+        bgcolor: color,
         padding: '2rem 1.5rem',
         flex: '1',
         overflowY: 'auto',

@@ -18,16 +18,18 @@ const useLogin = () => {
 const simulationLogin = (username, password, dispatch, setError, setIsLoading) => {
   setIsLoading(true)
   setError(null)
-  const user = data.users.find(user => (user.email === username || user.dni === username) && user.password === password)
+  setTimeout(() => {
+    const user = data.users.find(user => (user.email === username || user.dni === username) && user.password === password)
 
-  if (!user) {
-    setIsLoading(false)
-    setError('Usuario o contraseña incorrectos')
-    return 0
-  }
+    if (!user) {
+      setIsLoading(false)
+      setError('Usuario o contraseña incorrectos')
+      return 0
+    }
 
-  window.localStorage.setItem('user', JSON.stringify(user))
-  dispatch({ type: 'LOGIN', payload: user })
+    window.localStorage.setItem('user', JSON.stringify(user))
+    dispatch({ type: 'LOGIN', payload: user })
+  }, 1000)
 }
 
 export default useLogin
