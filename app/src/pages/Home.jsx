@@ -15,7 +15,7 @@ const HomePage = () => {
 
   return (
     <main style={{ minHeight: '100%', display: 'grid', placeItems: 'center' }}>
-      <Section bg='light.main'>
+      <Section color='light.main'>
         <img src={logo} />
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
           <Button size='large' variant='contained' component={Link} to='/login'>
