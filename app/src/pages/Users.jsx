@@ -88,7 +88,7 @@ const RenderSingleUser = () => {
   return (
     <>
       <NavigationMenu variant='toolbar' />
-      <Section color='light.main' sx={{ display: 'grid', justifyContent: 'center' }}>
+      <Section color='light.main' sx={{ display: 'grid', gridTemplateColumns: 'min(500px, 100%)', justifyContent: 'center' }}>
         <Box
           sx={{
             display: 'flex',
@@ -99,7 +99,7 @@ const RenderSingleUser = () => {
         >
           <Box sx={{ width: '60%' }}>
             <Avatar
-              src={user.profilePictureUrl}
+              src={user.profilePictureURL}
               sx={{
                 bgcolor: 'secondary.main',
                 aspectRatio: '1',
@@ -108,13 +108,13 @@ const RenderSingleUser = () => {
               }}
             />
           </Box>
-          <Typography variant='h4'>{`${user.firstnames} ${user.lastnames}`}</Typography>
+          <Typography variant='h4' textAlign='center'>{`${user.firstnames} ${user.lastnames}`}</Typography>
           <Stack spacing='0.5rem'>
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <LocalHospitalIcon /><Typography variant='body2'>{user.specialty}</Typography>
+              <LocalHospitalIcon /><Typography variant='body1'>{user.specialty}</Typography>
             </Stack>
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <BusinessIcon /><Typography variant='body2'>{user.department}</Typography>
+              <BusinessIcon /><Typography variant='body1'>{user.department}</Typography>
             </Stack>
           </Stack>
           <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>

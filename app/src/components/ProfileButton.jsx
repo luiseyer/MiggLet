@@ -16,7 +16,7 @@ const ProfileButton = () => {
     <>
       <IconButton onClick={handleClick}>
         <Avatar
-          src={user.profilePictureUrl}
+          src={user.profilePictureURL}
           sx={{ bgcolor: 'secondary.main' }}
         />
       </IconButton>

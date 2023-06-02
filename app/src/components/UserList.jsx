@@ -26,7 +26,7 @@ const UserList = ({ users }) => {
         <ListActionButton key={user.id} onClick={() => navigate(currentPage + user.id)} divider>
           <ListItemAvatar>
             <Avatar
-              src={user.profilePictureUrl}
+              src={user.profilePictureURL}
               sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
             />
           </ListItemAvatar>
