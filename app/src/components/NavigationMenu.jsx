@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Collapse, Stack, IconButton, Divider, InputBase } from '@mui/material'
+import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Collapse, Stack, IconButton } from '@mui/material'
 import { AppTitle, ProfileButton } from '@components'
-import { LocalHospital as LocalHospitalIcon, Home as HomeIcon, People as PeopleIcon, Search as SearchIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material'
+import { LocalHospital as LocalHospitalIcon, Dashboard as DashboardIcon, People as PeopleIcon, Search as SearchIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material'
 
 const pages = [
-  { text: 'inicio', path: '/dashboard', icon: <HomeIcon /> },
+  { text: 'inicio', path: '/dashboard', icon: <DashboardIcon /> },
   { text: 'pacientes', path: '/patients', icon: <LocalHospitalIcon /> },
   { text: 'usuarios', path: '/users', icon: <PeopleIcon /> }
 ]
@@ -49,7 +49,7 @@ const NavigationMenu = ({ variant = 'navigation' }) => {
     <AppBar
       id='appbar'
       ref={ref}
-      color='neutral'
+      color='light'
       elevation={0}
       variant='outlined'
     >
@@ -58,16 +58,15 @@ const NavigationMenu = ({ variant = 'navigation' }) => {
           <Collapse in={!trigger} timeout='auto' unmountOnExit>
             <Toolbar sx={{ justifyContent: 'space-between' }}>
               <AppTitle variant='h5' />
-              <Stack direction='row' justifyContent='flex-end' alignItems='center'>
-                <InputBase
-                  sx={{ ml: 1, flex: 1 }}
-                  placeholder='Buscar'
-                  inputProps={{ 'aria-label': 'search google maps' }}
-                />
-                <IconButton type='button' size='small'>
+              <Stack
+                direction='row'
+                spacing={1}
+                justifyContent='flex-end'
+                alignItems='center'
+              >
+                <IconButton type='button'>
                   <SearchIcon />
                 </IconButton>
-                <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
                 <ProfileButton />
               </Stack>
             </Toolbar>

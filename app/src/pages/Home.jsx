@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '@mui/material'
-import { Section } from '@components'
-import AnimatedLogo from '@assets/logo.gif'
-import SVGLogo from '@assets/logo.svg'
+import { Button, Box } from '@mui/material'
+import AnimatedLogo from '@assets/logotipo.gif'
+import SVGLogo from '@assets/logotipo.svg'
 
 const HomePage = () => {
   const [logo, setLogo] = useState(SVGLogo)
 
   useEffect(() => {
     setTimeout(() => setLogo(AnimatedLogo), 1000)
-    setTimeout(() => setLogo(SVGLogo), 4000)
+    setTimeout(() => setLogo(SVGLogo), 3000)
   }, [])
 
   return (
-    <main style={{ minHeight: '100%', display: 'grid', placeItems: 'center' }}>
-      <Section color='light.main'>
-        <img src={logo} />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+    <Box
+      component='main'
+      sx={{
+        display: 'grid',
+        placeItems: 'center',
+        bgcolor: 'light.main',
+        minHeight: '100dvh'
+      }}
+    >
+      <Box>
+        <img className='logotipo' src={logo} />
+        <Box style={{ display: 'flex', justifyContent: 'center', mt: '2rem' }}>
           <Button size='large' variant='contained' component={Link} to='/login'>
             Comenzar
           </Button>
-        </div>
-      </Section>
-    </main>
+        </Box>
+      </Box>
+    </Box>
   )
 }
 

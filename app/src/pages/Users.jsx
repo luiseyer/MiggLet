@@ -45,7 +45,7 @@ const RenderAllUsers = () => {
   return (
     <>
       <NavigationMenu />
-      <Section color='light.main'>
+      <Section color='light.main' sx={{ px: 0 }}>
         <TextField
           fullWidth
           variant='standard'
@@ -57,7 +57,14 @@ const RenderAllUsers = () => {
           sx={{ display: 'none' }}
         />
 
-        <List disablePadding sx={{ display: 'grid', gridTemplateColumns: '1fr', mt: 4 }}>
+        <List
+          disablePadding
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(10%, 600px)',
+            justifyContent: 'center'
+          }}
+        >
           <UserList users={users} />
         </List>
 
