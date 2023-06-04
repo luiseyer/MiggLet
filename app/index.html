@@ -5,12 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MiggLet</title>
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/images/icon.svg" />
     <link rel="stylesheet" href="/modern-normalize.css">
     <link rel="stylesheet" href="/index.css">
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.addEventListener('load', () => {
+        if (navigator.serviceWorker.controller) {
+  console.log('Active service worker found')
+} else {
+  navigator.serviceWorker
+    .register('serviceWorker.js', {
+      scope: './'
+    })
+    .then(function () {
+      console.log('Service worker registered')
+    })
+}
+      })
+    </script>
   </body>
 </html>
