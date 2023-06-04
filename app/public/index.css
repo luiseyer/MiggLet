@@ -14,6 +14,7 @@ body{
     background-color: #000;
 }
 
-img {
+img.logotipo {
+    display: block;
     width: 100%;
 }
