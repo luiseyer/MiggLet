@@ -207,7 +207,7 @@ const dataUsers = [
 
 const data = {
   users: dataUsers.map((user, i) => {
-    user.profilePictureURL = `/public/users/${i + 1}.jpg`
+    user.profilePictureURL = `/public/images/users/${i + 1}.jpg`
     return user
   })
 }
