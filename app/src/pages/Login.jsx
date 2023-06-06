@@ -8,7 +8,14 @@ function LoginPage () {
   if (user) return (<Navigate to='/dashboard' replace />)
 
   return (
-    <Box sx={{ p: '1rem', minHeight: '100dvh', display: 'grid', placeItems: 'center', bgcolor: 'neutral.dark' }}>
+    <Box sx={{
+      p: '1rem',
+      minHeight: '100dvh',
+      display: 'grid',
+      placeItems: 'center',
+      background: (theme) => theme.gradient.light
+    }}
+    >
       {!user
         ? <LoginForm />
         : <FirstLoginForm />}

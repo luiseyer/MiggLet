@@ -8,7 +8,7 @@ const UserList = ({ users }) => {
 
   if (!users) {
     return (
-      Array(3).fill(0).map((_, i) => (
+      Array(10).fill(0).map((_, i) => (
         <ListActionButton key={i} divider>
           <ListItemAvatar>
             <Skeleton variant='circular' width={54} height={54} />

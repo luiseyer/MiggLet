@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-import { indigo, blue, purple, red } from '@mui/material/colors'
+import { indigo, blue, purple } from '@mui/material/colors'
 
 // SETTINGS
 const palette = {
@@ -8,9 +8,9 @@ const palette = {
   secondary: blue,
   tertiary: purple,
   light: 'hsl(0, 0%, 100%)',
-  dark: 'hsl(0, 0%, 10%)',
-  error: red
+  dark: 'hsl(0, 0%, 10%)'
 }
+
 const primary = {
   light: palette.primary[200],
   main: palette.primary[300],
@@ -30,6 +30,13 @@ const tertiary = {
   surface: palette.tertiary[50]
 }
 
+const gradient = {
+  light: `linear-gradient(120deg, ${secondary.light} 0%, ${tertiary.light} 100%)`,
+  main: `linear-gradient(120deg, ${secondary.main} 0%, ${tertiary.main} 100%)`,
+  dark: `linear-gradient(120deg, ${secondary.dark} 0%, ${tertiary.dark} 100%)`,
+  surface: `linear-gradient(120deg, ${secondary.surface} 0%, ${tertiary.surface} 100%)`
+}
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -39,6 +46,7 @@ const theme = createTheme({
       surface: primary.surface,
       contrastText: '#F5F5F5'
     },
+
     secondary: {
       light: secondary.light,
       main: secondary.main,
@@ -46,6 +54,7 @@ const theme = createTheme({
       surface: secondary.surface,
       contrastText: '#F5F5F5'
     },
+
     tertiary: {
       light: tertiary.light,
       main: tertiary.main,
@@ -53,20 +62,30 @@ const theme = createTheme({
       surface: tertiary.surface,
       contrastText: '#F5F5F5'
     },
+
     light: {
       main: '#FFFFFF',
       contrastText: '#222222'
     },
+
     dark: {
       light: '#444444',
       main: '#222222',
       contrastText: '#F5F5F5'
     },
+
     neutral: {
       main: '#F5F5F5',
       dark: '#E5E5E5',
       contrastText: '#222222'
     }
+  },
+
+  gradient: {
+    light: gradient.light,
+    main: gradient.main,
+    dark: gradient.dark,
+    surface: gradient.surface
   }
 })
 

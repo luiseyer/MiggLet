@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Avatar, Box, List, Typography, Stack, TextField, TablePagination } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon } from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, ListActionButton, UserList } from '@components'
+import { List, TextField, TablePagination, Fab } from '@mui/material'
+import { Add as AddIcon } from '@mui/icons-material'
+import { PageContainer, Section, NavigationMenu, UserList } from '@components'
 
 import data from '@helpers/data'
 
-const RenderAllUsers = () => {
+const UsersPage = () => {
   const [users, setUsers] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
@@ -43,9 +42,16 @@ const RenderAllUsers = () => {
   }
 
   return (
-    <>
+    <PageContainer>
       <NavigationMenu />
-      <Section color='light.main' sx={{ px: 0 }}>
+      <Section
+        color='light.main' sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          justifyContent: 'center',
+          px: 0
+        }}
+      >
         <TextField
           fullWidth
           variant='standard'
@@ -57,100 +63,37 @@ const RenderAllUsers = () => {
           sx={{ display: 'none' }}
         />
 
-        <List
-          disablePadding
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(10%, 600px)',
-            justifyContent: 'center'
-          }}
-        >
+        <List disablePadding>
           <UserList users={users} />
+          <TablePagination
+            component='div'
+            count={data.users.length}
+            page={page}
+            onPageChange={handlePageChange}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[]}
+            labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
+            sx={{
+              my: '1rem',
+              '& .MuiToolbar-root': { justifyContent: 'center' },
+              '& .MuiTablePagination-spacer': { display: 'none' }
+            }}
+          />
         </List>
 
-        <TablePagination
-          component='div'
-          count={data.users.length}
-          page={page}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={() => {}}
-          labelRowsPerPage='Usuarios por página'
-          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
+        <Fab
+          color='primary'
           sx={{
-            my: '0.5rem',
-            '& .MuiToolbar-root': { justifyContent: 'center' },
-            '& .MuiTablePagination-spacer': { display: 'none' }
-          }}
-        />
-      </Section>
-    </>
-  )
-}
-
-const RenderSingleUser = () => {
-  const { id } = useParams()
-  const user = data.users.find(user => user.id === id)
-
-  return (
-    <>
-      <NavigationMenu variant='toolbar' />
-      <Section color='light.main' sx={{ display: 'grid', gridTemplateColumns: 'min(500px, 100%)', justifyContent: 'center' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '2rem'
+            position: 'sticky',
+            bottom: 0,
+            justifySelf: 'end',
+            mx: 2,
+            background: (theme) => theme.gradient.main
           }}
         >
-          <Box sx={{ width: '60%' }}>
-            <Avatar
-              src={user.profilePictureURL}
-              sx={{
-                bgcolor: 'secondary.main',
-                aspectRatio: '1',
-                width: '100%',
-                height: '100%'
-              }}
-            />
-          </Box>
-          <Typography variant='h4' textAlign='center'>{`${user.firstnames} ${user.lastnames}`}</Typography>
-          <Stack spacing='0.5rem'>
-            <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <LocalHospitalIcon /><Typography variant='body1'>{user.specialty}</Typography>
-            </Stack>
-            <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <BusinessIcon /><Typography variant='body1'>{user.department}</Typography>
-            </Stack>
-          </Stack>
-          <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
-            <ListActionButton
-              color='secondary.surface'
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
-              primary={user.phone}
-              secondary='Llamar'
-            />
-            <ListActionButton
-              color='secondary.surface'
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
-              primary={user.email}
-              secondary='Enviar correo'
-            />
-          </List>
-        </Box>
+          <AddIcon />
+        </Fab>
       </Section>
-    </>
-  )
-}
-
-const UsersPage = () => {
-  const { id } = useParams()
-
-  return (
-    <PageContainer>
-      {id && <RenderSingleUser />}
-      {!id && <RenderAllUsers />}
     </PageContainer>
   )
 }

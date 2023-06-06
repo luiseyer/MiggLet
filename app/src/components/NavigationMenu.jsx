@@ -21,10 +21,15 @@ const TabsItems = ({ value }) => {
           key={path}
           value={path}
           label={text}
-          icon={icon}
+          // icon={icon}
           component={Link}
           to={path}
-          sx={{ fontWeight: 'bolder', fontSize: '0.65rem', py: 0, minHeight: 64 }}
+          sx={{
+            fontWeight: 'bolder',
+            fontSize: '0.75rem'
+            // py: 0
+            // minHeight: 64
+          }}
           onClick={() => { window.scrollTo({ top: 0 }) }}
         />
       ))}
@@ -32,9 +37,10 @@ const TabsItems = ({ value }) => {
   )
 }
 
-const NavigationMenu = ({ variant = 'navigation' }) => {
+const NavigationMenu = ({ variant = 'navigation', sx }) => {
   const ref = useRef()
   const [target, setTarget] = useState(window)
+  const [elevation, setElevation] = useState(0)
   const trigger = useScrollTrigger({ target })
   const currentPage = '/' + useLocation().pathname.split('/')[1]
 
@@ -45,13 +51,25 @@ const NavigationMenu = ({ variant = 'navigation' }) => {
     }
   }, [])
 
+  useEffect(() => {
+    target.addEventListener('scroll', () => {
+      if (target.scrollTop <= 0) {
+        return setElevation(0)
+      }
+      return setElevation(3)
+    })
+  }, [target])
+
   return (
     <AppBar
       id='appbar'
       ref={ref}
       color='light'
-      elevation={0}
-      variant='outlined'
+      elevation={elevation}
+      sx={{
+        background: (theme) => theme.gradient.surface,
+        ...sx
+      }}
     >
       {variant === 'navigation' &&
         <>

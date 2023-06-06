@@ -1,18 +1,11 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Box, List, Typography, Stack, TextField, TablePagination, Divider } from '@mui/material'
-import {
-  LocalHospital as LocalHospitalIcon,
-  CalendarMonth as CalendarMonthIcon,
-  AccountBox as AccountBoxIcon,
-  ShortText as ShortTextIcon,
-  LocationOn as LocationOnIcon
-} from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, ListActionButton, UserList } from '@components'
+import { List, TextField, TablePagination, Fab } from '@mui/material'
+import { Add as AddIcon } from '@mui/icons-material'
+import { PageContainer, Section, NavigationMenu, UserList } from '@components'
 
 import data from '@helpers/data'
 
-const RenderAllUsers = () => {
+const PatientsPage = () => {
   const [users, setUsers] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
@@ -49,9 +42,16 @@ const RenderAllUsers = () => {
   }
 
   return (
-    <>
+    <PageContainer>
       <NavigationMenu />
-      <Section color='light.main' sx={{ px: 0 }}>
+      <Section
+        color='light.main' sx={{
+          display: 'grid',
+          gridTemplateColumns: '1fr',
+          justifyContent: 'center',
+          px: 0
+        }}
+      >
         <TextField
           fullWidth
           variant='standard'
@@ -63,116 +63,37 @@ const RenderAllUsers = () => {
           sx={{ display: 'none' }}
         />
 
-        <List
-          disablePadding
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'minmax(10%, 600px)',
-            justifyContent: 'center'
-          }}
-        >
+        <List disablePadding>
           <UserList users={users} />
+          <TablePagination
+            component='div'
+            count={data.users.length}
+            page={page}
+            onPageChange={handlePageChange}
+            rowsPerPage={rowsPerPage}
+            rowsPerPageOptions={[]}
+            labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
+            sx={{
+              my: '1rem',
+              '& .MuiToolbar-root': { justifyContent: 'center' },
+              '& .MuiTablePagination-spacer': { display: 'none' }
+            }}
+          />
         </List>
 
-        <TablePagination
-          component='div'
-          count={data.users.length}
-          page={page}
-          onPageChange={handlePageChange}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={() => {}}
-          labelRowsPerPage='Usuarios por página'
-          labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
+        <Fab
+          color='primary'
           sx={{
-            my: '0.5rem',
-            '& .MuiToolbar-root': { justifyContent: 'center' },
-            '& .MuiTablePagination-spacer': { display: 'none' }
-          }}
-        />
-      </Section>
-    </>
-  )
-}
-
-const RenderSinglePatient = () => {
-  const { id } = useParams()
-  const user = data.users.find(user => user.id === id)
-
-  return (
-    <>
-      <NavigationMenu variant='toolbar' />
-      <Section color='light.main' sx={{ display: 'grid', justifyContent: 'center' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
+            position: 'sticky',
+            bottom: 0,
+            justifySelf: 'end',
+            mx: 2,
+            background: (theme) => theme.gradient.main
           }}
         >
-          <Typography variant='h2'>Ficha del Paciente</Typography>
-
-          <Divider />
-
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <ShortTextIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Nombres: {user.firstnames}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <ShortTextIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Apellidos: {user.lastnames}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <AccountBoxIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Cédula de identidad: V-{user.dni}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <CalendarMonthIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Fecha de nacimiento: 00, MES de 0000</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocationOnIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Dirección: ------</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocalHospitalIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Número de Historia: ------</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocalHospitalIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Antecedentes personales: ------</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocalHospitalIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Antecedentes familiares: ------</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocalHospitalIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Antecedentes psicobiológicos: ------</Typography>
-          </Stack>
-
-          <Divider />
-
-          <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
-            <ListActionButton
-              color='secondary.surface'
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
-              primary={user.phone}
-              secondary='Llamar'
-            />
-          </List>
-        </Box>
+          <AddIcon />
+        </Fab>
       </Section>
-    </>
-  )
-}
-
-const PatientsPage = () => {
-  const { id } = useParams()
-
-  return (
-    <PageContainer>
-      {id && <RenderSinglePatient />}
-      {!id && <RenderAllUsers />}
     </PageContainer>
   )
 }
