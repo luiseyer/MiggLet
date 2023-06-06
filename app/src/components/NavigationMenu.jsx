@@ -46,9 +46,8 @@ const NavigationMenu = ({ variant = 'navigation', sx }) => {
 
   useEffect(() => {
     setTarget(ref?.current.nextSibling)
-    if (ref?.current.nextSibling instanceof window.HTMLElement) {
-      ref.current.nextSibling.style.paddingTop = `calc(${ref.current.clientHeight}px + 2rem`
-    }
+    const section = ref?.current.nextSibling
+    section.style.paddingTop = `calc(${ref.current.clientHeight}px + ${section.getAttribute('data-spacing')}`
   }, [])
 
   useEffect(() => {
