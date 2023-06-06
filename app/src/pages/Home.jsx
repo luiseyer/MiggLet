@@ -1,24 +1,9 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
-import AnimatedLogo from '@assets/logotipo.gif'
-import SVGLogo from '@assets/logotipo.svg'
+import AnimatedLogo500 from '@assets/logotipo-500.gif'
+import AnimatedLogo700 from '@assets/logotipo-700.gif'
 
 const HomePage = () => {
-  const [logoSource, setLogoSource] = useState(AnimatedLogo)
-
-  useEffect(() => {
-    if (logoSource !== SVGLogo) {
-      const Logo = document.querySelector('.logo')
-      window.addEventListener('load', () => {
-        setTimeout(() => setLogoSource(SVGLogo), 3000)
-      })
-      if (Logo.complete) {
-        setTimeout(() => setLogoSource(SVGLogo), 3000)
-      }
-    }
-  }, [logoSource])
-
   return (
     <Box
       component='main'
@@ -32,7 +17,12 @@ const HomePage = () => {
       <Box>
         <img
           className='logo'
-          src={logoSource}
+          srcSet={`
+            ${AnimatedLogo500} 500w, 
+            ${AnimatedLogo700} 700w
+          `}
+          sizes='(min-width: 700px) 700px, 500px'
+          src={AnimatedLogo500}
           loading='lazy'
           width={512}
           height={256}
