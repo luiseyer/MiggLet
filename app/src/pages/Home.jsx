@@ -1,28 +1,23 @@
 import { Link } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
-import AnimatedLogo500 from '@assets/logotipo-500.gif'
-import AnimatedLogo700 from '@assets/logotipo-700.gif'
+import SVGLogo from '@assets/logotipo-transparent.svg'
 
 const HomePage = () => {
   return (
     <Box
       component='main'
       sx={{
+        p: 2,
         display: 'grid',
         placeItems: 'center',
-        bgcolor: 'light.main',
-        minHeight: '100dvh'
+        minHeight: '100dvh',
+        background: (theme) => theme.gradient.light
       }}
     >
       <Box>
         <img
           className='logo'
-          srcSet={`
-            ${AnimatedLogo500} 500w, 
-            ${AnimatedLogo700} 700w
-          `}
-          sizes='(min-width: 700px) 700px, 500px'
-          src={AnimatedLogo500}
+          src={SVGLogo}
           loading='lazy'
           width={512}
           height={256}
