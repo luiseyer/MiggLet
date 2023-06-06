@@ -22,7 +22,7 @@ const SinglePatient = () => {
         >
           <Typography variant='h2'>Ficha del Paciente</Typography>
 
-          <Divider />
+          <Divider sx={{ visibility: 'hidden' }} />
 
           <Stack direction='row' alignItems='center' spacing='0.5rem'>
             <Typography variant='body1' fontSize='1.0875rem'>Nombres: {user.firstnames}</Typography>
@@ -47,7 +47,7 @@ const SinglePatient = () => {
             <Typography variant='body1' fontSize='1.0875rem'>Número de Historia: ------</Typography>
           </Stack>
 
-          <Divider />
+          <Divider sx={{ visibility: 'hidden' }} />
 
           <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
             <ListActionButton
@@ -58,7 +58,7 @@ const SinglePatient = () => {
             />
           </List>
 
-          <Divider />
+          <Divider sx={{ visibility: 'hidden' }} />
 
           <Accordion>
             <AccordionSummary
