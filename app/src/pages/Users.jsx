@@ -2,23 +2,29 @@ import { useEffect, useState } from 'react'
 import { List, TextField, TablePagination, Fab } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, UserList } from '@components'
+import { useAuthContext } from '@hooks'
 
 import data from '@helpers/data'
 
+let dataUsers = null
+
 const UsersPage = () => {
+  const { user } = useAuthContext()
   const [users, setUsers] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
   const rowsPerPage = 10
 
+  dataUsers = data.users.filter(_user => _user.id !== user.id)
+
   useEffect(() => {
     setUsers(null)
-    setTimeout(() => setUsers(data.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
+    setTimeout(() => setUsers(dataUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
   }, [page])
 
   useEffect(() => {
     if (query !== '') {
-      const filterUsers = data.users.filter(user => {
+      const filterUsers = dataUsers.filter(user => {
         if (query === '') return user
 
         if (
@@ -53,12 +59,6 @@ const UsersPage = () => {
         }}
       >
         <TextField
-          fullWidth
-          variant='standard'
-          id='search-user'
-          label='Buscar'
-          type='search'
-          size='small'
           onChange={handleSearch}
           sx={{ display: 'none' }}
         />
@@ -67,7 +67,7 @@ const UsersPage = () => {
           <UserList users={users} />
           <TablePagination
             component='div'
-            count={data.users.length}
+            count={dataUsers.length}
             page={page}
             onPageChange={handlePageChange}
             rowsPerPage={rowsPerPage}
