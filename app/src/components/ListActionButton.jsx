@@ -12,6 +12,9 @@ const ListActionButton = ({ children, icon, primary, secondary, color, sx, ...re
         '& :is(.MuiListItemText-primary, .MuiListItemText-secondary)': {
           overflow: 'hidden', textOverflow: 'ellipsis'
         },
+        '& :is(.MuiListItemIcon-root, .MuiListItemAvatar-root)': {
+          minWidth: 'auto'
+        },
         ...sx
       }}
       {...rest}

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { Avatar, Box, Fab, List, Stack, Typography } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Edit as EditIcon } from '@mui/icons-material'
+import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Edit as EditIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section, ListActionButton } from '@components'
 import { useAuthContext } from '@hooks'
 
@@ -23,16 +23,28 @@ const SingleUserPage = () => {
     <PageContainer>
       <NavigationMenu
         variant='toolbar'
+        title='usuario'
         manageAdminAction={() => {}}
         deleteAction={() => {}}
       />
 
-      <Section color='light.main' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
+      <Section color='light.main' spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-          <Box sx={{ width: '60%' }}>
+          <Box sx={{
+            p: '0.25rem',
+            width: '50%',
+            borderRadius: '100%',
+            border: '0.25rem solid rgba(0, 0, 0, 0.25)'
+          }}
+          >
             <Avatar
               src={profilePictureURL}
-              sx={{ bgcolor: 'secondary.main', aspectRatio: '1', width: '100%', height: '100%' }}
+              sx={{
+                bgcolor: 'secondary.main',
+                aspectRatio: '1',
+                width: '100%',
+                height: '100%'
+              }}
             />
           </Box>
 
@@ -42,6 +54,7 @@ const SingleUserPage = () => {
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
               <LocalHospitalIcon /><Typography variant='body1'>{specialty}</Typography>
             </Stack>
+
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
               <BusinessIcon /><Typography variant='body1'>{department}</Typography>
             </Stack>
@@ -49,17 +62,17 @@ const SingleUserPage = () => {
 
           <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
             <ListActionButton
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
+              icon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
               primary={phone}
               secondary='Llamar'
-              sx={{ background: (theme) => theme.gradient.surface }}
+              sx={{ background: (theme) => theme.gradient.surface, bgcolor: 'primary.surface' }}
             />
 
             <ListActionButton
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
+              icon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
               primary={email}
               secondary='Enviar correo'
-              sx={{ background: (theme) => theme.gradient.surface }}
+              sx={{ background: (theme) => theme.gradient.surface, bgcolor: 'primary.surface' }}
             />
           </List>
 

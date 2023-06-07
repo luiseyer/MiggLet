@@ -27,8 +27,8 @@ const DashboardPage = () => {
             Pacientes Diarios
           </Item>
           <Item elevation={3} sx={{ bgcolor: 'tertiary.main' }}>
-            <Typography variant='h3'>3.000</Typography>
-            Otra Cosa
+            <Typography variant='h3'>86</Typography>
+            Total de Usuarios
           </Item>
         </Box>
 

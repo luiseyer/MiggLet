@@ -1,19 +1,27 @@
 import { useParams } from 'react-router-dom'
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, List, Stack, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section, ListActionButton } from '@components'
+import { PageContainer, NavigationMenu, Section } from '@components'
 
 import data from '@helpers/data'
 
 const SinglePatient = () => {
   const { id } = useParams()
-  const user = data.users.find(user => user.id === id)
+
+  const {
+    dni,
+    firstnames,
+    lastnames
+  } = data.users.find(user => user.id === id)
 
   return (
     <PageContainer>
-      <NavigationMenu variant='toolbar' />
+      <NavigationMenu
+        variant='toolbar'
+        title='datos de paciente'
+      />
 
-      <Section color='light.main' sx={{ display: 'grid', justifyContent: 'center' }}>
+      <Section color='light.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
         <Box
           sx={{
             display: 'flex',
@@ -21,42 +29,53 @@ const SinglePatient = () => {
             gap: '1rem'
           }}
         >
-          <Typography variant='h2'>Ficha del Paciente</Typography>
+          {/* <Typography variant='h3' textAlign='center'>Ficha del Paciente</Typography> */}
 
-          <Divider sx={{ visibility: 'hidden' }} />
+          <List component={Paper}>
+            <ListItem
+              component={Typography}
+              variant='h5'
+              id='nested-list-subheader'
+              sx={{ bgcolor: 'transparent' }}
+            >
+              Datos Personales
+            </ListItem>
 
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <Typography variant='body1' fontSize='1.0875rem'>Nombres: {user.firstnames}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <Typography variant='body1' fontSize='1.0875rem'>Apellidos: {user.lastnames}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <AccountBoxIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Cédula de identidad: V-{user.dni}</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <CalendarMonthIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Fecha de nacimiento: 00, MES de 0000</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocationOnIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Dirección: ------</Typography>
-          </Stack>
-          <Stack direction='row' alignItems='center' spacing='0.5rem'>
-            <LocalHospitalIcon />
-            <Typography variant='body1' fontSize='1.0875rem'>Número de Historia: ------</Typography>
-          </Stack>
+            <ListItem>
+              <ListItemText primary={<><b>Nombres: </b> {firstnames}</>} />
+            </ListItem>
 
-          <Divider sx={{ visibility: 'hidden' }} />
+            <ListItem>
+              <ListItemText primary={<><b>Apellidos: </b> {lastnames}</>} />
+            </ListItem>
 
-          <List sx={{ width: '100%', display: 'grid', gap: '1rem' }}>
-            <ListActionButton
-              icon={<LocalHospitalIcon color='primary' sx={{ width: '2.5rem', height: '2.5rem' }} />}
-              primary={user.phone}
-              secondary='Llamar'
-              sx={{ background: (theme) => theme.gradient.surface }}
-            />
+            <ListItem>
+              <ListItemIcon>
+                <LocalHospitalIcon />
+              </ListItemIcon>
+              <ListItemText primary={<><b>Número de historia: </b> 000000</>} />
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary={<><b>Cédula: </b> {dni}</>} />
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <CalendarMonthIcon />
+              </ListItemIcon>
+              <ListItemText primary={<><b>Fecha de Nacimiento: </b> ----------</>} />
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <LocationOnIcon />
+              </ListItemIcon>
+              <ListItemText primary={<><b>Dirección: </b> ----------</>} />
+            </ListItem>
           </List>
 
           <Divider sx={{ visibility: 'hidden' }} />
@@ -67,7 +86,7 @@ const SinglePatient = () => {
               aria-controls='patient-panel1a-content'
               id='patient-panel1a-header'
             >
-              <Typography>Antecedentes</Typography>
+              <Typography variant='h5'>Antecedentes</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -83,7 +102,7 @@ const SinglePatient = () => {
               aria-controls='patient-panel2a-content'
               id='patient-panel2a-header'
             >
-              <Typography>Consultas</Typography>
+              <Typography variant='h5'>Consultas</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>

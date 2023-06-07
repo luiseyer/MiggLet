@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useScrollTrigger, AppBar, Toolbar, Stack, IconButton, Tooltip } from '@mui/material'
-import { Search as SearchIcon, ChevronLeft as ChevronLeftIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon } from '@mui/icons-material'
+import { useScrollTrigger, AppBar, Toolbar, Stack, IconButton, Tooltip, Button } from '@mui/material'
+import { Search as SearchIcon, ArrowBack as ArrowBackIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon } from '@mui/icons-material'
 import { AppTitle, MenuOptions, NavigationTabs } from '@components'
 import { useAuthContext } from '@hooks'
 
 const NavigationMenu = ({
   variant = 'navigation',
+  title,
   deleteAction,
   manageAdminAction,
   sx
@@ -70,9 +71,13 @@ const NavigationMenu = ({
 
       {variant === 'toolbar' &&
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <IconButton onClick={() => navigate(-1)}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Button
+            color='dark'
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate(-1)}
+          >
+            {title}
+          </Button>
 
           <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
             {isAdmin && manageAdminAction &&

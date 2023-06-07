@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
 
-const Section = ({ children, color, sx }) => {
+const Section = ({ children, color, spacing, sx }) => {
   return (
     <Box
-      data-spacing='1rem'
+      data-spacing={spacing || '1rem'}
       component='section'
       sx={{
         bgcolor: color,

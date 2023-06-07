@@ -27,16 +27,20 @@ const UserList = ({ users }) => {
         }, i) => {
         const username = firstnames + ' ' + lastnames
 
+        const avatar = (
+          <Avatar
+            src={profilePictureURL}
+            sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
+          />
+        )
+
         return (
-          <ListActionButton key={id} onClick={() => navigate(`/users/${id}`)} divider>
-            <ListItemAvatar>
-              <Avatar
-                src={profilePictureURL}
-                sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
-              />
-            </ListItemAvatar>
-            <ListItemText primary={username} secondary={specialty} />
-          </ListActionButton>
+          <ListActionButton
+            key={id}
+            icon={avatar}
+            primary={username} secondary={specialty}
+            onClick={() => navigate(`/users/${id}`)} divider
+          />
         )
       })}
     </>
