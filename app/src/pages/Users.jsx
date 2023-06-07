@@ -9,13 +9,13 @@ import data from '@helpers/data'
 let dataUsers = null
 
 const UsersPage = () => {
-  const { user } = useAuthContext()
+  const { user: { id, isAdmin } } = useAuthContext()
   const [users, setUsers] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
   const rowsPerPage = 10
 
-  dataUsers = data.users.filter(_user => _user.id !== user.id)
+  dataUsers = data.users.filter(_user => _user.id !== id)
 
   useEffect(() => {
     setUsers(null)
@@ -53,7 +53,7 @@ const UsersPage = () => {
       <Section
         color='light.main' sx={{
           display: 'grid',
-          gridTemplateColumns: '1fr',
+          gridTemplateColumns: '100%',
           justifyContent: 'center',
           px: 0
         }}
@@ -81,18 +81,19 @@ const UsersPage = () => {
           />
         </List>
 
-        <Fab
-          color='primary'
-          sx={{
-            position: 'sticky',
-            bottom: 0,
-            justifySelf: 'end',
-            mx: 2,
-            background: (theme) => theme.gradient.main
-          }}
-        >
-          <AddIcon />
-        </Fab>
+        {isAdmin &&
+          <Fab
+            color='primary'
+            sx={{
+              position: 'sticky',
+              bottom: 0,
+              justifySelf: 'end',
+              mx: 2,
+              background: (theme) => theme.gradient.main
+            }}
+          >
+            <AddIcon />
+          </Fab>}
       </Section>
     </PageContainer>
   )

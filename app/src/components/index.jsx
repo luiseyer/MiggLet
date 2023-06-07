@@ -3,12 +3,12 @@ import Section from './Section'
 import PrivateRoute from './PrivateRoute'
 import AppTitle from './AppTitle'
 import NavigationMenu from './NavigationMenu'
-import SingleItemMenu from './SingleItemMenu'
-import ProfileButton from './ProfileButton'
+import MenuOptions from './MenuOptions'
 import LoginForm from './LoginForm'
 import FirstLoginForm from './FirstLoginForm'
 import ListActionButton from './ListActionButton'
 import UserList from './UserList'
+import PatientList from './PatientList'
 
 export {
   PageContainer,
@@ -16,10 +16,10 @@ export {
   PrivateRoute,
   AppTitle,
   NavigationMenu,
-  SingleItemMenu,
-  ProfileButton,
+  MenuOptions,
   LoginForm,
   FirstLoginForm,
   ListActionButton,
-  UserList
+  UserList,
+  PatientList
 }

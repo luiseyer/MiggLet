@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react'
 import { List, TextField, TablePagination, Fab } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, UserList } from '@components'
+import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
 
 import data from '@helpers/data'
 
 const PatientsPage = () => {
-  const [users, setUsers] = useState(null)
+  const [patients, setPatients] = useState(null)
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
   const rowsPerPage = 10
 
   useEffect(() => {
-    setUsers(null)
-    setTimeout(() => setUsers(data.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
+    setPatients(null)
+    setTimeout(() => setPatients(data.users.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
   }, [page])
 
   useEffect(() => {
     if (query !== '') {
-      const filterUsers = data.users.filter(user => {
+      const filterPatients = data.users.filter(user => {
         if (query === '') return user
 
         if (
@@ -29,7 +29,7 @@ const PatientsPage = () => {
         return null
       })
 
-      setUsers(filterUsers)
+      setPatients(filterPatients)
     }
   }, [query])
 
@@ -47,7 +47,7 @@ const PatientsPage = () => {
       <Section
         color='light.main' sx={{
           display: 'grid',
-          gridTemplateColumns: '1fr',
+          gridTemplateColumns: '100%',
           justifyContent: 'center',
           px: 0
         }}
@@ -64,7 +64,7 @@ const PatientsPage = () => {
         />
 
         <List disablePadding>
-          <UserList users={users} />
+          <PatientList patients={patients} />
           <TablePagination
             component='div'
             count={data.users.length}

@@ -1,9 +1,8 @@
 import { ListActionButton } from '@components'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Avatar, ListItemAvatar, ListItemText, Skeleton } from '@mui/material'
 
 const UserList = ({ users }) => {
-  const currentPage = '/' + useLocation().pathname.split('/')[1] + '/'
   const navigate = useNavigate()
 
   return (
@@ -18,17 +17,25 @@ const UserList = ({ users }) => {
         </ListActionButton>
       ))}
 
-      {users?.map((user, i) => {
-        const username = user.firstnames + ' ' + user.lastnames
+      {users?.map((
+        {
+          id,
+          firstnames,
+          lastnames,
+          profilePictureURL,
+          specialty
+        }, i) => {
+        const username = firstnames + ' ' + lastnames
+
         return (
-          <ListActionButton key={user.id} onClick={() => navigate(currentPage + user.id)} divider>
+          <ListActionButton key={id} onClick={() => navigate(`/users/${id}`)} divider>
             <ListItemAvatar>
               <Avatar
-                src={user.profilePictureURL}
+                src={profilePictureURL}
                 sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
               />
             </ListItemAvatar>
-            <ListItemText primary={username} secondary={user.specialty} />
+            <ListItemText primary={username} secondary={specialty} />
           </ListActionButton>
         )
       })}

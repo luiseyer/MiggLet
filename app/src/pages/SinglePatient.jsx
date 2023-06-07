@@ -12,6 +12,7 @@ const SinglePatient = () => {
   return (
     <PageContainer>
       <NavigationMenu variant='toolbar' />
+
       <Section color='light.main' sx={{ display: 'grid', justifyContent: 'center' }}>
         <Box
           sx={{

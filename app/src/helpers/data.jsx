@@ -9,7 +9,8 @@ const dataUsers = [
     lastnames: 'Graham Yundt',
     phone: '(930) 399-0435',
     department: 'Unidad de Hematología/Oncología e Inmunología',
-    specialty: 'Inmunólogo'
+    specialty: 'Inmunólogo',
+    isAdmin: true
   },
   {
     id: '41794649',
@@ -207,7 +208,7 @@ const dataUsers = [
 
 const data = {
   users: dataUsers.map((user, i) => {
-    user.profilePictureURL = `/public/images/users/${i + 1}.jpg`
+    user.profilePictureURL = `/images/users/${i + 1}.jpg`
     return user
   })
 }

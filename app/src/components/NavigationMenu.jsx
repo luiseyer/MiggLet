@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Collapse, Stack, IconButton } from '@mui/material'
-import { AppTitle, ProfileButton } from '@components'
-import { LocalHospital as LocalHospitalIcon, Dashboard as DashboardIcon, People as PeopleIcon, Search as SearchIcon, ChevronLeft as ChevronLeftIcon } from '@mui/icons-material'
+import { useScrollTrigger, AppBar, Toolbar, Tabs, Tab, Stack, IconButton, Tooltip } from '@mui/material'
+import {
+  Search as SearchIcon,
+  ChevronLeft as ChevronLeftIcon,
+  Delete as DeleteIcon,
+  ManageAccounts as ManageAccountsIcon
+} from '@mui/icons-material'
+import { AppTitle, MenuOptions } from '@components'
+import { useAuthContext } from '@hooks'
 
 const pages = [
-  { text: 'inicio', path: '/dashboard', icon: <DashboardIcon /> },
-  { text: 'pacientes', path: '/patients', icon: <LocalHospitalIcon /> },
-  { text: 'usuarios', path: '/users', icon: <PeopleIcon /> }
+  { text: 'inicio', path: '/dashboard' },
+  { text: 'pacientes', path: '/patients' },
+  { text: 'usuarios', path: '/users' }
 ]
 
 const TabsItems = ({ value }) => {
@@ -16,20 +22,10 @@ const TabsItems = ({ value }) => {
       value={value}
       variant='fullWidth'
     >
-      {pages.map(({ text, path, icon }) => (
+      {pages.map(({ text, path }) => (
         <Tab
-          key={path}
-          value={path}
-          label={text}
-          // icon={icon}
-          component={Link}
-          to={path}
-          sx={{
-            fontWeight: 'bolder',
-            fontSize: '0.75rem'
-            // py: 0
-            // minHeight: 64
-          }}
+          key={path} value={path} label={text} component={Link} to={path}
+          sx={{ fontWeight: 'bolder', fontSize: '0.75rem' }}
           onClick={() => { window.scrollTo({ top: 0 }) }}
         />
       ))}
@@ -37,7 +33,14 @@ const TabsItems = ({ value }) => {
   )
 }
 
-const NavigationMenu = ({ variant = 'navigation', sx }) => {
+const NavigationMenu = ({
+  variant = 'navigation',
+  deleteAction,
+  manageAdminAction,
+  sx
+}) => {
+  const { user: { isAdmin } } = useAuthContext()
+
   const ref = useRef()
   const [target, setTarget] = useState(window)
   const [elevation, setElevation] = useState(0)
@@ -46,11 +49,15 @@ const NavigationMenu = ({ variant = 'navigation', sx }) => {
 
   useEffect(() => {
     setTarget(ref?.current.nextSibling)
-    const section = ref?.current.nextSibling
-    section.style.paddingTop = `calc(${ref.current.clientHeight}px + ${section.getAttribute('data-spacing')}`
   }, [])
 
   useEffect(() => {
+    const section = ref.current.nextSibling
+    const height = ref.current.clientHeight
+    const spacing = section.getAttribute('data-spacing')
+
+    section.style.paddingTop = `calc(${height}px + ${spacing}`
+
     target.addEventListener('scroll', () => {
       if (target.scrollTop <= 0) {
         return setElevation(0)
@@ -67,38 +74,51 @@ const NavigationMenu = ({ variant = 'navigation', sx }) => {
       elevation={elevation}
       sx={{
         background: (theme) => theme.gradient.surface,
+        transition: 'transform 0.1s ease',
+        transform: 'translateY(0)',
+        ...(trigger &&
+          { transform: `translateY(-${ref.current.querySelector('.MuiToolbar-root').clientHeight}px)` }),
         ...sx
       }}
     >
       {variant === 'navigation' &&
         <>
-          <Collapse in={!trigger} timeout='auto' unmountOnExit>
-            <Toolbar sx={{ justifyContent: 'space-between' }}>
-              <AppTitle variant='h5' />
-              <Stack
-                direction='row'
-                spacing={1}
-                justifyContent='flex-end'
-                alignItems='center'
-              >
-                <IconButton type='button'>
-                  <SearchIcon />
-                </IconButton>
-                <ProfileButton />
-              </Stack>
-            </Toolbar>
-          </Collapse>
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <AppTitle variant='h5' />
+            <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
+              <IconButton type='button'>
+                <SearchIcon />
+              </IconButton>
+              <MenuOptions />
+            </Stack>
+          </Toolbar>
           <TabsItems value={currentPage} />
         </>}
 
       {variant === 'toolbar' &&
-        <Collapse in={!trigger} timeout='auto' unmountOnExit>
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <IconButton component={Link} to='..'>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-        </Collapse>}
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <IconButton component={Link} to='..'>
+            <ChevronLeftIcon />
+          </IconButton>
+
+          <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
+            {isAdmin && manageAdminAction &&
+              <Tooltip title='Configurar tipo de usuario' arrow>
+                <IconButton onClick={deleteAction}>
+                  <ManageAccountsIcon />
+                </IconButton>
+              </Tooltip>}
+
+            {isAdmin && deleteAction &&
+              <Tooltip title='Eliminar' arrow>
+                <IconButton onClick={deleteAction}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>}
+
+            <MenuOptions />
+          </Stack>
+        </Toolbar>}
     </AppBar>
   )
 }
