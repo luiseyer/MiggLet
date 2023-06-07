@@ -16,7 +16,7 @@ const DashboardPage = () => {
   return (
     <PageContainer>
       <NavigationMenu />
-      <Section color='light.main'>
+      <Section>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 4 }}>
           <Item elevation={3} sx={{ bgcolor: 'primary.main' }}>
             <Typography variant='h3'>15.454</Typography>

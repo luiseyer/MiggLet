@@ -51,7 +51,7 @@ const UsersPage = () => {
     <PageContainer>
       <NavigationMenu />
       <Section
-        color='light.main' sx={{
+        sx={{
           display: 'grid',
           gridTemplateColumns: '100%',
           justifyContent: 'center',

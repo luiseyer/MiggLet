@@ -28,15 +28,9 @@ const SingleUserPage = () => {
         deleteAction={() => {}}
       />
 
-      <Section color='light.main' spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
+      <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-          <Box sx={{
-            p: '0.25rem',
-            width: '50%',
-            borderRadius: '100%',
-            border: '0.25rem solid rgba(0, 0, 0, 0.25)'
-          }}
-          >
+          <Box sx={{ p: '0.25rem', width: '50%', borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
             <Avatar
               src={profilePictureURL}
               sx={{
@@ -52,11 +46,11 @@ const SingleUserPage = () => {
 
           <Stack spacing='0.5rem'>
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <LocalHospitalIcon /><Typography variant='body1'>{specialty}</Typography>
+              <BusinessIcon /><Typography variant='body1'>{department}</Typography>
             </Stack>
 
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <BusinessIcon /><Typography variant='body1'>{department}</Typography>
+              <LocalHospitalIcon /><Typography variant='body1'>{specialty}</Typography>
             </Stack>
           </Stack>
 

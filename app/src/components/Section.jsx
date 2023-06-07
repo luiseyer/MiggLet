@@ -6,7 +6,7 @@ const Section = ({ children, color, spacing, sx }) => {
       data-spacing={spacing || '1rem'}
       component='section'
       sx={{
-        bgcolor: color,
+        bgcolor: color || 'light.main',
         padding: '1rem',
         flex: '1',
         overflowY: 'auto',

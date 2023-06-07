@@ -9,7 +9,7 @@ const UserList = ({ users }) => {
     <>
       {!users &&
       Array(10).fill(0).map((_, i) => (
-        <ListActionButton key={i} divider>
+        <ListActionButton key={i}>
           <ListItemAvatar>
             <Skeleton variant='circular' width={54} height={54} />
           </ListItemAvatar>
@@ -39,7 +39,7 @@ const UserList = ({ users }) => {
             key={id}
             icon={avatar}
             primary={username} secondary={specialty}
-            onClick={() => navigate(`/users/${id}`)} divider
+            onClick={() => navigate(`/users/${id}`)}
           />
         )
       })}

@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Accordion, AccordionDetails, AccordionSummary, Box, Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section } from '@components'
 
 import data from '@helpers/data'
+
+const colors = ['primary', 'secondary', 'tertiary']
+let color = -1
 
 const SinglePatient = () => {
   const { id } = useParams()
@@ -14,71 +18,51 @@ const SinglePatient = () => {
     lastnames
   } = data.users.find(user => user.id === id)
 
+  const personalData = [
+    { name: 'Número de historia: ', value: '000000', icon: color => <LocalHospitalIcon color={color} /> },
+    { name: 'Cedula de identidad: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
+    { name: 'Fecha de nacimiento: ', value: '----------', icon: color => <CalendarMonthIcon color={color} /> },
+    { name: 'Lugar de residencia: ', value: '----------', icon: color => <LocationOnIcon color={color} /> }
+  ]
+
+  const [expanded, setExpanded] = useState(true)
+
+  const handleExpandedChange = (_, isExpanded) => {
+    setExpanded(isExpanded)
+  }
+
   return (
     <PageContainer>
-      <NavigationMenu
-        variant='toolbar'
-        title='datos de paciente'
-      />
+      <NavigationMenu variant='toolbar' title='datos de paciente' />
 
-      <Section color='light.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1rem'
-          }}
-        >
-          {/* <Typography variant='h3' textAlign='center'>Ficha del Paciente</Typography> */}
+      <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <Accordion expanded={expanded} onChange={handleExpandedChange}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant='h5'>Datos Personales</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <List>
+                <ListItem>
+                  <ListItemText primary='Nombres: ' secondary={firstnames} />
+                  <ListItemText primary='Apellidos: ' secondary={lastnames} />
+                </ListItem>
 
-          <List component={Paper}>
-            <ListItem
-              component={Typography}
-              variant='h5'
-              id='nested-list-subheader'
-              sx={{ bgcolor: 'transparent' }}
-            >
-              Datos Personales
-            </ListItem>
+                {personalData.map(({ name, value, icon }, i) => {
+                  color = color < 2 ? ++color : 0
 
-            <ListItem>
-              <ListItemText primary={<><b>Nombres: </b> {firstnames}</>} />
-            </ListItem>
-
-            <ListItem>
-              <ListItemText primary={<><b>Apellidos: </b> {lastnames}</>} />
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <LocalHospitalIcon />
-              </ListItemIcon>
-              <ListItemText primary={<><b>Número de historia: </b> 000000</>} />
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <AccountBoxIcon />
-              </ListItemIcon>
-              <ListItemText primary={<><b>Cédula: </b> {dni}</>} />
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <CalendarMonthIcon />
-              </ListItemIcon>
-              <ListItemText primary={<><b>Fecha de Nacimiento: </b> ----------</>} />
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <LocationOnIcon />
-              </ListItemIcon>
-              <ListItemText primary={<><b>Dirección: </b> ----------</>} />
-            </ListItem>
-          </List>
-
-          <Divider sx={{ visibility: 'hidden' }} />
+                  return (
+                    <ListItem key={i} sx={{ gap: 2 }}>
+                      <ListItemIcon sx={{ minWidth: 'auto' }}>
+                        {icon(colors.at(color))}
+                      </ListItemIcon>
+                      <ListItemText primary={name} secondary={value} />
+                    </ListItem>
+                  )
+                })}
+              </List>
+            </AccordionDetails>
+          </Accordion>
 
           <Accordion>
             <AccordionSummary

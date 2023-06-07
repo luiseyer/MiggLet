@@ -9,7 +9,7 @@ const PatientList = ({ patients }) => {
     <>
       {!patients &&
       Array(10).fill(0).map((_, i) => (
-        <ListActionButton key={i} divider>
+        <ListActionButton key={i}>
           <ListItemText primary={<Skeleton width={200} />} secondary={<Skeleton width={100} />} />
         </ListActionButton>
       ))}
@@ -24,7 +24,7 @@ const PatientList = ({ patients }) => {
         const username = firstnames + ' ' + lastnames
 
         return (
-          <ListActionButton key={id} onClick={() => navigate(`/patients/${id}`)} divider>
+          <ListActionButton key={id} onClick={() => navigate(`/patients/${id}`)}>
             <ListItemText primary={username} secondary={dni} />
           </ListActionButton>
         )
