@@ -3,6 +3,7 @@ import Section from './Section'
 import PrivateRoute from './PrivateRoute'
 import AppTitle from './AppTitle'
 import NavigationMenu from './NavigationMenu'
+import NavigationTabs from './NavigationTabs'
 import MenuOptions from './MenuOptions'
 import LoginForm from './LoginForm'
 import FirstLoginForm from './FirstLoginForm'
@@ -16,6 +17,7 @@ export {
   PrivateRoute,
   AppTitle,
   NavigationMenu,
+  NavigationTabs,
   MenuOptions,
   LoginForm,
   FirstLoginForm,
