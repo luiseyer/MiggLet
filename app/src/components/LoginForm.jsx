@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, TextField, Typography } from '@mui/material'
+import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, Snackbar, TextField, Typography } from '@mui/material'
 import { AppTitle } from '@components'
 import { useLogin } from '@hooks'
 
@@ -13,11 +14,31 @@ const LoginForm = () => {
     await login(data.get('username'), data.get('password'))
   }
 
+  const [open, setOpen] = useState(Boolean(error))
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    setOpen(Boolean(error))
+  }, [error])
+
   return (
     <>
       <Backdrop sx={{ color: '#fff', zIndex: 9999 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        sx={{ width: 'calc(100% - 1rem)' }}
+      >
+        <Alert severity='error'>{error}</Alert>
+      </Snackbar>
 
       <Container
         component={Paper}
@@ -30,8 +51,6 @@ const LoginForm = () => {
         }}
       >
         <AppTitle variant='h4' sx={{ mb: '1rem' }} />
-
-        {error && <Alert severity='error'>{error}</Alert>}
 
         <Box component='form' onSubmit={handleSubmit}>
           <TextField

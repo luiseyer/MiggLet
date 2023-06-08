@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom'
-import { Avatar, Box, Fab, List, Stack, Typography } from '@mui/material'
+import { Link, useParams } from 'react-router-dom'
+import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, List, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Edit as EditIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section, ListActionButton } from '@components'
 import { useAuthContext } from '@hooks'
 
 import data from '@helpers/data'
+import { useState } from 'react'
 
 const SingleUserPage = () => {
   const { id } = useParams()
@@ -19,13 +20,23 @@ const SingleUserPage = () => {
     email
   } = data.users.find(user => user.id === id)
 
+  const [openDialog, setOpenDialog] = useState(false)
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true)
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
+
   return (
     <PageContainer>
       <NavigationMenu
         variant='toolbar'
         title='usuario'
         manageAdminAction={() => {}}
-        deleteAction={() => {}}
+        deleteAction={handleClickOpenDialog}
       />
 
       <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
@@ -84,6 +95,26 @@ const SingleUserPage = () => {
             </Fab>}
         </Box>
       </Section>
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+      >
+        <DialogTitle>
+          ¿Seguro que desea eliminar este usuario?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Los datos del usuario no serán eliminados,
+            sin embargo este perderá todo acceso a la aplicación
+            <Box mt={1}><Link to='#' onClick={handleCloseDialog}>más información</Link></Box>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Aceptar</Button>
+          <Button onClick={handleCloseDialog} autoFocus>Cancelar</Button>
+        </DialogActions>
+      </Dialog>
     </PageContainer>
   )
 }

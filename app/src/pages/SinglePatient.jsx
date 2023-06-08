@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Accordion, AccordionDetails, AccordionSummary, Box, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section } from '@components'
 
@@ -20,7 +20,7 @@ const SinglePatient = () => {
 
   const personalData = [
     { name: 'Número de historia: ', value: '000000', icon: color => <LocalHospitalIcon color={color} /> },
-    { name: 'Cedula de identidad: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
+    { name: 'Cedula o pasaporte: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
     { name: 'Fecha de nacimiento: ', value: '----------', icon: color => <CalendarMonthIcon color={color} /> },
     { name: 'Lugar de residencia: ', value: '----------', icon: color => <LocationOnIcon color={color} /> }
   ]
@@ -89,10 +89,21 @@ const SinglePatient = () => {
               <Typography variant='h5'>Consultas</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Pagination count={10} siblingCount={0} size='small' sx={{ alignSelf: 'center' }} />
+                <List disablePadding>
+                  <ListItem disableGutters dense>
+                    <ListItemText primary='Médico: ' secondary='Nombre del Médico' />
+                  </ListItem>
+                  <ListItem disableGutters dense divider>
+                    <ListItemText primary='Fecha: ' secondary='----------' />
+                  </ListItem>
+                </List>
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                  malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+              </Box>
             </AccordionDetails>
           </Accordion>
         </Box>

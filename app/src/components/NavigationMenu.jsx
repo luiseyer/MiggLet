@@ -57,7 +57,7 @@ const NavigationMenu = ({
     >
       {variant === 'navigation' &&
         <>
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Toolbar variant='dense' sx={{ justifyContent: 'space-between' }}>
             <AppTitle variant='h5' />
             <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
               <IconButton type='button'>
@@ -70,7 +70,7 @@ const NavigationMenu = ({
         </>}
 
       {variant === 'toolbar' &&
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar variant='dense' sx={{ justifyContent: 'space-between' }}>
           <Button
             color='dark'
             startIcon={<ArrowBackIcon />}
