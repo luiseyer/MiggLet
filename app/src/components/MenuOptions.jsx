@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Divider, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, MenuList } from '@mui/material'
-import { MoreVert as MoreVertIcon, Settings as SettingsIcon, AccountCircle as AccountIcon, Logout as LogoutIcon } from '@mui/icons-material'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
+import { MoreVert as MoreVertIcon, Settings as SettingsIcon, Info as InfoIcon, AccountCircle as AccountIcon, Logout as LogoutIcon } from '@mui/icons-material'
 import { useLogout, useAuthContext } from '@hooks'
 
 const MenuOptions = () => {
@@ -11,6 +11,7 @@ const MenuOptions = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
+  const pathname = useLocation().pathname.split('/')
 
   const handleClick = ({ currentTarget }) => {
     setAnchorEl(currentTarget)
@@ -20,6 +21,9 @@ const MenuOptions = () => {
   }
   const viewProfile = () => {
     navigate(`/users/${id}`)
+  }
+  const about = () => {
+    navigate('/about')
   }
 
   return (
@@ -34,41 +38,47 @@ const MenuOptions = () => {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        MenuListProps={{ disablePadding: true }}
         sx={{
           '& .MuiPaper-root': {
             top: '0 !important',
             right: '0 !important',
             left: 'calc(100% - 200px) !important'
-          }
+          },
+          '& .MuiMenuItem-root': { py: 2 }
         }}
       >
-        <MenuList>
-          {isAdmin &&
-            <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <SettingsIcon />
-              </ListItemIcon>
-              <ListItemText primary='Ajustes' />
-            </MenuItem>}
 
-          {isAdmin && <Divider />}
+        {isAdmin && !pathname.includes('settings') &&
+          <MenuItem onClick={handleClose} divider>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText primary='Ajustes' />
+          </MenuItem>}
 
+        {!(pathname.includes('users') && pathname.includes(id)) &&
           <MenuItem onClick={viewProfile}>
             <ListItemIcon>
               <AccountIcon />
             </ListItemIcon>
             <ListItemText primary='Mi Perfil' />
-          </MenuItem>
+          </MenuItem>}
 
-          <Divider />
+        <MenuItem onClick={logout} divider>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          <ListItemText primary='Salir' />
+        </MenuItem>
 
-          <MenuItem onClick={logout}>
+        {!pathname.includes('about') &&
+          <MenuItem onClick={about}>
             <ListItemIcon>
-              <LogoutIcon />
+              <InfoIcon />
             </ListItemIcon>
-            <ListItemText primary='Salir' />
-          </MenuItem>
-        </MenuList>
+            <ListItemText primary='Acerca de' />
+          </MenuItem>}
       </Menu>
 
     </>

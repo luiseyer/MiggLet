@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fab, List, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Edit as EditIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
@@ -5,7 +6,6 @@ import { PageContainer, NavigationMenu, Section, ListActionButton } from '@compo
 import { useAuthContext } from '@hooks'
 
 import data from '@helpers/data'
-import { useState } from 'react'
 
 const SingleUserPage = () => {
   const { id } = useParams()
@@ -107,7 +107,9 @@ const SingleUserPage = () => {
           <DialogContentText>
             Los datos del usuario no serán eliminados,
             sin embargo este perderá todo acceso a la aplicación
-            <Box mt={1}><Link to='#' onClick={handleCloseDialog}>más información</Link></Box>
+          </DialogContentText>
+          <DialogContentText>
+            <Link to='/about/delete-users'>Más información</Link>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
