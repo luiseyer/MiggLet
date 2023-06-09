@@ -17,7 +17,7 @@ const DashboardPage = () => {
   return (
     <PageContainer>
       <NavigationMenu />
-      <Section sx={{ px: 0 }}>
+      <Section spacing='2rem' sx={{ px: 0 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, px: 2 }}>
           <Item elevation={3} sx={{ bgcolor: 'primary.main' }}>
             <Typography variant='h3'>17</Typography>
