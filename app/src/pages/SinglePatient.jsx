@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Accordion, AccordionDetails, AccordionSummary, Box, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon } from '@mui/icons-material'
+import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from '@mui/material'
+import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Add as AddIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section } from '@components'
 
 import data from '@helpers/data'
@@ -36,13 +36,13 @@ const SinglePatient = () => {
       <NavigationMenu variant='toolbar' title='datos de paciente' />
 
       <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          <Accordion expanded={expanded} onChange={handleExpandedChange}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          <Accordion expanded={expanded} onChange={handleExpandedChange} disableGutters sx={{ py: 1 }}>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant='h5'>Datos Personales</Typography>
+              <PersonIcon color='primary' sx={{ mr: 1 }} /> <Typography variant='h5'>Datos Personales</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <List>
+              <List disablePadding>
                 <ListItem>
                   <ListItemText primary='Nombres: ' secondary={firstnames} />
                   <ListItemText primary='Apellidos: ' secondary={lastnames} />
@@ -64,13 +64,9 @@ const SinglePatient = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls='patient-panel1a-content'
-              id='patient-panel1a-header'
-            >
-              <Typography variant='h5'>Antecedentes</Typography>
+          <Accordion disableGutters sx={{ py: 1 }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <EventNoteIcon color='secondary' sx={{ mr: 1 }} /> <Typography variant='h5'>Antecedentes</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
@@ -80,13 +76,9 @@ const SinglePatient = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls='patient-panel2a-content'
-              id='patient-panel2a-header'
-            >
-              <Typography variant='h5'>Consultas</Typography>
+          <Accordion disableGutters sx={{ py: 1 }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <LocalHospitalIcon color='tertiary' sx={{ mr: 1 }} /> <Typography variant='h5'>Consultas</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -95,6 +87,7 @@ const SinglePatient = () => {
                   <ListItem disableGutters dense>
                     <ListItemText primary='Médico: ' secondary='Nombre del Médico' />
                   </ListItem>
+
                   <ListItem disableGutters dense divider>
                     <ListItemText primary='Fecha: ' secondary='----------' />
                   </ListItem>
@@ -103,7 +96,18 @@ const SinglePatient = () => {
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                   malesuada lacus ex, sit amet blandit leo lobortis eget.
                 </Typography>
+
+                <Fab
+                  color='primary'
+                  sx={{
+                    alignSelf: 'flex-end',
+                    background: (theme) => theme.gradient.main
+                  }}
+                >
+                  <AddIcon />
+                </Fab>
               </Box>
+
             </AccordionDetails>
           </Accordion>
         </Box>

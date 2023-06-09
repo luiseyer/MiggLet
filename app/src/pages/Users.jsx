@@ -50,14 +50,7 @@ const UsersPage = () => {
   return (
     <PageContainer>
       <NavigationMenu />
-      <Section
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: '100%',
-          justifyContent: 'center',
-          px: 0
-        }}
-      >
+      <Section sx={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', px: 0 }}>
         <TextField
           onChange={handleSearch}
           sx={{ display: 'none' }}
@@ -65,6 +58,7 @@ const UsersPage = () => {
 
         <List disablePadding>
           <UserList users={users} />
+
           <TablePagination
             component='div'
             count={dataUsers.length}

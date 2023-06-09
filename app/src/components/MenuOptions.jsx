@@ -11,7 +11,7 @@ const MenuOptions = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const navigate = useNavigate()
-  const pathname = useLocation().pathname.split('/')
+  const pathnames = useLocation().pathname.split('/')
 
   const handleClick = ({ currentTarget }) => {
     setAnchorEl(currentTarget)
@@ -49,7 +49,7 @@ const MenuOptions = () => {
         }}
       >
 
-        {isAdmin && !pathname.includes('settings') &&
+        {isAdmin && !pathnames.includes('settings') &&
           <MenuItem onClick={handleClose} divider>
             <ListItemIcon>
               <SettingsIcon />
@@ -57,28 +57,29 @@ const MenuOptions = () => {
             <ListItemText primary='Ajustes' />
           </MenuItem>}
 
-        {!(pathname.includes('users') && pathname.includes(id)) &&
-          <MenuItem onClick={viewProfile}>
+        {!pathnames.includes('about') &&
+          <MenuItem onClick={about} divider>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary='Acerca de' />
+          </MenuItem>}
+
+        {!['users', id].every(value => pathnames.includes(value)) &&
+          <MenuItem onClick={viewProfile} divider>
             <ListItemIcon>
               <AccountIcon />
             </ListItemIcon>
             <ListItemText primary='Mi Perfil' />
           </MenuItem>}
 
-        <MenuItem onClick={logout} divider>
+        <MenuItem onClick={logout}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
           <ListItemText primary='Salir' />
         </MenuItem>
 
-        {!pathname.includes('about') &&
-          <MenuItem onClick={about}>
-            <ListItemIcon>
-              <InfoIcon />
-            </ListItemIcon>
-            <ListItemText primary='Acerca de' />
-          </MenuItem>}
       </Menu>
 
     </>
