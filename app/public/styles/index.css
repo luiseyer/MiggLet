@@ -3,7 +3,7 @@
     font-weight: 400;
     font-style: normal;
     font-display: swap;
-    src: url("/Coiny-Regular.ttf") format("TrueType");
+    src: url("/fonts/Coiny-Regular.ttf") format("TrueType");
 }
 
 :root {

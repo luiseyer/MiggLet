@@ -19,10 +19,10 @@ const SinglePatient = () => {
   } = data.users.find(user => user.id === id)
 
   const personalData = [
-    { name: 'Número de historia: ', value: '000000', icon: color => <LocalHospitalIcon color={color} /> },
+    { name: 'Número de historia: ', value: '028504', icon: color => <LocalHospitalIcon color={color} /> },
     { name: 'Cedula o pasaporte: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
-    { name: 'Fecha de nacimiento: ', value: '----------', icon: color => <CalendarMonthIcon color={color} /> },
-    { name: 'Lugar de residencia: ', value: '----------', icon: color => <LocationOnIcon color={color} /> }
+    { name: 'Fecha de nacimiento: ', value: 'Agosto 24, 1990', icon: color => <CalendarMonthIcon color={color} /> },
+    { name: 'Lugar de residencia: ', value: 'Calle Progreso / Calle Proyecto, Casa 58', icon: color => <LocationOnIcon color={color} /> }
   ]
 
   const [expanded, setExpanded] = useState(true)
@@ -92,6 +92,7 @@ const SinglePatient = () => {
                     <ListItemText primary='Fecha: ' secondary='----------' />
                   </ListItem>
                 </List>
+
                 <Typography>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                   malesuada lacus ex, sit amet blandit leo lobortis eget.
