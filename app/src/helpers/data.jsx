@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const getMedic = (medicId) => {
   const { dni, firstnames, lastnames } = users.find(({ id }) => id === medicId)
   return `${firstnames} ${lastnames} - ${dni}`
@@ -25,29 +24,6 @@ const users = [
     email: 'MisaelDavidSalazarMadriz@hotmail.com',
     code: '26528479',
     password: '12345678',
-=======
-const users = [
-  {
-    id: '28b5d69a4c-99e5d00daa-09353ddae6',
-    dni: 'V-17.343.109',
-    email: 'LeydaMargaritaVelazco@yahoo.com',
-    code: '94700573',
-    password: '12345678',
-    firstnames: 'Leyda Margarita',
-    lastnames: 'Velazco',
-    phone: '+58 426-940-4305',
-    profilePictureURL: '/images/users/1.jpg',
-    department: 'Unidad de Psiquiatría',
-    specialty: 'Psiquiatra',
-    isAdmin: false
-  },
-  {
-    id: 'fa0cf2f8c0-12c2e2a773-334bdb7535',
-    dni: 'V-21.751.500',
-    email: 'MisaelDavidSalazarMadriz@hotmail.com',
-    code: '26528479',
-    password: '12345678',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     firstnames: 'Misael David',
     lastnames: 'Salazar Madríz',
     phone: '+58 416-091-3704',
@@ -58,11 +34,7 @@ const users = [
   },
   {
     id: '3c8de3fa25-88c776b796-f06adc5b56',
-<<<<<<< HEAD
     dni: '12099858',
-=======
-    dni: 'V-12.099.858',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'YajairaJosefinaZarraga@gmail.com',
     code: '84901124',
     password: '12345678',
@@ -76,11 +48,7 @@ const users = [
   },
   {
     id: '952ed6bec9-352887ae43-bc257bfc0f',
-<<<<<<< HEAD
     dni: '13488315',
-=======
-    dni: 'V-13.488.315',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'JoseLuisMoralesVasquez@gmail.com',
     code: '93156404',
     password: '12345678',
@@ -94,11 +62,7 @@ const users = [
   },
   {
     id: '3b843a2ef5-558c222edd-6d776362ca',
-<<<<<<< HEAD
     dni: '13425862',
-=======
-    dni: 'V-13.425.862',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'TulioRafaelLugo@hotmail.com',
     code: '59123025',
     password: '12345678',
@@ -112,11 +76,7 @@ const users = [
   },
   {
     id: '2f5f8d0a13-7037e6a91c-d36fe2ade9',
-<<<<<<< HEAD
     dni: '17834901',
-=======
-    dni: 'V-17.834.901',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'RobertoAntonioGonzalez@hotmail.com',
     code: '12523148',
     password: '12345678',
@@ -130,11 +90,7 @@ const users = [
   },
   {
     id: '4cc0a6331b-a36a7ac69b-0551a7a491',
-<<<<<<< HEAD
     dni: '19154542',
-=======
-    dni: 'V-19.154.542',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'RichardAlexanderSeferen@yahoo.com',
     code: '29715094',
     password: '12345678',
@@ -148,11 +104,7 @@ const users = [
   },
   {
     id: 'bff386ef99-8595def230-9b194505cb',
-<<<<<<< HEAD
     dni: '18425641',
-=======
-    dni: 'V-18.425.641',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'RosmaryCoromotoPalenciaArteaga@gmail.com',
     code: '01168979',
     password: '12345678',
@@ -166,11 +118,7 @@ const users = [
   },
   {
     id: '6d9597139a-41b94d562b-18ae7b5f2b',
-<<<<<<< HEAD
     dni: '9156017',
-=======
-    dni: 'V-9.156.017',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'MiguelAngelSangronis@gmail.com',
     code: '99482491',
     password: '12345678',
@@ -184,11 +132,7 @@ const users = [
   },
   {
     id: 'd608d3b718-d2d87eaa90-20bdbea8a3',
-<<<<<<< HEAD
     dni: '13599444',
-=======
-    dni: 'V-13.599.444',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'GladysVargasVentura@gmail.com',
     code: '23263824',
     password: '12345678',
@@ -202,11 +146,7 @@ const users = [
   },
   {
     id: '5d7717b931-77ad6dadcf-4847ed0c81',
-<<<<<<< HEAD
     dni: '9511607',
-=======
-    dni: 'V-9.511.607',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'HenryJosChirinosSanchez@gmail.com',
     code: '23481248',
     password: '12345678',
@@ -220,11 +160,7 @@ const users = [
   },
   {
     id: '8ea23a9603-db2e9a5a4d-07c8dc81af',
-<<<<<<< HEAD
     dni: '24408937',
-=======
-    dni: 'V-24.408.937',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'MorelbaGomez@gmail.com',
     code: '82897777',
     password: '12345678',
@@ -238,11 +174,7 @@ const users = [
   },
   {
     id: '5dc1c0aac0-4c3f1652ab-8d3ef391c7',
-<<<<<<< HEAD
     dni: '11151424',
-=======
-    dni: 'V-11.151.424',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'BeatrizGarciaHerrera@hotmail.com',
     code: '09252957',
     password: '12345678',
@@ -256,11 +188,7 @@ const users = [
   },
   {
     id: '1ab0bfad2c-20556f8e91-f3c36f0b4c',
-<<<<<<< HEAD
     dni: '19724055',
-=======
-    dni: 'V-19.724.055',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'EiraLisbethVenturaCuriel@yahoo.com',
     code: '37862308',
     password: '12345678',
@@ -274,11 +202,7 @@ const users = [
   },
   {
     id: 'd6f2e250b3-c7242e4df9-e8f3d69afe',
-<<<<<<< HEAD
     dni: '19381990',
-=======
-    dni: 'V-19.381.990',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'PedroPabloPolanco@gmail.com',
     code: '72780116',
     password: '12345678',
@@ -292,11 +216,7 @@ const users = [
   },
   {
     id: 'bb2c960072-be05b8b5cc-9dfd029e0c',
-<<<<<<< HEAD
     dni: '9293796',
-=======
-    dni: 'V-9.293.796',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     email: 'LuisAlbertoDuranteGarcia@yahoo.com',
     code: '93038331',
     password: '12345678',
@@ -310,13 +230,8 @@ const users = [
   },
   {
     id: '8225ce29b9-782e8132e1-cbf8cfbb20',
-<<<<<<< HEAD
     dni: '15104832',
     email: 'jagm@gmail.com',
-=======
-    dni: 'V-15.104.832',
-    email: 'JulioArmandoGomezMartinez@yahoo.com',
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
     code: '40317251',
     password: '12345678',
     firstnames: 'Julio Armando',
@@ -325,7 +240,6 @@ const users = [
     profilePictureURL: '/images/users/17.jpg',
     department: 'Unidad de Neurología y Neurocirugía',
     specialty: 'Neurólogo',
-<<<<<<< HEAD
     isAdmin: true
   }
 ]
@@ -579,113 +493,6 @@ const patients = [
     location: 'Falcón, Punto Fijo, Avenida Los Jardines, Casa #17',
     medicalBacgrounds,
     consultations
-=======
-    isAdmin: false
-  }
-]
-
-const patients = [
-  {
-    id: '28b5d69a4c-99e5d00daa-09353ddae6',
-    dni: 'V-17.343.109',
-    firstnames: 'Leyda Margarita',
-    lastnames: 'Velazco'
-  },
-  {
-    id: 'fa0cf2f8c0-12c2e2a773-334bdb7535',
-    dni: 'V-21.751.500',
-    firstnames: 'Misael David',
-    lastnames: 'Salazar Madríz'
-  },
-  {
-    id: '3c8de3fa25-88c776b796-f06adc5b56',
-    dni: 'V-12.099.858',
-    firstnames: 'Yajaira Josefina',
-    lastnames: 'Zarraga'
-  },
-  {
-    id: '952ed6bec9-352887ae43-bc257bfc0f',
-    dni: 'V-13.488.315',
-    firstnames: 'José Luis',
-    lastnames: 'Morales Vasquez'
-  },
-  {
-    id: '3b843a2ef5-558c222edd-6d776362ca',
-    dni: 'V-13.425.862',
-    firstnames: 'Tulio Rafael',
-    lastnames: 'Lugo'
-  },
-  {
-    id: '2f5f8d0a13-7037e6a91c-d36fe2ade9',
-    dni: 'V-17.834.901',
-    firstnames: 'Roberto Antonio',
-    lastnames: 'González'
-  },
-  {
-    id: '4cc0a6331b-a36a7ac69b-0551a7a491',
-    dni: 'V-19.154.542',
-    firstnames: 'Richard Alexander',
-    lastnames: 'Seferen'
-  },
-  {
-    id: 'bff386ef99-8595def230-9b194505cb',
-    dni: 'V-18.425.641',
-    firstnames: 'Rosmary Coromoto',
-    lastnames: 'Palencia Arteaga'
-  },
-  {
-    id: '6d9597139a-41b94d562b-18ae7b5f2b',
-    dni: 'V-9.156.017',
-    firstnames: 'Miguel Angel',
-    lastnames: 'Sangronis'
-  },
-  {
-    id: 'd608d3b718-d2d87eaa90-20bdbea8a3',
-    dni: 'V-13.599.444',
-    firstnames: 'Gladys',
-    lastnames: 'Vargas Ventura'
-  },
-  {
-    id: '5d7717b931-77ad6dadcf-4847ed0c81',
-    dni: 'V-9.511.607',
-    firstnames: 'Henry José',
-    lastnames: 'Chirinos Sánchez'
-  },
-  {
-    id: '8ea23a9603-db2e9a5a4d-07c8dc81af',
-    dni: 'V-24.408.937',
-    firstnames: 'Morelba',
-    lastnames: 'Gómez'
-  },
-  {
-    id: '5dc1c0aac0-4c3f1652ab-8d3ef391c7',
-    dni: 'V-11.151.424',
-    firstnames: 'Beatriz'
-  },
-  {
-    id: '1ab0bfad2c-20556f8e91-f3c36f0b4c',
-    dni: 'V-19.724.055',
-    firstnames: 'Eira Lisbeth',
-    lastnames: 'Ventura Curiel'
-  },
-  {
-    id: 'd6f2e250b3-c7242e4df9-e8f3d69afe',
-    dni: 'V-19.381.990',
-    firstnames: 'Pedro Pablo',
-    lastnames: 'Polanco'
-  },
-  {
-    id: 'bb2c960072-be05b8b5cc-9dfd029e0c',
-    dni: 'V-9.293.796',
-    firstnames: 'Luis Alberto',
-    lastnames: 'Durante García'
-  },
-  {
-    id: '8225ce29b9-782e8132e1-cbf8cfbb20',
-    dni: 'V-15.104.832',
-    firstnames: 'Julio Armando',
-    lastnames: 'Gómez Martínez'
->>>>>>> b2f80c349da604097adb25e342a648051a3cff89
   }
 ]
 
