@@ -23,6 +23,7 @@ const SinglePatient = () => {
   } = data.patients.find(user => user.id === id)
 
   const personalData = [
+<<<<<<< HEAD
     {
       name: 'Número de historia:',
       value: medicalRecordNumber,
@@ -43,6 +44,12 @@ const SinglePatient = () => {
       value: location,
       icon: <LocationOnIcon color='primary' />
     }
+=======
+    { name: 'Número de historia: ', value: '028504', icon: color => <LocalHospitalIcon color={color} /> },
+    { name: 'Cedula o pasaporte: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
+    { name: 'Fecha de nacimiento: ', value: 'Agosto 24, 1990', icon: color => <CalendarMonthIcon color={color} /> },
+    { name: 'Lugar de residencia: ', value: 'Calle Progreso / Calle Proyecto, Casa 58', icon: color => <LocationOnIcon color={color} /> }
+>>>>>>> b2f80c349da604097adb25e342a648051a3cff89
   ]
 
   const [expanded, setExpanded] = useState(true)
@@ -126,6 +133,7 @@ const SinglePatient = () => {
               </Stack>
             </AccordionSummary>
             <AccordionDetails>
+<<<<<<< HEAD
               <Stack spacing='0.5rem'>
                 <FormControl variant='outlined' sx={{ mx: 3, mt: 3 }}>
                   <InputLabel id='consultations-dates-label'>Fecha de consulta</InputLabel>
@@ -171,6 +179,35 @@ const SinglePatient = () => {
                   </>}
 
               </Stack>
+=======
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Pagination count={10} siblingCount={0} size='small' sx={{ alignSelf: 'center' }} />
+                <List disablePadding>
+                  <ListItem disableGutters dense>
+                    <ListItemText primary='Médico: ' secondary='Nombre del Médico' />
+                  </ListItem>
+
+                  <ListItem disableGutters dense divider>
+                    <ListItemText primary='Fecha: ' secondary='----------' />
+                  </ListItem>
+                </List>
+
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                  malesuada lacus ex, sit amet blandit leo lobortis eget.
+                </Typography>
+
+                <Fab
+                  color='primary'
+                  sx={{
+                    alignSelf: 'flex-end',
+                    background: (theme) => theme.gradient.main
+                  }}
+                >
+                  <AddIcon />
+                </Fab>
+              </Box>
+>>>>>>> b2f80c349da604097adb25e342a648051a3cff89
 
             </AccordionDetails>
           </Accordion>

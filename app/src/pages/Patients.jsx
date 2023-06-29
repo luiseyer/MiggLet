@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
+<<<<<<< HEAD
 import { List, TablePagination, Fab, Tooltip } from '@mui/material'
+=======
+import { List, TablePagination, Fab } from '@mui/material'
+>>>>>>> b2f80c349da604097adb25e342a648051a3cff89
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
 
@@ -13,7 +17,12 @@ const PatientsPage = () => {
   const rowsPerPage = 10
 
   useEffect(() => {
+<<<<<<< HEAD
     setPatients(dataPatients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
+=======
+    setPatients(null)
+    setTimeout(() => setPatients(dataPatients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage - 1)), 1000)
+>>>>>>> b2f80c349da604097adb25e342a648051a3cff89
   }, [page])
 
   const handlePageChange = (_, newPage) => {
