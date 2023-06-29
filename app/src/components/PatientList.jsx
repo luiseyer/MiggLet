@@ -6,6 +6,7 @@ import { TextSnippet as TextSnippetIcon } from '@mui/icons-material'
 const PatientList = ({ patients }) => {
   const colors = ['primary', 'secondary', 'tertiary']
   let color = -1
+
   const navigate = useNavigate()
 
   return (

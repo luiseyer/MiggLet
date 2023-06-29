@@ -9,7 +9,7 @@ const single = (resource, authUser) => ({
   department: resource.department,
   specialty: resource.specialty,
   isAdmin: resource.isAdmin,
-  isNew: resource.isNew
+  ...(resource.status !== 'deleted' && { status: resource.status })
 })
 
 const multiple = (resources, authUser) =>

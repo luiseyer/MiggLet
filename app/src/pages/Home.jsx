@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
-import SVGLogo from '@assets/logotipo-transparent.svg'
+
+const SVGLogo = '/images/logotipo.svg'
 
 const HomePage = () => {
   return (

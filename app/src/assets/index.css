@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'coiny';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Coiny-Regular.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Thin.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 100;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-ThinItalic.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Light.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-LightItalic.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Regular.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-Italic.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Medium.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-MediumItalic.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Bold.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-BoldItalic.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/Roboto-Black.ttf") format("TrueType");
+}
+
+@font-face {
+    font-family: 'roboto';
+    font-weight: 900;
+    font-style: italic;
+    font-display: swap;
+    src: url("/fonts/Roboto-BlackItalic.ttf") format("TrueType");
+}
+
+:root {
+    --size-00: clamp(1.00rem, calc(0.20rem + 3.20vw), 2.00rem);
+}
+
+body{
+    font-family: 'roboto';
+    background-color: #000;
+}
+
+img.logo {
+    display: block;
+    width: 100%;
+    height: auto
+}
+
+strong {
+    font-weight: 500;
+}
+
+.MuiDialogTitle-root  {
+    padding-top: 24px !important;
+    line-height: 1.25 !important;
+}
+
+.MuiDialogContent-root  {
+    padding-bottom: 8px !important;
+    line-height: 1.25 !important;
+}
+
+.MuiDialogContent-root > * + * {
+    margin-top: 8px !important;
+}
+
+.MuiDialogActions-root {
+    padding-inline: 24px !important;
+    padding-bottom: 16px !important;
+}
+
+.MuiDialogActions-root .MuiButtonBase-root {
+    font-weight: bolder !important;
+    text-transform: capitalize !important;
+}

@@ -5,6 +5,7 @@ const Section = ({ children, color, spacing, sx }) => {
     <Box
       data-spacing={spacing || '1rem'}
       component='section'
+      className='section'
       sx={{
         bgcolor: color || 'light.main',
         padding: '1rem',

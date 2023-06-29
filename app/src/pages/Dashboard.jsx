@@ -12,7 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const DashboardPage = () => {
-  const recentPatiens = data.users.slice(0, 6)
+  const recentPatiens = data.patients.slice(0, 6)
 
   return (
     <PageContainer>

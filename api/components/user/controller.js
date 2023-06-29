@@ -21,9 +21,19 @@ const getUser = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const { dni, code, email, password } = req.body
+    const {
+      dni,
+      code,
+      email,
+      password
+    } = req.body
 
-    await User.validate({ dni, code, email, password })
+    await User.validate({
+      dni,
+      code,
+      email,
+      password
+    })
 
     const passwordHash = await bcrypt.hash(password, 10)
 
@@ -45,6 +55,8 @@ const updateUser = async (req, res, next) => {
     const { id } = req.params
 
     const {
+      dni,
+      code,
       email,
       password,
       phone,
@@ -63,6 +75,8 @@ const updateUser = async (req, res, next) => {
 
     await User.findByIdAndUpdate(id, {
       $set: {
+        dni,
+        code,
         email,
         password: passwordHash,
         phone,

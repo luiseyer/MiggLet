@@ -7,9 +7,11 @@ import NavigationTabs from './NavigationTabs'
 import MenuOptions from './MenuOptions'
 import LoginForm from './LoginForm'
 import FirstLoginForm from './FirstLoginForm'
+import CreateUserForm from './CreateUserForm'
 import ListActionButton from './ListActionButton'
 import UserList from './UserList'
 import PatientList from './PatientList'
+import FormDialog from './FormDialog'
 
 export {
   PageContainer,
@@ -21,7 +23,9 @@ export {
   MenuOptions,
   LoginForm,
   FirstLoginForm,
+  CreateUserForm,
   ListActionButton,
   UserList,
-  PatientList
+  PatientList,
+  FormDialog
 }

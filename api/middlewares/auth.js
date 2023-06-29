@@ -19,7 +19,9 @@ const login = async (req, res, next) => {
       ? false
       : await bcrypt.compare(password, user.password)
 
-    if (!isMatch) return next(new jwt.JsonWebTokenError('Invalid user or password'))
+    if (!isMatch || user.status === 'deleted') {
+      return next(new jwt.JsonWebTokenError('Invalid user or password'))
+    }
 
     const userForToken = {
       id: user.id,
@@ -42,7 +44,7 @@ const verifyToken = async (req, _, next) => {
       return next(new jwt.JsonWebTokenError('User does not exist'))
     }
 
-    req.user = decodedToken
+    req.currentUser = decodedToken
     next()
   } catch (error) { next(error) }
 }
@@ -52,7 +54,6 @@ const isAdmin = async (req, res, next) => {
     const { id } = req.user
     const user = await User.findById(id, { _id: 0, isAdmin: 1 }).exec()
 
-    console.log('isAdmin: ', user.isAdmin)
     if (user && user.isAdmin) {
       return next()
     }

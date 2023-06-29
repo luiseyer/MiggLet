@@ -1,7 +1,16 @@
 import { ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@mui/material'
 import { ChevronRight as ChevronRightIcon } from '@mui/icons-material'
 
-const ListActionButton = ({ children, icon, primary, secondary, color, sx, ...rest }) => {
+const ListActionButton = ({
+  children,
+  icon,
+  primary,
+  secondary,
+  actionIcon,
+  color,
+  sx,
+  ...rest
+}) => {
   return (
     <ListItemButton
       component='li'
@@ -23,7 +32,7 @@ const ListActionButton = ({ children, icon, primary, secondary, color, sx, ...re
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
       {(primary || secondary) && <ListItemText primary={primary} secondary={secondary} />}
       <ListItemSecondaryAction>
-        <ChevronRightIcon />
+        {actionIcon || <ChevronRightIcon />}
       </ListItemSecondaryAction>
     </ListItemButton>
   )

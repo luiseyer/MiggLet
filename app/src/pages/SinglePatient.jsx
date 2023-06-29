@@ -1,28 +1,48 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Accordion, AccordionDetails, AccordionSummary, Box, Fab, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Add as AddIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
+import { marked } from 'marked'
+import { Accordion, AccordionDetails, AccordionSummary, FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select, Stack, Typography } from '@mui/material'
+import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section } from '@components'
+import { formatDate } from '@helpers'
 
 import data from '@helpers/data'
-
-const colors = ['primary', 'secondary', 'tertiary']
-let color = -1
 
 const SinglePatient = () => {
   const { id } = useParams()
 
   const {
     dni,
+    medicalRecordNumber,
     firstnames,
-    lastnames
-  } = data.users.find(user => user.id === id)
+    lastnames,
+    birthdate,
+    location,
+    medicalBacgrounds,
+    consultations
+  } = data.patients.find(user => user.id === id)
 
   const personalData = [
-    { name: 'Número de historia: ', value: '000000', icon: color => <LocalHospitalIcon color={color} /> },
-    { name: 'Cedula o pasaporte: ', value: dni, icon: color => <AccountBoxIcon color={color} /> },
-    { name: 'Fecha de nacimiento: ', value: '----------', icon: color => <CalendarMonthIcon color={color} /> },
-    { name: 'Lugar de residencia: ', value: '----------', icon: color => <LocationOnIcon color={color} /> }
+    {
+      name: 'Número de historia:',
+      value: medicalRecordNumber,
+      icon: <LocalHospitalIcon color='primary' />
+    },
+    {
+      name: 'Cedula de identidad:',
+      value: dni,
+      icon: <AccountBoxIcon color='primary' />
+    },
+    {
+      name: 'Fecha de nacimiento:',
+      value: formatDate(birthdate),
+      icon: <CalendarMonthIcon color='primary' />
+    },
+    {
+      name: 'Lugar de residencia:',
+      value: location,
+      icon: <LocationOnIcon color='primary' />
+    }
   ]
 
   const [expanded, setExpanded] = useState(true)
@@ -31,86 +51,130 @@ const SinglePatient = () => {
     setExpanded(isExpanded)
   }
 
+  const [date, setDate] = useState(consultations[0].date)
+
+  const handleSelectChange = ({ target }) => {
+    setDate(target.value)
+  }
+
+  const [currentConsultation, setCurrentConsultation] = useState(null)
+
+  useEffect(() => {
+    setCurrentConsultation(consultations.find(c => c.date === date))
+  }, [consultations, date])
+
   return (
     <PageContainer>
       <NavigationMenu variant='toolbar' title='datos de paciente' />
 
       <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-          <Accordion expanded={expanded} onChange={handleExpandedChange} disableGutters sx={{ py: 1 }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <PersonIcon color='primary' sx={{ mr: 1 }} /> <Typography variant='h5'>Datos Personales</Typography>
+        <Stack spacing='2rem'>
+          <Accordion expanded={expanded} onChange={handleExpandedChange} disableGutters sx={{ width: '100%' }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'primary.main', color: 'light.main' }}>
+              <Stack direction='row' alignItems='center' spacing={1.5}>
+                <PersonIcon /> <Typography variant='h5'>Datos Personales</Typography>
+              </Stack>
             </AccordionSummary>
             <AccordionDetails>
               <List disablePadding>
                 <ListItem>
-                  <ListItemText primary='Nombres: ' secondary={firstnames} />
-                  <ListItemText primary='Apellidos: ' secondary={lastnames} />
+                  <ListItemText primary='Nombre del paciente ' secondary={`${firstnames} ${lastnames}`} />
                 </ListItem>
 
-                {personalData.map(({ name, value, icon }, i) => {
-                  color = color < 2 ? ++color : 0
-
-                  return (
-                    <ListItem key={i} sx={{ gap: 2 }}>
-                      <ListItemIcon sx={{ minWidth: 'auto' }}>
-                        {icon(colors.at(color))}
-                      </ListItemIcon>
-                      <ListItemText primary={name} secondary={value} />
-                    </ListItem>
-                  )
-                })}
+                {personalData?.map(({ name, value, icon }, i) => (
+                  <ListItem key={i} sx={{ gap: 2 }}>
+                    <ListItemIcon sx={{ minWidth: 'auto' }}>
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText primary={name} secondary={value} />
+                  </ListItem>
+                ))}
               </List>
             </AccordionDetails>
           </Accordion>
 
-          <Accordion disableGutters sx={{ py: 1 }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <EventNoteIcon color='secondary' sx={{ mr: 1 }} /> <Typography variant='h5'>Antecedentes</Typography>
+          <Accordion disableGutters sx={{ width: '100%' }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'secondary.main', color: 'light.main' }}>
+              <Stack direction='row' alignItems='center' spacing={1.5}>
+                <EventNoteIcon /> <Typography variant='h5'>Antecedentes</Typography>
+              </Stack>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
-              </Typography>
+              <List disablePadding>
+                {medicalBacgrounds?.map(({ name, description }, i) => (
+                  <ListItem key={i}>
+                    <ListItemText
+                      primary={<Typography mb={1} variant='subtitle1' textTransform='capitalize' fontWeight={500}>{name}</Typography>}
+                      secondary={
+                        <Typography
+                          sx={{ '& ul': { pl: 3, listStyleType: 'square' }, '& ::marker': { color: 'secondary.main' } }}
+                          dangerouslySetInnerHTML={{ __html: marked.parse(description, { mangle: false, headerIds: false }) }}
+                        />
+                        }
+                      sx={{ '& .MuiListItemText-secondary': { color: 'dark.main' } }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
             </AccordionDetails>
           </Accordion>
 
-          <Accordion disableGutters sx={{ py: 1 }}>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <LocalHospitalIcon color='tertiary' sx={{ mr: 1 }} /> <Typography variant='h5'>Consultas</Typography>
+          <Accordion disableGutters sx={{ width: '100%' }}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'tertiary.main', color: 'light.main' }}>
+              <Stack direction='row' alignItems='center' spacing={1.5}>
+                <LocalHospitalIcon /> <Typography variant='h5'>Consultas</Typography>
+              </Stack>
             </AccordionSummary>
             <AccordionDetails>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <Pagination count={10} siblingCount={0} size='small' sx={{ alignSelf: 'center' }} />
-                <List disablePadding>
-                  <ListItem disableGutters dense>
-                    <ListItemText primary='Médico: ' secondary='Nombre del Médico' />
-                  </ListItem>
+              <Stack spacing='0.5rem'>
+                <FormControl variant='outlined' sx={{ mx: 3, mt: 3 }}>
+                  <InputLabel id='consultations-dates-label'>Fecha de consulta</InputLabel>
+                  <Select
+                    id='consultations-dates'
+                    value={date}
+                    onChange={handleSelectChange}
+                    label='Fecha de consulta'
+                  >
+                    {consultations?.map(({ date }, i) => (
+                      <MenuItem key={i} value={date}>{formatDate(date, 'short')}</MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-                  <ListItem disableGutters dense divider>
-                    <ListItemText primary='Fecha: ' secondary='----------' />
-                  </ListItem>
-                </List>
-                <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  malesuada lacus ex, sit amet blandit leo lobortis eget.
-                </Typography>
+                {currentConsultation &&
+                  <>
+                    <List>
+                      <ListItem sx={{ gap: 2 }}>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
+                          <PersonIcon color='tertiary' />
+                        </ListItemIcon>
+                        <ListItemText primary='Médico:' secondary={currentConsultation.medic} />
+                      </ListItem>
 
-                <Fab
-                  color='primary'
-                  sx={{
-                    alignSelf: 'flex-end',
-                    background: (theme) => theme.gradient.main
-                  }}
-                >
-                  <AddIcon />
-                </Fab>
-              </Box>
+                      {/* <ListItem sx={{ gap: 2 }}>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
+                          <CalendarMonthIcon color='tertiary' />
+                        </ListItemIcon>
+                        <ListItemText primary='Fecha:' secondary={formatDate(currentConsultation.date, 'longShort')} />
+                      </ListItem> */}
+                    </List>
+
+                    <Typography
+                      sx={{
+                        '& ul': { pl: 2.5, m: 0, listStyleType: 'square' },
+                        '& ul li': { mb: 3 },
+                        '& ::marker': { color: 'tertiary.main' }
+                      }}
+                      px={3}
+                      dangerouslySetInnerHTML={{ __html: marked.parse(currentConsultation.description, { mangle: false, headerIds: false }) }}
+                    />
+                  </>}
+
+              </Stack>
 
             </AccordionDetails>
           </Accordion>
-        </Box>
+        </Stack>
       </Section>
     </PageContainer>
   )

@@ -5,7 +5,7 @@ import { MoreVert as MoreVertIcon, Settings as SettingsIcon, Info as InfoIcon, A
 import { useLogout, useAuthContext } from '@hooks'
 
 const MenuOptions = () => {
-  const { user: { id, isAdmin } } = useAuthContext()
+  const { user: { isAdmin } } = useAuthContext()
 
   const { logout } = useLogout()
   const [anchorEl, setAnchorEl] = useState(null)
@@ -20,7 +20,7 @@ const MenuOptions = () => {
     setAnchorEl(null)
   }
   const viewProfile = () => {
-    navigate(`/users/${id}`)
+    navigate('/profile')
   }
   const about = () => {
     navigate('/about')
@@ -65,7 +65,7 @@ const MenuOptions = () => {
             <ListItemText primary='Acerca de' />
           </MenuItem>}
 
-        {!['users', id].every(value => pathnames.includes(value)) &&
+        {!pathnames.includes('profile') &&
           <MenuItem onClick={viewProfile} divider>
             <ListItemIcon>
               <AccountIcon />

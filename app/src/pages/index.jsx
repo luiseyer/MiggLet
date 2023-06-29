@@ -2,6 +2,7 @@ import HomePage from './Home'
 import DashboardPage from './Dashboard'
 import UsersPage from './Users'
 import SingleUserPage from './SingleUser'
+import UserProfilePage from './UserProfile'
 import PatientsPage from './Patients'
 import SinglePatientPage from './SinglePatient'
 import LoginPage from './Login'
@@ -12,6 +13,7 @@ export {
   DashboardPage,
   UsersPage,
   SingleUserPage,
+  UserProfilePage,
   PatientsPage,
   SinglePatientPage,
   LoginPage,

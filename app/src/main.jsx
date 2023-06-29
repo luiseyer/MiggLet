@@ -1,3 +1,6 @@
+import '@assets/modern-normalize.css'
+import '@assets/index.css'
+
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'

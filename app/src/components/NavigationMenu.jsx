@@ -16,41 +16,31 @@ const NavigationMenu = ({
 
   const ref = useRef()
   const [target, setTarget] = useState(window)
-  const [elevation, setElevation] = useState(0)
-  const trigger = useScrollTrigger({ target })
+  const scrollTrigger = useScrollTrigger({ target, threshold: 0 })
+  const elevationTrigger = useScrollTrigger({ disableHysteresis: true, target, threshold: 0 })
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
   useEffect(() => {
-    setTarget(ref?.current.nextSibling)
-  }, [])
-
-  useEffect(() => {
-    const section = ref.current.nextSibling
-    const height = ref.current.clientHeight
+    const section = document.querySelector('.section')
+    const height = document.querySelector('#appbar').clientHeight
     const spacing = section.getAttribute('data-spacing')
+    setTarget(section)
 
     section.style.paddingTop = `calc(${height}px + ${spacing}`
-
-    target.addEventListener('scroll', () => {
-      if (target.scrollTop <= 0) {
-        return setElevation(0)
-      }
-      return setElevation(3)
-    })
-  }, [target])
+  }, [])
 
   return (
     <AppBar
       id='appbar'
       ref={ref}
       color='light'
-      elevation={elevation}
+      elevation={elevationTrigger ? 3 : 0}
       sx={{
         background: (theme) => theme.gradient.surface,
         transition: 'transform 0.1s ease',
         transform: 'translateY(0)',
-        ...(trigger &&
+        ...(scrollTrigger &&
           { transform: `translateY(-${ref.current.querySelector('.MuiToolbar-root').clientHeight}px)` }),
         ...sx
       }}

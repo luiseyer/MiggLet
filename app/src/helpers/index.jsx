@@ -1,3 +1,3 @@
-import useIsMobile from './useIsMobile'
+import formatDate from './formatDate'
 
-export { useIsMobile }
+export { formatDate }
