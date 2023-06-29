@@ -15,7 +15,7 @@ const UsersPage = () => {
   const [page, setPage] = useState(0)
   const rowsPerPage = 10
 
-  dataUsers = data.users.filter(user => user.id !== id)
+  dataUsers = data.users.filter(user => user.id !== id).reverse()
 
   useEffect(() => {
     setUsers(null)

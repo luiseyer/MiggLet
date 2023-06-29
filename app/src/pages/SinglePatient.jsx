@@ -67,9 +67,9 @@ const SinglePatient = () => {
     <PageContainer>
       <NavigationMenu variant='toolbar' title='datos de paciente' />
 
-      <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', justifyContent: 'center' }}>
+      <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center' }}>
         <Stack spacing='2rem'>
-          <Accordion expanded={expanded} onChange={handleExpandedChange} disableGutters sx={{ width: '100%' }}>
+          <Accordion expanded={expanded} onChange={handleExpandedChange} disableGutters>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'primary.main', color: 'light.main' }}>
               <Stack direction='row' alignItems='center' spacing={1.5}>
                 <PersonIcon /> <Typography variant='h5'>Datos Personales</Typography>
@@ -93,7 +93,7 @@ const SinglePatient = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion disableGutters sx={{ width: '100%' }}>
+          <Accordion disableGutters>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'secondary.main', color: 'light.main' }}>
               <Stack direction='row' alignItems='center' spacing={1.5}>
                 <EventNoteIcon /> <Typography variant='h5'>Antecedentes</Typography>
@@ -119,7 +119,7 @@ const SinglePatient = () => {
             </AccordionDetails>
           </Accordion>
 
-          <Accordion disableGutters sx={{ width: '100%' }}>
+          <Accordion disableGutters>
             <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: 'light.main' }} />} sx={{ bgcolor: 'tertiary.main', color: 'light.main' }}>
               <Stack direction='row' alignItems='center' spacing={1.5}>
                 <LocalHospitalIcon /> <Typography variant='h5'>Consultas</Typography>
@@ -150,13 +150,6 @@ const SinglePatient = () => {
                         </ListItemIcon>
                         <ListItemText primary='Médico:' secondary={currentConsultation.medic} />
                       </ListItem>
-
-                      {/* <ListItem sx={{ gap: 2 }}>
-                        <ListItemIcon sx={{ minWidth: 'auto' }}>
-                          <CalendarMonthIcon color='tertiary' />
-                        </ListItemIcon>
-                        <ListItemText primary='Fecha:' secondary={formatDate(currentConsultation.date, 'longShort')} />
-                      </ListItem> */}
                     </List>
 
                     <Typography
@@ -169,9 +162,7 @@ const SinglePatient = () => {
                       dangerouslySetInnerHTML={{ __html: marked.parse(currentConsultation.description, { mangle: false, headerIds: false }) }}
                     />
                   </>}
-
               </Stack>
-
             </AccordionDetails>
           </Accordion>
         </Stack>

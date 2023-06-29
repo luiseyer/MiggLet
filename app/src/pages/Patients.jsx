@@ -5,7 +5,7 @@ import { PageContainer, Section, NavigationMenu, PatientList } from '@components
 
 import data from '@helpers/data'
 
-const dataPatients = [...data.patients]
+const dataPatients = [...data.patients].reverse()
 
 const PatientsPage = () => {
   const [patients, setPatients] = useState(null)
