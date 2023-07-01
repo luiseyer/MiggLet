@@ -1,14 +1,19 @@
 import { ListActionButton } from '@components'
 import { useNavigate } from 'react-router-dom'
-import { Avatar, ListItemAvatar, ListItemText, Skeleton } from '@mui/material'
+import { Avatar, ListItemAvatar, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
 
-const UserList = ({ users }) => {
+const UserList = ({ data, isLoading, limit }) => {
   const navigate = useNavigate()
 
   return (
     <>
-      {!users &&
-      Array(10).fill(0).map((_, i) => (
+      {!isLoading && data?.count === 0 &&
+        <Stack justifyContent='center' height='100%' px='2rem'>
+          <Typography variant='h2' textAlign='center'>Sin resultados</Typography>
+        </Stack>}
+
+      {isLoading &&
+      Array(limit).fill(0).map((_, i) => (
         <ListActionButton key={i}>
           <ListItemAvatar>
             <Skeleton variant='circular' width={54} height={54} />
@@ -17,7 +22,7 @@ const UserList = ({ users }) => {
         </ListActionButton>
       ))}
 
-      {users?.map((
+      {data?.users?.map((
         {
           id,
           firstnames,
@@ -25,20 +30,17 @@ const UserList = ({ users }) => {
           profilePictureURL,
           specialty
         }, i) => {
-        const username = firstnames + ' ' + lastnames
-
-        const avatar = (
-          <Avatar
-            src={profilePictureURL}
-            sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
-          />
-        )
-
         return (
           <ListActionButton
             key={id}
-            icon={avatar}
-            primary={username} secondary={specialty}
+            icon={
+              <Avatar
+                src={profilePictureURL}
+                sx={{ bgcolor: 'primary.main', width: 54, height: 54 }}
+              />
+            }
+            primary={`${firstnames} ${lastnames}`}
+            secondary={specialty}
             onClick={() => navigate(`/users/${id}`)}
           />
         )

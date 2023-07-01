@@ -1,12 +1,13 @@
 {
   "name": "migglet_api",
   "private": true,
-  "version": "0.0.1",  
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "start": "cross-env NODE_ENV=pro node ./bin/www",
     "dev": "cross-env NODE_ENV=dev node --watch ./bin/www",
-    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
+    "reset-data-base": "cross-env NODE_ENV=dev NODE_OPTIONS=--experimental-vm-modules jest --testMatch=**/reset.js"
   },
   "dependencies": {
     "@tinyhttp/app": "2.0.29",
@@ -25,8 +26,8 @@
     "testEnvironment": "node",
     "transform": {},
     "verbose": true,
-    "silent": true,
-    "detectOpenHandles":true,
+    "silent": false,
+    "detectOpenHandles": true,
     "forceExit": true
   }
 }

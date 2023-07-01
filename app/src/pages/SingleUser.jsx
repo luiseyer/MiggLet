@@ -1,104 +1,97 @@
-import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, List, Stack, Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
+import { Avatar, Box, List, ListItemIcon, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section, ListActionButton } from '@components'
-
-import data from '@helpers/data'
+import { PageContainer, NavigationMenu, Section, ListActionButton, DeleteUserDialog } from '@components'
+import { useGetUser } from '../hooks/useUsers'
 
 const SingleUserPage = () => {
   const { id } = useParams()
-  const {
-    firstnames,
-    lastnames,
-    profilePictureURL,
-    specialty,
-    department,
-    phone,
-    email
-  } = data.users.find(user => user.id === id)
-
-  const [openDialog, setOpenDialog] = useState(false)
-
-  const handleClickOpenDialog = () => {
-    setOpenDialog(true)
-  }
-
-  const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+  const { data } = useGetUser(id)
 
   return (
     <PageContainer>
       <NavigationMenu
         variant='toolbar'
         title='usuario'
-        manageAdminAction={() => {}}
-        deleteAction={handleClickOpenDialog}
+        manageAdminButton
+        deleteButton
       />
 
       <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
         <Stack spacing='2rem' alignItems='center'>
-          <Box sx={{ p: '0.25rem', width: '50%', borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
-            <Avatar
-              src={profilePictureURL}
-              sx={{
-                bgcolor: 'secondary.main',
-                aspectRatio: '1',
-                width: '100%',
-                height: '100%'
-              }}
-            />
+          <Box sx={{ p: '0.25rem', width: '50%', aspectRatio: 1, borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
+            {data
+              ? <Avatar
+                  src={data.profilePictureURL}
+                  sx={{
+                    bgcolor: 'secondary.main',
+                    aspectRatio: '1',
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              : <Skeleton variant='circular' width='100%' height='100%' />}
           </Box>
 
-          <Typography variant='h4' textAlign='center'>{`${firstnames} ${lastnames}`}</Typography>
+          <Typography variant='h4' textAlign='center' width='100%'>
+            {data
+              ? `${data.firstnames} ${data.lastnames}`
+              : <Skeleton variant='text' width='75%' sx={{ mx: 'auto' }} />}
+          </Typography>
 
           <Stack spacing='0.5rem'>
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <BusinessIcon color='primary' /><Typography variant='body1'>{department}</Typography>
+              {data
+                ? <><BusinessIcon color='primary' /><Typography variant='body1'>{data.department}</Typography></>
+                : <><Skeleton><BusinessIcon color='primary' /></Skeleton><Typography variant='body1'><Skeleton width='20ch' /></Typography></>}
             </Stack>
 
             <Stack direction='row' alignItems='center' spacing='0.5rem'>
-              <LocalHospitalIcon color='primary' /><Typography variant='body1'>{specialty}</Typography>
+              {data
+                ? <><LocalHospitalIcon color='primary' /><Typography variant='body1'>{data.specialty}</Typography></>
+                : <><Skeleton><LocalHospitalIcon color='primary' /></Skeleton><Typography variant='body1'><Skeleton width='20ch' /></Typography></>}
             </Stack>
           </Stack>
 
-          <List sx={{ display: 'grid', gridTemplateColumns: 'min(500px, 100%)', gap: '1rem' }}>
-            <ListActionButton
-              icon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-              primary={phone}
-              secondary='Llamar'
-              sx={{ background: (theme) => theme.gradient.surface, bgcolor: 'primary.surface' }}
-            />
+          <List sx={{ display: 'grid', gridTemplateColumns: 'minmax(min(500px, 100%), 500px)', gap: '1rem' }}>
+            {data &&
+              <>
+                <ListActionButton
+                  icon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
+                  primary={data.phone}
+                  secondary='Llamar'
+                  sx={{ background: (theme) => theme.gradient.surface }}
+                />
 
-            <ListActionButton
-              icon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-              primary={email}
-              secondary='Enviar correo'
-              sx={{ background: (theme) => theme.gradient.surface, bgcolor: 'primary.surface' }}
-            />
+                <ListActionButton
+                  icon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
+                  primary={data.email}
+                  secondary='Enviar correo'
+                  sx={{ background: (theme) => theme.gradient.surface }}
+                />
+              </>}
+
+            {!data &&
+              <>
+                <ListActionButton color='neutral.main'>
+                  <ListItemIcon>
+                    <Skeleton variant='rectangular' width={32} height={32} />
+                  </ListItemIcon>
+                  <ListItemText primary={<Skeleton width={200} />} secondary={<Skeleton width={100} />} />
+                </ListActionButton>
+
+                <ListActionButton color='neutral.main'>
+                  <ListItemIcon>
+                    <Skeleton variant='rectangular' width={32} height={32} />
+                  </ListItemIcon>
+                  <ListItemText primary={<Skeleton width={200} />} secondary={<Skeleton width={100} />} />
+                </ListActionButton>
+              </>}
           </List>
         </Stack>
       </Section>
 
-      <Dialog open={openDialog} onClose={handleCloseDialog} maxWidth='xs'>
-        <DialogTitle>
-          ¿Seguro que desea eliminar este usuario?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Los datos del usuario no serán eliminados,
-            sin embargo este perderá todo acceso a la aplicación
-          </DialogContentText>
-          <DialogContentText>
-            <Link to='/about/delete-users'>Más información</Link>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDialog} autoFocus>Cancelar</Button>
-          <Button onClick={handleCloseDialog}>Aceptar</Button>
-        </DialogActions>
-      </Dialog>
+      <DeleteUserDialog id={id} />
     </PageContainer>
   )
 }

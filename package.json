@@ -16,7 +16,8 @@
     "preview": "npm run preview --workspace=app",
     "dev:api": "npm run dev --workspace=api",
     "dev:app": "npm run dev --workspace=app",
-    "test:api": "npm run test --workspace=api"
+    "test:api": "npm run test --workspace=api",
+    "reset-data-base": "npm run reset-data-base --workspace=api"
   },
   "devDependencies": {
     "cross-env": "7.0.3",

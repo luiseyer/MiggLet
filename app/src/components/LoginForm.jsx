@@ -57,6 +57,7 @@ const LoginForm = () => {
             fullWidth
             margin='normal'
             name='username'
+            type='text'
             id='username'
             label='Correo o cédula'
           />

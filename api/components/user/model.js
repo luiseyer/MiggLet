@@ -10,10 +10,10 @@ const UserSchema = new Schema({
   lastnames: { type: String },
   phone: { type: String },
   profilePictureURL: { type: String },
-  department: { type: Schema.Types.ObjectId },
-  specialty: { type: Schema.Types.ObjectId },
+  department: { type: String },
+  specialty: { type: String },
   isAdmin: { type: Boolean, default: false },
-  status: { type: 'active' || 'inactive' || 'deleted', default: 'inactive' }
+  isActive: { type: Boolean, default: true }
 })
 
 const User = conn.model('User', UserSchema)

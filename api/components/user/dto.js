@@ -5,11 +5,12 @@ const single = (resource, authUser) => ({
   email: resource.email,
   firstnames: resource.firstnames,
   lastnames: resource.lastnames,
+  phone: resource.phone,
   profilePictureURL: resource.profilePictureURL,
   department: resource.department,
   specialty: resource.specialty,
   isAdmin: resource.isAdmin,
-  ...(resource.status !== 'deleted' && { status: resource.status })
+  isActive: resource.isActive
 })
 
 const multiple = (resources, authUser) =>

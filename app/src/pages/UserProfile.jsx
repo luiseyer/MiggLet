@@ -1,54 +1,56 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Avatar, Badge, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, List, TextField } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Avatar, Badge, Box, DialogContent, DialogTitle, IconButton, List, ListItemIcon, ListItemText, Skeleton, Stack, TextField } from '@mui/material'
 import { Person as PersonIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon, Edit as EditIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section, ListActionButton, FormDialog } from '@components'
+import { PageContainer, NavigationMenu, Section, ListActionButton, FormDialog, DeleteUserDialog } from '@components'
 import { useAuthContext } from '@hooks'
 
-import data from '@helpers/data'
-
-const colors = ['primary', 'secondary', 'tertiary']
-let color = -1
+import { useGetUser, useUpdateUser } from '@hooks/useUsers'
 
 const UserProfilePage = () => {
-  const { user: { id } } = useAuthContext()
-  const {
-    firstnames,
-    lastnames,
-    profilePictureURL,
-    specialty,
-    department,
-    phone,
-    email
-  } = data.users.find(user => user.id === id)
+  const colors = ['primary', 'secondary', 'tertiary']
+  let color = -1
 
-  const personalData = [
-    { name: 'Nombres', value: firstnames, icon: color => <PersonIcon color={color} />, plural: true },
-    { name: 'Apellidos', value: lastnames, icon: color => <PersonIcon color={color} />, plural: true },
-    { name: 'Departamento', value: department, icon: color => <BusinessIcon color={color} />, plural: false },
-    { name: 'Especialidad', value: specialty, icon: color => <LocalHospitalIcon color={color} />, plural: false },
-    { name: 'Teléfono', value: phone, icon: color => <CallIcon color={color} />, plural: false },
-    { name: 'Correo electrónico', value: email, icon: color => <EmailIcon color={color} />, plural: false }
+  const { user: session } = useAuthContext()
+  const { data, isLoading } = useGetUser(session.id)
+  const { mutate, data: mutateData } = useUpdateUser(session.id)
+
+  const [user, setUser] = useState(session)
+
+  useEffect(() => {
+    if (data) {
+      setUser(data)
+    }
+  }, [data])
+
+  const generatePersonalData = (data) => [
+    { name: 'Nombres', value: data?.firstnames, field: 'firstnames', icon: color => <PersonIcon color={color} />, plural: true },
+    { name: 'Apellidos', value: data?.lastnames, field: 'lastnames', icon: color => <PersonIcon color={color} />, plural: true },
+    { name: 'Departamento', value: data?.department, field: 'department', icon: color => <BusinessIcon color={color} />, plural: false },
+    { name: 'Especialidad', value: data?.specialty, field: 'specialty', icon: color => <LocalHospitalIcon color={color} />, plural: false },
+    { name: 'Teléfono', value: data?.phone, field: 'phone', icon: color => <CallIcon color={color} />, plural: false },
+    { name: 'Correo electrónico', value: data?.email, field: 'email', icon: color => <EmailIcon color={color} />, plural: false }
   ]
 
-  const [openDeletetDialog, setOpenDeleteDialog] = useState(false)
+  const [personalData, setPersonalData] = useState(generatePersonalData())
 
-  const handleClickOpenDeleteDialog = () => {
-    setOpenDeleteDialog(true)
-  }
+  useEffect(() => {
+    if (data) {
+      setPersonalData(generatePersonalData(data))
+    }
+  }, [data])
 
-  const handleCloseDeleteDialog = () => {
-    setOpenDeleteDialog(false)
-  }
+  useEffect(() => {
+    if (mutateData) {
+      setPersonalData(generatePersonalData(mutateData))
+    }
+  }, [mutateData])
 
-  const [openFormDialog, setOpenFormDialog] = useState(false)
-  const [formDialogTitle, setFormDialogTitle] = useState('')
+  const [openFormDialog, setOpenFormDialog] = useState('')
   const [formDialogInputValue, setFormDialogInputValue] = useState('')
 
-  const handleClickOpenFormDialog = (name, value, plural) => () => {
-    setFormDialogTitle(`${plural ? 'sus' : 'su'} ${name.toLowerCase()}`)
+  const handleClickOpenFormDialog = (value, dialog) => () => {
     setFormDialogInputValue(value)
-    setOpenFormDialog(true)
+    setOpenFormDialog(dialog)
   }
 
   const handleCloseFormDialog = () => {
@@ -62,98 +64,102 @@ const UserProfilePage = () => {
   return (
     <PageContainer>
       <NavigationMenu
-        variant='toolbar'
-        title='usuario'
-        manageAdminAction={() => {}}
-        deleteAction={handleClickOpenDeleteDialog}
+        variant='toolbar' title='usuario' manageAdminButton deleteButton
       />
 
       <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-          <IconButton sx={{ display: 'block', p: '0.25rem', width: '50%', borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
-            <Badge
-              color='primary'
-              overlap='circular'
-              badgeContent={<PhotoCameraIcon />}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              sx={{
-                '& .MuiBadge-badge': {
-                  width: '3rem',
-                  height: '3rem',
-                  borderRadius: '50%'
-                }
-              }}
-            >
-              <Avatar
-                src={profilePictureURL}
-                sx={{
-                  bgcolor: 'secondary.main',
-                  aspectRatio: '1',
-                  width: '100%',
-                  height: '100%'
+        <Stack spacing='2rem' alignItems='center'>
+          <IconButton sx={{ display: 'block', p: '0.25rem', width: '50%', aspectRatio: 1, borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
+            {user &&
+              <Badge
+                color='primary'
+                overlap='circular'
+                badgeContent={<PhotoCameraIcon />}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right'
                 }}
-              />
-            </Badge>
+                sx={{
+                  '& .MuiBadge-badge': {
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '50%'
+                  }
+                }}
+              >
+                <Avatar
+                  src={user.profilePictureURL}
+                  sx={{
+                    bgcolor: 'secondary.main',
+                    aspectRatio: '1',
+                    width: '100%',
+                    height: '100%'
+                  }}
+                />
+              </Badge>}
+
+            {!user && <Skeleton variant='circular' width='100%' height='100%' />}
           </IconButton>
 
           <List sx={{ width: '100%' }}>
-            {personalData.map(({ icon, value, name, plural }, i) => {
+            {personalData?.map(({ icon, value, name, field }, i) => {
               color = color < 2 ? ++color : 0
 
               return (
-                <ListActionButton
-                  key={i}
-                  icon={icon(colors.at(color))}
-                  primary={value}
-                  secondary={name}
-                  onClick={handleClickOpenFormDialog(name, value, plural)}
-                  actionIcon={<EditIcon sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />}
-                  sx={{ '& .MuiListItemText-root': { display: 'flex', flexDirection: 'column-reverse' } }}
-                />
+                <Box key={i}>
+                  {value &&
+                    <ListActionButton
+                      id={`dialog-${i}`}
+                      icon={icon(colors.at(color))}
+                      primary={value}
+                      secondary={name}
+                      onClick={handleClickOpenFormDialog(value, `dialog-${i}`)}
+                      actionIcon={<EditIcon sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />}
+                      sx={{ '& .MuiListItemText-root': { display: 'flex', flexDirection: 'column-reverse' } }}
+                    />}
+
+                  {!value &&
+                    <ListActionButton
+                      actionIcon={<EditIcon sx={{ color: 'rgba(0, 0, 0, 0.5)' }} />}
+                      sx={{ '& .MuiListItemText-root': { display: 'flex', flexDirection: 'column-reverse' } }}
+                    >
+                      <ListItemIcon>
+                        <Skeleton variant='rectangular' width={32} height={32} />
+                      </ListItemIcon>
+                      <ListItemText primary={<Skeleton width={200} />} secondary={<Skeleton width={100} />} />
+                    </ListActionButton>}
+
+                  {value &&
+                    <FormDialog
+                      open={openFormDialog === `dialog-${i}`}
+                      action={async () => { mutate({ [field]: formDialogInputValue }) }}
+                      isLoading={isLoading}
+                      handleClose={handleCloseFormDialog}
+                    >
+                      <DialogTitle>Actualizar {name.toLowerCase()}</DialogTitle>
+                      <DialogContent>
+                        <TextField
+                          autoFocus
+                          id='data-profile'
+                          type='text'
+                          value={formDialogInputValue || value}
+                          onChange={handleChange}
+                          autoComplete='off'
+                          variant='standard'
+                          margin='none'
+                          fullWidth
+                        />
+                      </DialogContent>
+                    </FormDialog>}
+                </Box>
               )
             })}
           </List>
-        </Box>
+        </Stack>
       </Section>
 
-      <Dialog open={openDeletetDialog} onClose={handleCloseDeleteDialog} maxWidth='xs'>
-        <DialogTitle>
-          ¿Seguro que desea eliminar este usuario?
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Los datos del usuario no serán eliminados,
-            sin embargo este perderá todo acceso a la aplicación
-          </DialogContentText>
-          <DialogContentText>
-            <Link to='/about/delete-users'>Más información</Link>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseDeleteDialog} autoFocus>Cancelar</Button>
-          <Button onClick={handleCloseDeleteDialog}>Aceptar</Button>
-        </DialogActions>
-      </Dialog>
+      {user && <DeleteUserDialog id={user.id} />}
 
-      <FormDialog open={openFormDialog} handleClose={handleCloseFormDialog}>
-        <DialogTitle>Escriba {formDialogTitle}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            id='user-profile'
-            type='text'
-            value={formDialogInputValue}
-            onChange={handleChange}
-            autoComplete='off'
-            variant='standard'
-            margin='none'
-            fullWidth
-          />
-        </DialogContent>
-      </FormDialog>
     </PageContainer>
   )
 }

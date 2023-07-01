@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTrigger, AppBar, Toolbar, Stack, IconButton, Tooltip, Button } from '@mui/material'
 import { Search as SearchIcon, ArrowBack as ArrowBackIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon } from '@mui/icons-material'
-import { AppTitle, MenuOptions, NavigationTabs } from '@components'
-import { useAuthContext } from '@hooks'
+import { AppTitle, MenuOptions, NavigationTabs, SearchInput } from '@components'
+import { useAuthContext, useSearchContext } from '@hooks'
 
 const NavigationMenu = ({
   variant = 'navigation',
   title,
-  deleteAction,
-  manageAdminAction,
+  deleteButton,
+  manageAdminButton,
   sx
 }) => {
   const { user: { isAdmin } } = useAuthContext()
@@ -21,14 +21,16 @@ const NavigationMenu = ({
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
+  const [openSearchInput, setOpenSearchInput] = useState(false)
+  const { setSearchQuery } = useSearchContext()
+
   useEffect(() => {
     const section = document.querySelector('.section')
     const height = document.querySelector('#appbar').clientHeight
     const spacing = section.getAttribute('data-spacing')
-    setTarget(section)
-
     section.style.paddingTop = `calc(${height}px + ${spacing}`
-  }, [])
+    setTarget(section)
+  }, [openSearchInput])
 
   return (
     <AppBar
@@ -47,20 +49,39 @@ const NavigationMenu = ({
     >
       {variant === 'navigation' &&
         <>
-          <Toolbar variant='dense' sx={{ justifyContent: 'space-between' }}>
-            <AppTitle variant='h5' />
-            <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
-              <IconButton type='button'>
-                <SearchIcon />
-              </IconButton>
-              <MenuOptions />
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            {!openSearchInput && <AppTitle variant='h5' />}
+            <Stack direction='row' spacing={1} justifyContent='flex-end' flex={1} alignItems='center'>
+              {!openSearchInput &&
+                <>
+                  <IconButton type='button' onClick={() => { setOpenSearchInput(true) }}>
+                    <SearchIcon />
+                  </IconButton>
+
+                  <MenuOptions />
+                </>}
+
+              {openSearchInput &&
+                <>
+                  <IconButton
+                    type='button' onClick={() => {
+                      setOpenSearchInput(false)
+                      setSearchQuery('')
+                    }}
+                  >
+                    <ArrowBackIcon />
+                  </IconButton>
+
+                  <SearchInput />
+                </>}
             </Stack>
           </Toolbar>
-          <NavigationTabs value={pathname} />
+
+          {!openSearchInput && <NavigationTabs value={pathname} />}
         </>}
 
       {variant === 'toolbar' &&
-        <Toolbar variant='dense' sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Button
             color='dark'
             startIcon={<ArrowBackIcon />}
@@ -70,16 +91,16 @@ const NavigationMenu = ({
           </Button>
 
           <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
-            {isAdmin && manageAdminAction &&
+            {isAdmin && manageAdminButton &&
               <Tooltip title='Configurar tipo de usuario' arrow>
-                <IconButton onClick={manageAdminAction}>
+                <IconButton>
                   <ManageAccountsIcon />
                 </IconButton>
               </Tooltip>}
 
-            {isAdmin && deleteAction &&
+            {isAdmin && deleteButton &&
               <Tooltip title='Eliminar' arrow>
-                <IconButton onClick={deleteAction}>
+                <IconButton id='delete-button'>
                   <DeleteIcon />
                 </IconButton>
               </Tooltip>}

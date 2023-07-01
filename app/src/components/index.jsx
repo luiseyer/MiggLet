@@ -12,6 +12,8 @@ import ListActionButton from './ListActionButton'
 import UserList from './UserList'
 import PatientList from './PatientList'
 import FormDialog from './FormDialog'
+import DeleteUserDialog from './DeleteUserDialog'
+import SearchInput from './SearchInput'
 
 export {
   PageContainer,
@@ -27,5 +29,7 @@ export {
   ListActionButton,
   UserList,
   PatientList,
-  FormDialog
+  FormDialog,
+  DeleteUserDialog,
+  SearchInput
 }

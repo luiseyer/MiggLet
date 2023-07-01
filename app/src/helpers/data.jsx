@@ -1,11 +1,10 @@
 const getMedic = (medicId) => {
-  const { dni, firstnames, lastnames } = users.find(({ id }) => id === medicId)
-  return `${firstnames} ${lastnames} - ${dni}`
+  // const { dni, firstnames, lastnames } = users.find(({ id }) => id === medicId)
+  // return `${firstnames} ${lastnames} - ${dni}`
 }
 
 const users = [
   {
-    id: '28b5d69a4c-99e5d00daa-09353ddae6',
     dni: '17343109',
     email: 'LeydaMargaritaVelazco@yahoo.com',
     code: '94700573',
@@ -19,7 +18,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: 'fa0cf2f8c0-12c2e2a773-334bdb7535',
     dni: '21751500',
     email: 'MisaelDavidSalazarMadriz@hotmail.com',
     code: '26528479',
@@ -33,7 +31,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '3c8de3fa25-88c776b796-f06adc5b56',
     dni: '12099858',
     email: 'YajairaJosefinaZarraga@gmail.com',
     code: '84901124',
@@ -47,7 +44,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '952ed6bec9-352887ae43-bc257bfc0f',
     dni: '13488315',
     email: 'JoseLuisMoralesVasquez@gmail.com',
     code: '93156404',
@@ -61,7 +57,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '3b843a2ef5-558c222edd-6d776362ca',
     dni: '13425862',
     email: 'TulioRafaelLugo@hotmail.com',
     code: '59123025',
@@ -75,7 +70,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '2f5f8d0a13-7037e6a91c-d36fe2ade9',
     dni: '17834901',
     email: 'RobertoAntonioGonzalez@hotmail.com',
     code: '12523148',
@@ -89,7 +83,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '4cc0a6331b-a36a7ac69b-0551a7a491',
     dni: '19154542',
     email: 'RichardAlexanderSeferen@yahoo.com',
     code: '29715094',
@@ -103,7 +96,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: 'bff386ef99-8595def230-9b194505cb',
     dni: '18425641',
     email: 'RosmaryCoromotoPalenciaArteaga@gmail.com',
     code: '01168979',
@@ -117,7 +109,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '6d9597139a-41b94d562b-18ae7b5f2b',
     dni: '9156017',
     email: 'MiguelAngelSangronis@gmail.com',
     code: '99482491',
@@ -131,7 +122,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: 'd608d3b718-d2d87eaa90-20bdbea8a3',
     dni: '13599444',
     email: 'GladysVargasVentura@gmail.com',
     code: '23263824',
@@ -145,7 +135,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '5d7717b931-77ad6dadcf-4847ed0c81',
     dni: '9511607',
     email: 'HenryJosChirinosSanchez@gmail.com',
     code: '23481248',
@@ -159,7 +148,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '8ea23a9603-db2e9a5a4d-07c8dc81af',
     dni: '24408937',
     email: 'MorelbaGomez@gmail.com',
     code: '82897777',
@@ -173,7 +161,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '5dc1c0aac0-4c3f1652ab-8d3ef391c7',
     dni: '11151424',
     email: 'BeatrizGarciaHerrera@hotmail.com',
     code: '09252957',
@@ -187,7 +174,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '1ab0bfad2c-20556f8e91-f3c36f0b4c',
     dni: '19724055',
     email: 'EiraLisbethVenturaCuriel@yahoo.com',
     code: '37862308',
@@ -201,7 +187,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: 'd6f2e250b3-c7242e4df9-e8f3d69afe',
     dni: '19381990',
     email: 'PedroPabloPolanco@gmail.com',
     code: '72780116',
@@ -215,7 +200,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: 'bb2c960072-be05b8b5cc-9dfd029e0c',
     dni: '9293796',
     email: 'LuisAlbertoDuranteGarcia@yahoo.com',
     code: '93038331',
@@ -229,7 +213,6 @@ const users = [
     isAdmin: false
   },
   {
-    id: '8225ce29b9-782e8132e1-cbf8cfbb20',
     dni: '15104832',
     email: 'jagm@gmail.com',
     code: '40317251',

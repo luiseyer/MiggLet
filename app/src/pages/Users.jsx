@@ -1,26 +1,18 @@
-import { useEffect, useState } from 'react'
-import { List, TablePagination, Fab, Tooltip } from '@mui/material'
+import { useState } from 'react'
+import { List, Fab, Tooltip, Pagination } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, UserList, CreateUserForm } from '@components'
-import { useAuthContext } from '@hooks'
-
-import data from '@helpers/data'
-
-let dataUsers
+import { useAuthContext, useSearchContext } from '@hooks'
+import { useGetUsers } from '@hooks/useUsers'
 
 const UsersPage = () => {
-  const { user: { isAdmin, id } } = useAuthContext()
+  const { user: { isAdmin } } = useAuthContext()
   const [open, setOpen] = useState(false)
-  const [users, setUsers] = useState(null)
-  const [page, setPage] = useState(0)
-  const rowsPerPage = 10
+  const [page, setPage] = useState(1)
+  const limit = 10
+  const { searchQuery } = useSearchContext()
 
-  dataUsers = data.users.filter(user => user.id !== id).reverse()
-
-  useEffect(() => {
-    setUsers(null)
-    setUsers(dataUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
-  }, [page])
+  const { data, isLoading } = useGetUsers({ page, limit, search: searchQuery })
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)
@@ -36,25 +28,20 @@ const UsersPage = () => {
 
   return (
     <PageContainer>
-      <NavigationMenu />
+      <NavigationMenu title='usuarios' />
       <Section sx={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', px: 0 }}>
         <List disablePadding>
-          <UserList users={users} />
+          <UserList data={data} isLoading={isLoading} limit={limit} />
 
-          <TablePagination
-            component='div'
-            count={dataUsers.length}
-            page={page}
-            onPageChange={handlePageChange}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[]}
-            labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
-            sx={{
-              my: '1rem',
-              '& .MuiToolbar-root': { justifyContent: 'center' },
-              '& .MuiTablePagination-spacer': { display: 'none' }
-            }}
-          />
+          {data?.count > limit &&
+            <Pagination
+              component='div'
+              count={Math.ceil(data.count / limit)}
+              page={page}
+              onChange={handlePageChange}
+              size='large'
+              sx={{ mt: 3, '& .MuiPagination-ul': { justifyContent: 'center' } }}
+            />}
         </List>
 
         {isAdmin &&
@@ -66,6 +53,7 @@ const UsersPage = () => {
                 position: 'sticky',
                 bottom: 0,
                 justifySelf: 'end',
+                alignSelf: 'end',
                 mx: 2,
                 background: (theme) => theme.gradient.main
               }}

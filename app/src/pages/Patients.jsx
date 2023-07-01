@@ -56,6 +56,7 @@ const PatientsPage = () => {
               position: 'sticky',
               bottom: 0,
               justifySelf: 'end',
+              alignSelf: 'end',
               mx: 2,
               background: (theme) => theme.gradient.main
             }}

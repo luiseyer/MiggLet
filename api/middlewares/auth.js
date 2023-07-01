@@ -19,7 +19,7 @@ const login = async (req, res, next) => {
       ? false
       : await bcrypt.compare(password, user.password)
 
-    if (!isMatch || user.status === 'deleted') {
+    if (!isMatch || !user.isActive) {
       return next(new jwt.JsonWebTokenError('Invalid user or password'))
     }
 
@@ -28,15 +28,16 @@ const login = async (req, res, next) => {
       dni: user.dni
     }
 
-    const token = jwt.sign(userForToken, process.env.JWT_SECRET, { expiresIn: '12h' })
+    const token = jwt.sign(userForToken, process.env.JWT_SECRET)
 
-    res.status(200).json({ id: DTO.single(user).id, token })
+    res.status(200).json({ ...DTO.single(user), token })
   } catch (error) { return next(error) }
 }
 
 const verifyToken = async (req, _, next) => {
   try {
-    const token = req.get('Authorization') ?? ''
+    const token = req.headers.authorization ?? ''
+
     const decodedToken = jwt.verify(token.substring(7), process.env.JWT_SECRET)
     const user = await User.findById(decodedToken.id)
 
@@ -44,7 +45,7 @@ const verifyToken = async (req, _, next) => {
       return next(new jwt.JsonWebTokenError('User does not exist'))
     }
 
-    req.currentUser = decodedToken
+    req.user = user
     next()
   } catch (error) { next(error) }
 }
@@ -52,9 +53,9 @@ const verifyToken = async (req, _, next) => {
 const isAdmin = async (req, res, next) => {
   try {
     const { id } = req.user
-    const user = await User.findById(id, { _id: 0, isAdmin: 1 }).exec()
+    const { isAdmin } = await User.findById(id)
 
-    if (user && user.isAdmin) {
+    if (isAdmin) {
       return next()
     }
 

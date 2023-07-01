@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import { AuthContextProvider } from '@contexts/AuthContext'
+import { SearchContextProvider } from '@contexts/SearchContext'
 import theme from './theme'
 import App from './App.jsx'
 
@@ -17,9 +18,11 @@ createRoot(Root).render(
   <ThemeProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <SearchContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </SearchContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   </ThemeProvider>
