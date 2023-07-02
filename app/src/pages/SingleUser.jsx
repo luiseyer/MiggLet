@@ -56,18 +56,58 @@ const SingleUserPage = () => {
           <List sx={{ display: 'grid', gridTemplateColumns: 'minmax(min(500px, 100%), 500px)', gap: '1rem' }}>
             {data &&
               <>
+                {/* <Stack
+                  direction='row'
+                  spacing={4}
+                  justifyContent='center'
+                  sx={{ '& .MuiButton-startIcon': { m: 0 } }}
+                >
+                  <Button
+                    href={`tel:${data.phone}`}
+                    startIcon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
+                    sx={{ flexDirection: 'column' }}
+                  >
+                    Llamar
+                  </Button>
+
+                  <Button
+                    href={`sms:${data.phone}`}
+                    startIcon={<SmsIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
+                    sx={{ flexDirection: 'column' }}
+                  >
+                    Mensaje
+                  </Button>
+
+                  <Button
+                    href={`mailto:${data.email}`}
+                    startIcon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
+                    sx={{ flexDirection: 'column' }}
+                  >
+                    Correo
+                  </Button>
+                </Stack> */}
                 <ListActionButton
+                  component='a'
+                  href={`tel:${data.phone}`}
                   icon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-                  primary={data.phone}
-                  secondary='Llamar'
-                  sx={{ background: (theme) => theme.gradient.surface }}
+                  primary={<Typography fontWeight={500}>{data.phone}</Typography>}
+                  secondary='Número de teléfono'
+                  sx={{
+                    background: (theme) => theme.gradient.surface,
+                    '& .MuiListItemText-root': { display: 'flex', flexDirection: 'column-reverse' }
+                  }}
                 />
 
                 <ListActionButton
+                  component='a'
+                  href={`mailto:${data.email}`}
                   icon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-                  primary={data.email}
-                  secondary='Enviar correo'
-                  sx={{ background: (theme) => theme.gradient.surface }}
+                  primary={<Typography fontWeight={500}>{data.email}</Typography>}
+                  secondary='Correo electrónico'
+                  sx={{
+                    background: (theme) => theme.gradient.surface,
+                    '& .MuiListItemText-root': { display: 'flex', flexDirection: 'column-reverse' }
+                  }}
                 />
               </>}
 

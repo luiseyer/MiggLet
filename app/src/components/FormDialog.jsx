@@ -1,4 +1,4 @@
-import { forwardRef } from 'react'
+import { forwardRef, useEffect } from 'react'
 import { Backdrop, Button, CircularProgress, Dialog, DialogActions, Slide } from '@mui/material'
 
 const Transition = forwardRef(function Transition (props, ref) {
@@ -26,9 +26,17 @@ const FormDialog = ({
     handleClose()
   }
 
+  useEffect(() => {
+    document.querySelectorAll('.section').forEach(section => {
+      open
+        ? section.classList.add('no-scrollable')
+        : section.classList.remove('no-scrollable')
+    }
+    )
+  }, [open])
+
   return (
     <>
-
       {isLoading &&
         <Backdrop sx={{ color: '#fff', zIndex: 9999, bgcolor: 'rgba(0,0,0, 0.1)' }} open={isLoading}>
           <CircularProgress color='inherit' />
@@ -36,17 +44,21 @@ const FormDialog = ({
 
       <Dialog
         component='form'
+        autoComplete='off'
         onSubmit={handleSubmit}
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
         sx={{
-          '.MuiPaper-root': {
-            m: 0,
+          '& .MuiDialog-container': {
             position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0
+            inset: 0,
+            alignItems: 'flex-end'
+
+          },
+          '& .MuiPaper-root': {
+            m: 0,
+            width: '100%'
           }
         }}
         {...props}

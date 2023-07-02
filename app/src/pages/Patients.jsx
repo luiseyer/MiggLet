@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { List, TablePagination, Fab, Tooltip } from '@mui/material'
+import { List, Fab, Pagination } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
 
@@ -9,11 +9,11 @@ const dataPatients = [...data.patients].reverse()
 
 const PatientsPage = () => {
   const [patients, setPatients] = useState(null)
-  const [page, setPage] = useState(0)
-  const rowsPerPage = 10
+  const [page, setPage] = useState(1)
+  const limit = 10
 
   useEffect(() => {
-    setPatients(dataPatients.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
+    setPatients(dataPatients.slice((page - 1) * limit, (page - 1) * limit + limit))
   }, [page])
 
   const handlePageChange = (_, newPage) => {
@@ -23,47 +23,37 @@ const PatientsPage = () => {
   return (
     <PageContainer>
       <NavigationMenu />
-      <Section
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: '100%',
-          justifyContent: 'center',
-          px: 0
-        }}
-      >
+      <Section sx={{ display: 'grid', gridTemplateColumns: '100%', gridTemplateRows: '1fr', px: 0 }}>
         <List disablePadding>
           <PatientList patients={patients} />
-          <TablePagination
-            component='div'
-            count={dataPatients.length}
-            page={page}
-            onPageChange={handlePageChange}
-            rowsPerPage={rowsPerPage}
-            rowsPerPageOptions={[]}
-            labelDisplayedRows={({ from, to, count }) => { return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}` }}
-            sx={{
-              my: '1rem',
-              '& .MuiToolbar-root': { justifyContent: 'center' },
-              '& .MuiTablePagination-spacer': { display: 'none' }
-            }}
-          />
         </List>
 
-        <Tooltip title='Registrar paciente' arrow>
-          <Fab
-            color='primary'
-            sx={{
-              position: 'sticky',
-              bottom: 0,
-              justifySelf: 'end',
-              alignSelf: 'end',
-              mx: 2,
-              background: (theme) => theme.gradient.main
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
+        <Pagination
+          component='div'
+          count={Math.ceil(dataPatients.length / limit)}
+          page={page}
+          onChange={handlePageChange}
+          size='large'
+          sx={{
+            mt: 3,
+            alignSelf: 'end',
+            '& .MuiPagination-ul': { justifyContent: 'center' }
+          }}
+        />
+
+        <Fab
+          color='primary'
+          sx={{
+            position: 'sticky',
+            bottom: 0,
+            justifySelf: 'end',
+            alignSelf: 'end',
+            mx: 2,
+            background: (theme) => theme.gradient.main
+          }}
+        >
+          <AddIcon />
+        </Fab>
       </Section>
     </PageContainer>
   )

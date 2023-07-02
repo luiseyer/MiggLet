@@ -85,7 +85,10 @@ const NavigationMenu = ({
           <Button
             color='dark'
             startIcon={<ArrowBackIcon />}
-            onClick={() => navigate(-1)}
+            onClick={() => {
+              setSearchQuery('')
+              navigate(-1)
+            }}
           >
             {title}
           </Button>

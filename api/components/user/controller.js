@@ -4,9 +4,11 @@ import bcrypt from 'bcrypt'
 
 const getUsers = async (req, res, next) => {
   try {
+    const { id } = req.user
     const page = req.query.page || 0
     const limit = req.query.limit || 10
     const view = req.query.view
+    const counter = req.query.counter || false
     const search = req.query.search && req.query.search.trim().length !== 0
       ? req.query.search
       : '.'
@@ -21,6 +23,11 @@ const getUsers = async (req, res, next) => {
 
     const filters = {
       $and: [
+        {
+          ...(!counter
+            ? { _id: { $ne: id } }
+            : {})
+        },
         { ...handleView },
         {
           $or: [
@@ -31,7 +38,9 @@ const getUsers = async (req, res, next) => {
       ]
     }
 
-    const users = await User.find(filters).skip(page * limit).limit(limit)
+    const users = !counter
+      ? await User.find(filters).skip(page * limit).limit(limit)
+      : []
     const count = await User.find(filters).count()
 
     return res.json({ users: DTO.multiple(users), count })

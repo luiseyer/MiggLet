@@ -12,8 +12,6 @@ const FirstLoginForm = () => {
       <Container component={Paper} maxWidth='sm' sx={{ p: 4 }}>
         <AppTitle variant='h4' sx={{ mb: '1rem' }} />
 
-        {/* {error && <Alert severity='error'>{error}</Alert>} */}
-
         <Box
           component='form'
           onSubmit={() => {}}

@@ -141,6 +141,10 @@ strong {
 }
 
 .MuiDialogActions-root .MuiButtonBase-root {
-    font-weight: bolder !important;
+    font-weight: 500 !important;
     text-transform: capitalize !important;
+}
+
+.no-scrollable {
+    overflow-y: visible !important;
 }

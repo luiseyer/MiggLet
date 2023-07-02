@@ -1,8 +1,10 @@
-import { Paper, styled, Typography, Box, List, Stack, Button } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { Paper, styled, Typography, Box, List, Stack, Button, CircularProgress } from '@mui/material'
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
+import { useGetUsers } from '@hooks/useUsers'
 
 import data from '@helpers/data'
-import { Link } from 'react-router-dom'
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: '1rem',
@@ -12,7 +14,17 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 const DashboardPage = () => {
+  const { data: users } = useGetUsers({ counter: true })
   const recentPatiens = data.patients.slice(0, 6)
+  const [totalPatients, setTotalPatients] = useState(null)
+  const [patientsPerDay, setPatientsPerDay] = useState(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTotalPatients('2.475')
+      setPatientsPerDay('86')
+    }, 1000)
+  }, [])
 
   return (
     <PageContainer>
@@ -20,17 +32,24 @@ const DashboardPage = () => {
       <Section spacing='2rem' sx={{ px: 0 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, px: 2 }}>
           <Item elevation={3} sx={{ bgcolor: 'primary.main' }}>
-            <Typography variant='h3'>17</Typography>
+            <Typography variant='h3'>{users?.count
+              ? users.count
+              : <CircularProgress color='inherit' />}
+            </Typography>
             <Typography>Total de Usuarios</Typography>
           </Item>
 
           <Item elevation={3} sx={{ bgcolor: 'secondary.main' }}>
-            <Typography variant='h3'>124</Typography>
+            <Typography variant='h3'>{patientsPerDay ||
+              <CircularProgress color='inherit' />}
+            </Typography>
             <Typography>Pacientes Diarios</Typography>
           </Item>
 
           <Item elevation={3} sx={{ bgcolor: 'tertiary.main' }}>
-            <Typography variant='h3'>5.454</Typography>
+            <Typography variant='h3'>{totalPatients ||
+              <CircularProgress color='inherit' />}
+            </Typography>
             <Typography>Total de Pacientes</Typography>
           </Item>
         </Box>

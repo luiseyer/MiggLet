@@ -2,13 +2,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuthContext } from '@hooks'
 import axios from 'axios'
 
-export const useGetUsers = ({ page = 1, limit = 10, view = 'active', search = '' }) => {
+export const useGetUsers = ({ page = 1, limit = 10, view = 'active', search = '', counter = false }) => {
   const { user: { token } } = useAuthContext()
   return useQuery({
-    queryKey: ['users', { page, limit, view, search }],
+    queryKey: ['users', { page, limit, view, search, counter }],
     queryFn: async () => {
       const _page = page - 1
-      const params = Object.entries({ page: _page, limit, view, search })
+      const params = Object.entries({ page: _page, limit, view, search, ...(counter ? { counter } : {}) })
         .map(([key, value]) => ([key, value]))
 
       const searchParams = `?${new URLSearchParams(params).toString()}`

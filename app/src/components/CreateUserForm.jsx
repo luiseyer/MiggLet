@@ -16,11 +16,12 @@ const CreateUserForm = ({
         <DialogTitle>Crear usuario</DialogTitle>
         <DialogContent>
           <TextField
-            id='new-user-email'
+            name='new-user-email'
             label='Correo electrónico'
             type='email'
             variant='outlined'
             margin='none'
+            autoComplete='off'
             autoFocus
             fullWidth
           />
