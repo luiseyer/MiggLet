@@ -19,7 +19,7 @@ const CreateUserForm = ({
             id='new-user-email'
             label='Correo electrónico'
             type='email'
-            variant='standard'
+            variant='outlined'
             margin='none'
             autoFocus
             fullWidth

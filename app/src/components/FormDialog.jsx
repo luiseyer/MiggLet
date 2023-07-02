@@ -10,22 +10,33 @@ const FormDialog = ({
   open,
   isLoading,
   handleClose,
+  field,
+  value,
   action = () => {},
   ...props
 }) => {
-  const handleClick = async () => {
-    action()
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget).get(field)
+
+    if (value !== data) {
+      action({ [field]: data })
+    }
+
     handleClose()
   }
 
   return (
     <>
+
       {isLoading &&
-        <Backdrop sx={{ color: '#fff', zIndex: 9999 }} open={isLoading}>
+        <Backdrop sx={{ color: '#fff', zIndex: 9999, bgcolor: 'rgba(0,0,0, 0.1)' }} open={isLoading}>
           <CircularProgress color='inherit' />
         </Backdrop>}
 
       <Dialog
+        component='form'
+        onSubmit={handleSubmit}
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
@@ -42,8 +53,8 @@ const FormDialog = ({
       >
         {children}
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>Cancelar</Button>
-          <Button onClick={handleClick}>Enviar</Button>
+          <Button type='button' onClick={handleClose}>Cancelar</Button>
+          <Button type='submit'>Enviar</Button>
         </DialogActions>
       </Dialog>
     </>

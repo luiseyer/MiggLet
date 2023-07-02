@@ -11,8 +11,8 @@ const UserProfilePage = () => {
   let color = -1
 
   const { user: session } = useAuthContext()
-  const { data, isLoading } = useGetUser(session.id)
-  const { mutate, data: mutateData } = useUpdateUser(session.id)
+  const { data } = useGetUser(session.id)
+  const { mutate, data: mutateData, isLoading } = useUpdateUser(session.id)
 
   const [user, setUser] = useState(session)
 
@@ -132,15 +132,18 @@ const UserProfilePage = () => {
                   {value &&
                     <FormDialog
                       open={openFormDialog === `dialog-${i}`}
-                      action={async () => { mutate({ [field]: formDialogInputValue }) }}
+                      action={(data) => { mutate(data) }}
                       isLoading={isLoading}
                       handleClose={handleCloseFormDialog}
+                      field={field}
+                      value={value}
                     >
                       <DialogTitle>Actualizar {name.toLowerCase()}</DialogTitle>
                       <DialogContent>
                         <TextField
                           autoFocus
                           id='data-profile'
+                          name={field}
                           type='text'
                           value={formDialogInputValue || value}
                           onChange={handleChange}

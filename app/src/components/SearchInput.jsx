@@ -6,6 +6,7 @@ const SearchInput = () => {
 
   return (
     <InputBase
+      autoFocus
       id='search'
       sx={{ flex: '1' }}
       placeholder='Buscar'
