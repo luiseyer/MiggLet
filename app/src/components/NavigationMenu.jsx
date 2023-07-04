@@ -49,8 +49,8 @@ const NavigationMenu = ({
     >
       {variant === 'navigation' &&
         <>
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
-            {!openSearchInput && <AppTitle variant='h5' />}
+          <Toolbar sx={{ justifyContent: 'space-between', px: 1 }}>
+            {!openSearchInput && <AppTitle variant='h5' pl={1} />}
             <Stack direction='row' spacing={1} justifyContent='flex-end' flex={1} alignItems='center'>
               {!openSearchInput &&
                 <>
@@ -81,15 +81,20 @@ const NavigationMenu = ({
         </>}
 
       {variant === 'toolbar' &&
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', px: 1 }}>
           <Button
             color='dark'
-            startIcon={<ArrowBackIcon />}
             onClick={() => {
               setSearchQuery('')
               navigate(-1)
             }}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1
+            }}
           >
+            <ArrowBackIcon />
             {title}
           </Button>
 

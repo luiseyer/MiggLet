@@ -1,9 +1,9 @@
 import { ListActionButton } from '@components'
 import { useNavigate } from 'react-router-dom'
-import { Skeleton } from '@mui/material'
+import { Skeleton, Stack, Typography } from '@mui/material'
 import { TextSnippet as TextSnippetIcon } from '@mui/icons-material'
 
-const PatientList = ({ patients }) => {
+const PatientList = ({ data, isLoading, limit }) => {
   const colors = ['primary', 'secondary', 'tertiary']
   let color = -1
 
@@ -11,8 +11,13 @@ const PatientList = ({ patients }) => {
 
   return (
     <>
-      {!patients &&
-      Array(10).fill(0).map((_, i) => (
+      {!isLoading && data?.count === 0 &&
+        <Stack justifyContent='center' height='100%' px='2rem'>
+          <Typography variant='h2' textAlign='center'>Sin resultados</Typography>
+        </Stack>}
+
+      {isLoading &&
+      Array(limit).fill(0).map((_, i) => (
         <ListActionButton
           key={i}
           icon={
@@ -25,13 +30,13 @@ const PatientList = ({ patients }) => {
         />
       ))}
 
-      {patients?.map((
+      {data?.patients?.map((
         {
           id,
           dni,
           firstnames,
           lastnames
-        }, i) => {
+        }) => {
         const username = `${firstnames} ${lastnames}`
         color = color < 2 ? ++color : 0
 

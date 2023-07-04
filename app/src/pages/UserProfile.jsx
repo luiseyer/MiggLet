@@ -10,17 +10,28 @@ const UserProfilePage = () => {
   const colors = ['primary', 'secondary', 'tertiary']
   let color = -1
 
-  const { user: session } = useAuthContext()
+  const { user: session, dispatch } = useAuthContext()
   const { data } = useGetUser(session.id)
   const { mutate, data: mutateData, isLoading } = useUpdateUser(session.id)
 
-  const [user, setUser] = useState(session)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
+    const timeout = setTimeout(() => setUser(session), 5000)
+
     if (data) {
+      clearTimeout(timeout)
       setUser(data)
     }
-  }, [data])
+  }, [data, session])
+
+  useEffect(() => {
+    if (mutateData) {
+      window.localStorage.setItem('user', JSON.stringify({ ...mutateData, token: session.token }))
+      dispatch({ type: 'LOGIN', payload: { ...mutateData, token: session.token } })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mutateData, dispatch])
 
   const generatePersonalData = (data) => [
     { name: 'Nombres', value: data?.firstnames, field: 'firstnames', icon: color => <PersonIcon color={color} />, plural: true },
@@ -34,10 +45,10 @@ const UserProfilePage = () => {
   const [personalData, setPersonalData] = useState(generatePersonalData())
 
   useEffect(() => {
-    if (data) {
-      setPersonalData(generatePersonalData(data))
+    if (user) {
+      setPersonalData(generatePersonalData(user))
     }
-  }, [data])
+  }, [user])
 
   useEffect(() => {
     if (mutateData) {

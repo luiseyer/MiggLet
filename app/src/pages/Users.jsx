@@ -7,10 +7,10 @@ import { useGetUsers } from '@hooks/useUsers'
 
 const UsersPage = () => {
   const { user: { isAdmin } } = useAuthContext()
+  const { searchQuery } = useSearchContext()
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(1)
   const limit = 10
-  const { searchQuery } = useSearchContext()
 
   const { data, isLoading } = useGetUsers({ page, limit, search: searchQuery })
 

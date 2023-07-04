@@ -1,10 +1,8 @@
+/* eslint-disable no-undef */
+
 const cacheName = 'cache-v1'
 const resourcesToPrecache = [
-  '/',
-  'index.html',
-  'styles/index.css',
-  'styles/modern-normalize.css',
-  'images/logotipo.svg'
+  '/'
 ]
 
 self.addEventListener('install', event => {

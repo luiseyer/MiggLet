@@ -1,20 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { List, Fab, Pagination } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
-
-import data from '@helpers/data'
-
-const dataPatients = [...data.patients].reverse()
-
+import { useSearchContext } from '@hooks'
+import { useGetPatients } from '@hooks/usePatients'
 const PatientsPage = () => {
-  const [patients, setPatients] = useState(null)
+  const { searchQuery } = useSearchContext()
   const [page, setPage] = useState(1)
   const limit = 10
 
-  useEffect(() => {
-    setPatients(dataPatients.slice((page - 1) * limit, (page - 1) * limit + limit))
-  }, [page])
+  const { data, isLoading } = useGetPatients({ page, limit, search: searchQuery })
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)
@@ -25,21 +20,22 @@ const PatientsPage = () => {
       <NavigationMenu />
       <Section sx={{ display: 'grid', gridTemplateColumns: '100%', gridTemplateRows: '1fr', px: 0 }}>
         <List disablePadding>
-          <PatientList patients={patients} />
+          <PatientList data={data} isLoading={isLoading} limit={limit} />
         </List>
 
-        <Pagination
-          component='div'
-          count={Math.ceil(dataPatients.length / limit)}
-          page={page}
-          onChange={handlePageChange}
-          size='large'
-          sx={{
-            mt: 3,
-            alignSelf: 'end',
-            '& .MuiPagination-ul': { justifyContent: 'center' }
-          }}
-        />
+        {data?.count > limit &&
+          <Pagination
+            component='div'
+            count={Math.ceil(data.count / limit)}
+            page={page}
+            onChange={handlePageChange}
+            size='large'
+            sx={{
+              mt: 3,
+              alignSelf: 'end',
+              '& .MuiPagination-ul': { justifyContent: 'center' }
+            }}
+          />}
 
         <Fab
           color='primary'

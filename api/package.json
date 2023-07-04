@@ -27,6 +27,7 @@
     "transform": {},
     "verbose": true,
     "silent": true,
+    "timeOut": 30000,
     "detectOpenHandles": true,
     "forceExit": true
   }

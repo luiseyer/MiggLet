@@ -20,10 +20,11 @@ const CreateUserForm = ({
             label='Correo electrónico'
             type='email'
             variant='outlined'
-            margin='none'
+            margin='normal'
             autoComplete='off'
             autoFocus
             fullWidth
+            sx={{ mb: 2 }}
           />
           <DialogContentText>
             <Typography variant='caption'>

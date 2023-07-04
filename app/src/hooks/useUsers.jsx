@@ -4,8 +4,11 @@ import axios from 'axios'
 
 export const useGetUsers = ({ page = 1, limit = 10, view = 'active', search = '', counter = false }) => {
   const { user: { token } } = useAuthContext()
+  const queryClient = useQueryClient()
+
   return useQuery({
     queryKey: ['users', { page, limit, view, search, counter }],
+
     queryFn: async () => {
       const _page = page - 1
       const params = Object.entries({ page: _page, limit, view, search, ...(counter ? { counter } : {}) })
@@ -17,6 +20,12 @@ export const useGetUsers = ({ page = 1, limit = 10, view = 'active', search = ''
         { headers: { Authorization: `Bearer ${token}` } })
 
       return data
+    },
+
+    onSuccess: (data) => {
+      data.users?.forEach(user => {
+        queryClient.setQueryData(['users', { id: user.id }], user)
+      })
     }
   })
 }
@@ -26,6 +35,7 @@ export const useGetUser = (id) => {
 
   return useQuery({
     queryKey: ['users', { id }],
+
     queryFn: async () => {
       const { data } = await axios.get(
         `/api/users/${id}`,
@@ -37,11 +47,12 @@ export const useGetUser = (id) => {
 }
 
 export const useUpdateUser = (id) => {
-  const queryClient = useQueryClient()
   const { user: { token } } = useAuthContext()
+  const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: ['user', { id }],
+    mutationKey: ['users', { id }],
+
     mutationFn: async (body) => {
       const { data } = await axios.patch(
         `/api/users/${id}`, body,
@@ -49,17 +60,20 @@ export const useUpdateUser = (id) => {
 
       return data
     },
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(['user', { id: variables.id }], data)
+
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(['users', { id }], data)
     }
   })
 }
 
 export const useDeleteUser = (id) => {
   const { user: { token } } = useAuthContext()
+  const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: ['user', { id }],
+    mutationKey: ['users', { id }],
+
     mutationFn: async () => {
       const { data } = await axios.patch(
         `/api/users/set-remove-active/${id}`, {},
@@ -67,6 +81,9 @@ export const useDeleteUser = (id) => {
 
       return data
     },
-    onMutate: (data) => data
+
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(['users', { id }], data)
+    }
   })
 }

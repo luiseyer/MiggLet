@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Paper, styled, Typography, Box, List, Stack, Button, CircularProgress } from '@mui/material'
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
 import { useGetUsers } from '@hooks/useUsers'
-
-import data from '@helpers/data'
+import { useGetPatients } from '@hooks/usePatients'
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: '1rem',
@@ -15,16 +13,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const DashboardPage = () => {
   const { data: users } = useGetUsers({ counter: true })
-  const recentPatiens = data.patients.slice(0, 6)
-  const [totalPatients, setTotalPatients] = useState(null)
-  const [patientsPerDay, setPatientsPerDay] = useState(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setTotalPatients('2.475')
-      setPatientsPerDay('86')
-    }, 1000)
-  }, [])
+  const { data: patients, isLoading } = useGetPatients({})
 
   return (
     <PageContainer>
@@ -40,15 +29,17 @@ const DashboardPage = () => {
           </Item>
 
           <Item elevation={3} sx={{ bgcolor: 'secondary.main' }}>
-            <Typography variant='h3'>{patientsPerDay ||
-              <CircularProgress color='inherit' />}
+            <Typography variant='h3'>{patients?.count
+              ? '86'
+              : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Pacientes Diarios</Typography>
           </Item>
 
           <Item elevation={3} sx={{ bgcolor: 'tertiary.main' }}>
-            <Typography variant='h3'>{totalPatients ||
-              <CircularProgress color='inherit' />}
+            <Typography variant='h3'>{patients?.count
+              ? '2.475'
+              : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Total de Pacientes</Typography>
           </Item>
@@ -73,7 +64,7 @@ const DashboardPage = () => {
         </Stack>
 
         <List disablePadding sx={{ px: 1 }}>
-          <PatientList patients={recentPatiens} />
+          <PatientList data={patients} isLoading={isLoading} limit={6} />
         </List>
       </Section>
     </PageContainer>

@@ -13,6 +13,8 @@ const getUsers = async (req, res, next) => {
       ? req.query.search
       : '.'
 
+    const searchRegExp = new RegExp(`(${search})+`, 'gui')
+
     const VIEW_HANDLERS = {
       active: { isActive: true },
       inactive: { isActive: false },
@@ -31,8 +33,8 @@ const getUsers = async (req, res, next) => {
         { ...handleView },
         {
           $or: [
-            { firstnames: new RegExp(`(${search})+`, 'gui') },
-            { lasstnames: new RegExp(`(${search})+`, 'gui') }
+            { firstnames: searchRegExp },
+            { lastnames: searchRegExp }
           ]
         }
       ]
@@ -147,7 +149,7 @@ const updateUser = async (req, res, next) => {
 
     const updatedUser = await User.findById(id)
 
-    return res.status(201).json(DTO.single(updatedUser))
+    return res.status(200).json(DTO.single(updatedUser))
   } catch (error) { next(error) }
 }
 
