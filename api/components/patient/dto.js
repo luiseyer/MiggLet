@@ -1,7 +1,7 @@
 const single = (resource, authUser) => ({
   id: resource._id,
   dni: resource.dni,
-  medicalRecordNumber: resource.medicalRecordNumber,
+  medicalRecordNumber: resource.medicalRecordNumber.toString().padStart(4, '0'),
   birthdate: resource.birthdate,
   firstnames: resource.firstnames,
   lastnames: resource.lastnames,

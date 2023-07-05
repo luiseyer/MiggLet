@@ -14,7 +14,8 @@ const UserSchema = new Schema({
   specialty: { type: String },
   isAdmin: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true }
-})
+},
+{ timestamps: true })
 
 const User = conn.model('User', UserSchema)
 

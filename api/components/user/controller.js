@@ -41,7 +41,7 @@ const getUsers = async (req, res, next) => {
     }
 
     const users = !counter
-      ? await User.find(filters).skip(page * limit).limit(limit)
+      ? await User.find(filters).skip(page * limit).limit(limit).sort({ updatedAt: 'desc' })
       : []
     const count = await User.find(filters).count()
 

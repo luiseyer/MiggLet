@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTrigger, AppBar, Toolbar, Stack, IconButton, Tooltip, Button } from '@mui/material'
-import { Search as SearchIcon, ArrowBack as ArrowBackIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon } from '@mui/icons-material'
+import { Search as SearchIcon, ArrowBack as ArrowBackIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon, EditNote as EditNoteIcon } from '@mui/icons-material'
 import { AppTitle, MenuOptions, NavigationTabs, SearchInput } from '@components'
 import { useAuthContext, useSearchContext } from '@hooks'
 
 const NavigationMenu = ({
   variant = 'navigation',
   title,
+  noSearch,
   deleteButton,
   manageAdminButton,
+  patientButton,
   sx
 }) => {
   const { user: { isAdmin } } = useAuthContext()
@@ -54,9 +56,10 @@ const NavigationMenu = ({
             <Stack direction='row' spacing={1} justifyContent='flex-end' flex={1} alignItems='center'>
               {!openSearchInput &&
                 <>
-                  <IconButton type='button' onClick={() => { setOpenSearchInput(true) }}>
-                    <SearchIcon />
-                  </IconButton>
+                  {!noSearch &&
+                    <IconButton type='button' onClick={() => { setOpenSearchInput(true) }}>
+                      <SearchIcon />
+                    </IconButton>}
 
                   <MenuOptions />
                 </>}
@@ -110,6 +113,13 @@ const NavigationMenu = ({
               <Tooltip title='Eliminar' arrow>
                 <IconButton id='delete-button'>
                   <DeleteIcon />
+                </IconButton>
+              </Tooltip>}
+
+            {patientButton &&
+              <Tooltip title='Actualizar datos' arrow>
+                <IconButton id='patient-button'>
+                  <EditNoteIcon />
                 </IconButton>
               </Tooltip>}
 

@@ -14,6 +14,8 @@ import PatientList from './PatientList'
 import FormDialog from './FormDialog'
 import DeleteUserDialog from './DeleteUserDialog'
 import SearchInput from './SearchInput'
+import UpdatePatient from './UpdatePatient'
+import RegisterPatientForm from './RegisterPatientForm'
 
 export {
   PageContainer,
@@ -31,5 +33,7 @@ export {
   PatientList,
   FormDialog,
   DeleteUserDialog,
-  SearchInput
+  SearchInput,
+  UpdatePatient,
+  RegisterPatientForm
 }

@@ -58,7 +58,7 @@ const UsersPage = () => {
               justifySelf: 'end',
               alignSelf: 'end',
               mx: 2,
-              background: (theme) => theme.gradient.main
+              background: ({ gradient }) => gradient.main
             }}
           >
             <AddIcon />

@@ -14,13 +14,23 @@ const MedicalBackgroundSchema = new Schema({
 
 const PatientSchema = new Schema({
   dni: { type: String, required: true, unique: true },
-  medicalRecordNumber: { type: String, required: true, unique: true },
+  medicalRecordNumber: { type: Number },
   birthdate: { type: Date },
   firstnames: { type: String },
   lastnames: { type: String },
   location: { type: String },
   consultations: { type: [consultationSchema] },
   medicalBackgrounds: { type: [MedicalBackgroundSchema] }
+},
+{ timestamps: true })
+
+PatientSchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.constructor.find({}).then((result) => {
+      this.medicalRecordNumber = result.length + 1
+      next()
+    })
+  }
 })
 
 const Patient = conn.model('Patient', PatientSchema)

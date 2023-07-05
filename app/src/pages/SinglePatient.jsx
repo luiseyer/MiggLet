@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { marked } from 'marked'
 import { Accordion, AccordionDetails, AccordionSummary, Box, FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select, Skeleton, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section } from '@components'
+import { PageContainer, NavigationMenu, Section, UpdatePatient } from '@components'
 import { useGetPatient } from '@hooks/usePatients'
 import { formatDate } from '@helpers'
 
@@ -26,7 +26,7 @@ const ListItemSkeleton = ({ w1 = 200, w2 = 100, sx }) => (
 
 const SinglePatient = () => {
   const { id } = useParams()
-  const { data } = useGetPatient(id)
+  const { data, isLoading } = useGetPatient(id)
 
   const generatePersonalData = (data) => [
     { name: 'Número de historia:', value: data?.medicalRecordNumber, icon: <LocalHospitalIcon color='primary' /> },
@@ -41,7 +41,7 @@ const SinglePatient = () => {
   useEffect(() => {
     if (data) {
       setPersonalData(generatePersonalData(data))
-      setDate(data.consultations[0].date)
+      setDate(data.consultations[0]?.date)
     }
   }, [data])
 
@@ -65,7 +65,7 @@ const SinglePatient = () => {
 
   return (
     <PageContainer>
-      <NavigationMenu variant='toolbar' title='datos de paciente' />
+      <NavigationMenu variant='toolbar' title='datos de paciente' patientButton />
 
       <Section color='neutral.main' spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center' }}>
         <Stack spacing='2rem'>
@@ -126,10 +126,13 @@ const SinglePatient = () => {
                     />
                   </ListItem>
                 ))}
-                {!data?.medicalBackgrounds &&
+                {isLoading &&
                   <ListItem>
                     <ListItemText primary={<TextSkeleton />} />
                   </ListItem>}
+
+                {!isLoading && !!data?.medicalBackgrounds &&
+                  <Typography variant='h5' textAlign='center' py={6}>No hay antecentes</Typography>}
               </List>
             </AccordionDetails>
           </Accordion>
@@ -157,7 +160,7 @@ const SinglePatient = () => {
                     </Select>
                   </FormControl>}
 
-                {!date && <Skeleton component={Box} variant='rectangular' height={60} sx={{ mx: 3, mt: 3 }} />}
+                {isLoading && <Skeleton component={Box} variant='rectangular' height={60} sx={{ mx: 3, mt: 3 }} />}
 
                 <List>
                   {currentConsultation &&
@@ -168,7 +171,11 @@ const SinglePatient = () => {
                       <ListItemText primary='Médico:' secondary={currentConsultation.medic} />
                     </ListItem>}
 
-                  {!currentConsultation && <ListItemSkeleton sx={{ px: 3 }} w1={100} w2={200} />}
+                  {isLoading && <ListItemSkeleton sx={{ px: 3 }} w1={100} w2={200} />}
+
+                  {!isLoading && !currentConsultation &&
+                    <Typography variant='h5' textAlign='center' py={6}>No hay consultas</Typography>}
+
                 </List>
 
                 {currentConsultation &&
@@ -182,12 +189,13 @@ const SinglePatient = () => {
                     dangerouslySetInnerHTML={{ __html: marked.parse(currentConsultation.description, { mangle: false, headerIds: false }) }}
                   />}
 
-                {!currentConsultation && <TextSkeleton px={3} />}
+                {isLoading && <TextSkeleton px={3} />}
 
               </Stack>
             </AccordionDetails>
           </Accordion>
         </Stack>
+        <UpdatePatient />
       </Section>
     </PageContainer>
   )

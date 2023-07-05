@@ -106,7 +106,7 @@
     --size-00: clamp(1.00rem, calc(0.20rem + 3.20vw), 2.00rem);
 }
 
-body{
+body {
     font-family: 'roboto';
     background-color: #000;
 }
@@ -121,17 +121,17 @@ strong {
     font-weight: 500;
 }
 
-.MuiDialogTitle-root  {
+.MuiDialogTitle-root {
     padding-top: 24px !important;
     line-height: 1.25 !important;
 }
 
-.MuiDialogContent-root  {
+.MuiDialogContent-root {
     padding-bottom: 8px !important;
     line-height: 1.25 !important;
 }
 
-.MuiDialogContent-root > * + * {
+.MuiDialogContent-root>*+* {
     margin-top: 8px !important;
 }
 
@@ -143,6 +143,13 @@ strong {
 .MuiDialogActions-root .MuiButtonBase-root {
     font-weight: 500 !important;
     text-transform: capitalize !important;
+}
+
+.MuiPaper-root.MuiMenu-paper {
+    position: fixed;
+    top: 0px !important;
+    right: 0px !important;
+    left: auto !important;
 }
 
 .no-scrollable {

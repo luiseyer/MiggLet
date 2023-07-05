@@ -13,11 +13,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const DashboardPage = () => {
   const { data: users } = useGetUsers({ counter: true })
-  const { data: patients, isLoading } = useGetPatients({})
+  const { data: patients, isLoading } = useGetPatients({ limit: 6 })
 
   return (
     <PageContainer>
-      <NavigationMenu />
+      <NavigationMenu noSearch />
       <Section spacing='2rem' sx={{ px: 0 }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, px: 2 }}>
           <Item elevation={3} sx={{ bgcolor: 'primary.main' }}>

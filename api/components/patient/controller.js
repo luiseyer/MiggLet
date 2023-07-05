@@ -22,7 +22,7 @@ const getPatients = async (req, res, next) => {
     }
 
     const patients = !counter
-      ? await Patient.find(filters).skip(page * limit).limit(limit).populate('consultations.medic')
+      ? await Patient.find(filters).skip(page * limit).limit(limit).sort({ updatedAt: 'desc' }).populate('consultations.medic')
       : []
     const count = await Patient.find(filters).count()
 

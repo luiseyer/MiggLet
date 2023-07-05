@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import { List, Fab, Pagination } from '@mui/material'
-import { Add as AddIcon } from '@mui/icons-material'
-import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
+import { List, Pagination } from '@mui/material'
+import { PageContainer, Section, NavigationMenu, PatientList, RegisterPatientForm } from '@components'
 import { useSearchContext } from '@hooks'
 import { useGetPatients } from '@hooks/usePatients'
 const PatientsPage = () => {
@@ -9,7 +8,7 @@ const PatientsPage = () => {
   const [page, setPage] = useState(1)
   const limit = 10
 
-  const { data, isLoading } = useGetPatients({ page, limit, search: searchQuery })
+  const { data, isLoading, refetch } = useGetPatients({ page, limit, search: searchQuery })
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)
@@ -37,19 +36,7 @@ const PatientsPage = () => {
             }}
           />}
 
-        <Fab
-          color='primary'
-          sx={{
-            position: 'sticky',
-            bottom: 0,
-            justifySelf: 'end',
-            alignSelf: 'end',
-            mx: 2,
-            background: (theme) => theme.gradient.main
-          }}
-        >
-          <AddIcon />
-        </Fab>
+        <RegisterPatientForm refetchFn={refetch} count={data?.count} />
       </Section>
     </PageContainer>
   )

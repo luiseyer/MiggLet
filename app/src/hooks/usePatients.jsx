@@ -46,7 +46,7 @@ export const useGetPatient = (id) => {
   })
 }
 
-export const useUpdatePatietn = (id) => {
+export const useUpdatePatient = (id) => {
   const { user: { token } } = useAuthContext()
   const queryClient = useQueryClient()
 
@@ -61,8 +61,29 @@ export const useUpdatePatietn = (id) => {
       return data
     },
 
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(['patients', { id: variables.id }], data)
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(['patients', { id }], data)
+    }
+  })
+}
+
+export const useCreatePatient = () => {
+  const { user: { token } } = useAuthContext()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationKey: ['patients'],
+
+    mutationFn: async (body) => {
+      const { data } = await axios.post(
+        '/api/patients/', body,
+        { headers: { Authorization: `Bearer ${token}` } })
+
+      return data
+    },
+
+    onSuccess: (data) => {
+      queryClient.setQueryData(['patients', { id: data.id }], data)
     }
   })
 }

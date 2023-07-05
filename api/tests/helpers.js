@@ -296,7 +296,6 @@ const consultations = [
 const patients = [
   {
     dni: '20659874',
-    medicalRecordNumber: '0001',
     firstnames: 'Carlos Eduardo',
     lastnames: 'González Flores',
     birthdate: new Date('1990-11-25 12:15:00'),
@@ -306,7 +305,6 @@ const patients = [
   },
   {
     dni: '18653217',
-    medicalRecordNumber: '0002',
     firstnames: 'María Alejandra',
     lastnames: 'Rodríguez Torres',
     birthdate: new Date('1985-06-10 09:45:00'),
@@ -316,7 +314,6 @@ const patients = [
   },
   {
     dni: '21478953',
-    medicalRecordNumber: '0003',
     firstnames: 'Juan Carlos',
     lastnames: 'Pérez Ramírez',
     birthdate: new Date('1992-03-18 15:30:00'),
@@ -326,7 +323,6 @@ const patients = [
   },
   {
     dni: '19785632',
-    medicalRecordNumber: '0004',
     firstnames: 'Andrea Carolina',
     lastnames: 'Sánchez López',
     birthdate: new Date('1988-09-05 10:20:00'),
@@ -336,7 +332,6 @@ const patients = [
   },
   {
     dni: '22874159',
-    medicalRecordNumber: '0005',
     firstnames: 'José Luis',
     lastnames: 'Martínez García',
     birthdate: new Date('1997-02-28 14:00:00'),
@@ -346,7 +341,6 @@ const patients = [
   },
   {
     dni: '22369875',
-    medicalRecordNumber: '0006',
     firstnames: 'Ana María',
     lastnames: 'Torres Medina',
     birthdate: new Date('1991-11-10 11:45:00'),
@@ -356,7 +350,6 @@ const patients = [
   },
   {
     dni: '20357986',
-    medicalRecordNumber: '0007',
     firstnames: 'Luis Miguel',
     lastnames: 'Rivas Rodríguez',
     birthdate: new Date('1987-07-15 16:10:00'),
@@ -366,7 +359,6 @@ const patients = [
   },
   {
     dni: '19784521',
-    medicalRecordNumber: '0008',
     firstnames: 'Mariana González',
     lastnames: 'Torres',
     birthdate: new Date('1994-04-02 13:25:00'),
@@ -376,7 +368,6 @@ const patients = [
   },
   {
     dni: '20875963',
-    medicalRecordNumber: '0009',
     firstnames: 'Alejandro Pérez',
     lastnames: 'Jiménez',
     birthdate: new Date('1989-12-20 09:55:00'),
@@ -386,7 +377,6 @@ const patients = [
   },
   {
     dni: '21659874',
-    medicalRecordNumber: '0010',
     firstnames: 'Carolina Rodríguez',
     lastnames: 'López',
     birthdate: new Date('1996-08-08 14:35:00'),
@@ -396,7 +386,6 @@ const patients = [
   },
   {
     dni: '19987425',
-    medicalRecordNumber: '0011',
     firstnames: 'José Antonio',
     lastnames: 'Sánchez Ramírez',
     birthdate: new Date('1993-05-12 11:40:00'),
@@ -406,7 +395,6 @@ const patients = [
   },
   {
     dni: '22258963',
-    medicalRecordNumber: '0012',
     firstnames: 'Gabriela Martínez',
     lastnames: 'Torres',
     birthdate: new Date('1990-09-28 10:15:00'),
@@ -416,7 +404,6 @@ const patients = [
   },
   {
     dni: '20758963',
-    medicalRecordNumber: '0013',
     firstnames: 'Luis Eduardo',
     lastnames: 'Rodríguez Torres',
     birthdate: new Date('1986-03-24 08:50:00'),
@@ -426,7 +413,6 @@ const patients = [
   },
   {
     dni: '22659874',
-    medicalRecordNumber: '0014',
     firstnames: 'Andrés José',
     lastnames: 'Ramírez Sánchez',
     birthdate: new Date('1991-07-03 09:30:00'),
@@ -436,7 +422,6 @@ const patients = [
   },
   {
     dni: '19874352',
-    medicalRecordNumber: '0015',
     firstnames: 'Camila López',
     lastnames: 'Martínez',
     birthdate: new Date('1987-10-22 15:40:00'),
@@ -446,7 +431,6 @@ const patients = [
   },
   {
     dni: '20786952',
-    medicalRecordNumber: '0016',
     firstnames: 'Juan Manuel',
     lastnames: 'Rivas Torres',
     birthdate: new Date('1996-06-13 14:55:00'),
@@ -456,7 +440,6 @@ const patients = [
   },
   {
     dni: '22345678',
-    medicalRecordNumber: '0017',
     firstnames: 'María Fernanda',
     lastnames: 'Rodríguez García',
     birthdate: new Date('1989-12-05 10:45:00'),
@@ -466,7 +449,6 @@ const patients = [
   },
   {
     dni: '21235698',
-    medicalRecordNumber: '0018',
     firstnames: 'Pedro José',
     lastnames: 'Pérez López',
     birthdate: new Date('1994-11-01 08:20:00'),
@@ -476,7 +458,6 @@ const patients = [
   },
   {
     dni: '21453698',
-    medicalRecordNumber: '0019',
     firstnames: 'Laura Isabel',
     lastnames: 'Sánchez Martínez',
     birthdate: new Date('1992-07-29 13:00:00'),
@@ -486,7 +467,6 @@ const patients = [
   },
   {
     dni: '21654873',
-    medicalRecordNumber: '0020',
     firstnames: 'Valentina',
     lastnames: 'García López',
     birthdate: new Date('1995-02-17 13:20:00'),
