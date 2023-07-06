@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react'
-import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Fab, IconButton, TextField } from '@mui/material'
-import { Add as AddIcon, Close as CloseIcon, Send as SendIcon } from '@mui/icons-material'
+import { forwardRef, useEffect, useState } from 'react'
+import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Fab, TextField, Slide, DialogActions } from '@mui/material'
+import { Add as AddIcon, ArrowBack as ArrowBackIcon, Send as SendIcon } from '@mui/icons-material'
 import { useCreatePatient } from '@hooks/usePatients'
+
+const Transition = forwardRef(function Transition (props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 const RegisterPatientForm = ({
   count,
@@ -12,7 +16,7 @@ const RegisterPatientForm = ({
   const { mutate, isLoading, data: mutateData } = useCreatePatient()
 
   const [open, setOpen] = useState(false)
-  const [isCorrect, setIsCorrect] = useState(false)
+  const [isCompleted, setIsCompleted] = useState(false)
 
   const handleClose = () => {
     setOpen(false)
@@ -44,9 +48,9 @@ const RegisterPatientForm = ({
     const values = fields.map(field => formData.get(field))
 
     if (values.every(value => value && value.trim('').length !== 0)) {
-      setIsCorrect(true)
+      setIsCompleted(true)
     } else {
-      setIsCorrect(false)
+      setIsCompleted(false)
     }
   }
 
@@ -65,66 +69,88 @@ const RegisterPatientForm = ({
       {count &&
         <Dialog
           component='form'
+          autoComplete='off'
           open={open}
           onClose={handleClose}
           onInput={handleInput}
           onSubmit={handleSubmit}
+          TransitionComponent={Transition}
           fullScreen
         >
-          <DialogTitle>
-            <IconButton color='dark' onClick={handleClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <CloseIcon />
-            </IconButton>
+          <DialogTitle component='header' sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}>
+            <Button
+              color='dark'
+              onClick={handleClose}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
+              <ArrowBackIcon />
+              Registrar Paciente
+            </Button>
           </DialogTitle>
           <DialogContent>
-            <Stack sx={{ '& .MuiTextField-root': { mt: 3, width: '100%' } }}>
+            <Stack sx={{
+              pt: 1,
+              '& .MuiTextField-root': { mt: 4, width: '100%' },
+              '& .MuiTextField-root fieldset': { borderWidth: '2px' }
+            }}
+            >
               <TextField
                 label='Número de historia'
                 name='medicalRecordNumber'
                 type='number'
                 defaultValue={count + 1}
+                variant='outlined'
                 required
               />
               <TextField
                 label='Nombres'
                 name='firstnames'
+                variant='outlined'
                 required
               />
               <TextField
                 label='Apellidos'
                 name='lastnames'
+                variant='outlined'
                 required
               />
               <TextField
                 label='Cédula de identidad'
                 name='dni'
                 type='number'
+                variant='outlined'
                 required
               />
               <TextField
                 InputLabelProps={{ shrink: true }}
                 label='Fecha de Nacimiento'
                 name='birthdate'
-                type='datetime-local'
+                type='date'
+                variant='outlined'
                 required
               />
               <TextField
                 label='Lugar de residencia'
                 name='location'
+                variant='outlined'
                 required
               />
             </Stack>
           </DialogContent>
           <DialogActions sx={{ pb: '1.5rem !important' }}>
             <Button
-              disabled={!isCorrect}
-              variant='contained'
+              disabled={!isCompleted}
               type='submit'
+              variant='contained'
+              size='large'
               endIcon={<SendIcon />}
             >
               Registrar
             </Button>
-
           </DialogActions>
         </Dialog>}
 
