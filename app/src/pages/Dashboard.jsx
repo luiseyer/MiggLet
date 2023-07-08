@@ -31,7 +31,7 @@ const DashboardPage = () => {
 
           <Item elevation={3} sx={{ bgcolor: 'secondary.main' }}>
             <Typography variant='h3'>{patients?.count
-              ? patients?.count + 86
+              ? patients?.count + 66
               : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Pacientes Diarios</Typography>
@@ -39,7 +39,7 @@ const DashboardPage = () => {
 
           <Item elevation={3} sx={{ bgcolor: 'tertiary.main' }}>
             <Typography variant='h3'>{patients?.count
-              ? patients?.count + 2475
+              ? patients?.count + 1354
               : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Total de Pacientes</Typography>

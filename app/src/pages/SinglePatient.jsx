@@ -28,6 +28,8 @@ const SinglePatient = () => {
   const { id } = useParams()
   const { data, isLoading } = useGetPatient(id)
 
+  console.log(data?.medicalBackgrounds)
+
   const generatePersonalData = (data) => [
     { name: 'Número de historia:', value: data?.medicalRecordNumber, icon: <LocalHospitalIcon color='primary' /> },
     { name: 'Cedula de identidad:', value: data?.dni, icon: <AccountBoxIcon color='primary' /> },
@@ -131,7 +133,7 @@ const SinglePatient = () => {
                     <ListItemText primary={<TextSkeleton />} />
                   </ListItem>}
 
-                {!isLoading && !!data?.medicalBackgrounds &&
+                {!isLoading && data?.medicalBackgrounds?.length === 0 &&
                   <Typography variant='h5' textAlign='center' py={6}>No hay antecentes</Typography>}
               </List>
             </AccordionDetails>

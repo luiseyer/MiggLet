@@ -17,10 +17,9 @@ const UserProfilePage = () => {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    const timeout = setTimeout(() => setUser(session), 5000)
+    setUser(session)
 
     if (data) {
-      clearTimeout(timeout)
       setUser(data)
     }
   }, [data, session])

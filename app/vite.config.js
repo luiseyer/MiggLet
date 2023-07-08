@@ -38,12 +38,10 @@ export default defineConfig({
       manifest: {
         name: 'MiggLet - Gestión de Historias Clínicas',
         short_name: 'MiggLet',
-        description: 'MiggLet es una aplicación para registro, gestión y control de historias clínicas dirigida a especialistas de la salud',
         lang: 'es',
         start_url: '/',
         scope: '/',
         display: 'fullscreen',
-        theme_color: '#ffffff',
         icons: [
           {
             src: '/images/favicon-512.png',

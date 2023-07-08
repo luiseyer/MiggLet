@@ -35,7 +35,15 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         MenuListProps={{ disablePadding: true }}
-        sx={{ '& .MuiMenuItem-root': { pl: 2, pr: 4, py: 2 } }}
+        sx={{
+          '& .MuiMenuItem-root': { pl: 2, pr: 4, py: 2 },
+          '& .MuiPaper-root': {
+            position: 'fixed',
+            top: '0px !important',
+            right: '0px !important',
+            left: 'auto !important'
+          }
+        }}
       >
         <MenuItem onClick={handleClose} divider>
           <ListItemIcon><EventNoteIcon /></ListItemIcon>

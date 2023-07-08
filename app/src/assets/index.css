@@ -145,13 +145,6 @@ strong {
     text-transform: capitalize !important;
 }
 
-.MuiPaper-root.MuiMenu-paper {
-    position: fixed;
-    top: 0px !important;
-    right: 0px !important;
-    left: auto !important;
-}
-
 .no-scrollable {
     overflow-y: visible !important;
 }

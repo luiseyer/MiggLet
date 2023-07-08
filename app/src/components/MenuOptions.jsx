@@ -41,7 +41,15 @@ const MenuOptions = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
         MenuListProps={{ disablePadding: true }}
-        sx={{ '& .MuiMenuItem-root': { pl: 2, pr: 8, py: 2 } }}
+        sx={{
+          '& .MuiMenuItem-root': { pl: 2, pr: 8, py: 2 },
+          '& .MuiPaper-root': {
+            position: 'fixed',
+            top: '0px !important',
+            right: '0px !important',
+            left: 'auto !important'
+          }
+        }}
       >
         {isAdmin && !pathnames.includes('settings') &&
           <MenuItem onClick={handleClose} divider>

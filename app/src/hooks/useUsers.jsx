@@ -32,6 +32,7 @@ export const useGetUsers = ({ page = 1, limit = 10, view = 'active', search = ''
 
 export const useGetUser = (id) => {
   const { user: { token } } = useAuthContext()
+  const queryClient = useQueryClient()
 
   return useQuery({
     queryKey: ['users', { id }],
@@ -42,6 +43,10 @@ export const useGetUser = (id) => {
         { headers: { Authorization: `Bearer ${token}` } })
 
       return data
+    },
+
+    onSuccess: (data, id) => {
+      queryClient.setQueryData(['users', { id }], data)
     }
   })
 }
