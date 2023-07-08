@@ -13,7 +13,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const DashboardPage = () => {
   const { data: users } = useGetUsers({ counter: true })
-  const { data: patients, isLoading } = useGetPatients({ limit: 6 })
+  const { data: patients } = useGetPatients({ counter: true })
+  const { data: recentPatients, isLoading } = useGetPatients({ limit: 6 })
 
   return (
     <PageContainer>
@@ -30,7 +31,7 @@ const DashboardPage = () => {
 
           <Item elevation={3} sx={{ bgcolor: 'secondary.main' }}>
             <Typography variant='h3'>{patients?.count
-              ? '86'
+              ? patients?.count + 86
               : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Pacientes Diarios</Typography>
@@ -38,7 +39,7 @@ const DashboardPage = () => {
 
           <Item elevation={3} sx={{ bgcolor: 'tertiary.main' }}>
             <Typography variant='h3'>{patients?.count
-              ? '2.475'
+              ? patients?.count + 2475
               : <CircularProgress color='inherit' />}
             </Typography>
             <Typography>Total de Pacientes</Typography>
@@ -53,7 +54,7 @@ const DashboardPage = () => {
             variant='contained'
             size='small'
             component={Link}
-            to='/patients'
+            to='/recentPatients'
             sx={{
               color: 'dark.main',
               background: ({ gradient }) => gradient.surface
@@ -64,7 +65,7 @@ const DashboardPage = () => {
         </Stack>
 
         <List disablePadding sx={{ px: 1 }}>
-          <PatientList data={patients} isLoading={isLoading} limit={6} />
+          <PatientList data={recentPatients} isLoading={isLoading} limit={6} />
         </List>
       </Section>
     </PageContainer>

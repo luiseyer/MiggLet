@@ -1,12 +1,12 @@
 {
   "name": "migglet_app",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.9.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite build && vite preview --host --port=5173"
+    "preview": "vite preview --host --port=5173"
   },
   "dependencies": {
     "@emotion/react": "11.11.0",
@@ -18,14 +18,15 @@
     "marked": "5.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-router-dom": "6.11.1"
+    "react-router-dom": "6.11.1",
+    "sanitize-html": "2.11.0"
   },
   "devDependencies": {
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@vitejs/plugin-react": "4.0.0",
     "eslint-plugin-react-hooks": "4.6.0",
-    "vite": "4.3.2",
+    "vite": "4.4.2",
     "vite-plugin-pwa": "0.16.4"
   }
 }
