@@ -26,7 +26,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <Backdrop sx={{ color: '#fff', zIndex: 9999 }} open={isLoading}>
+      <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
         <CircularProgress color='inherit' />
       </Backdrop>
 

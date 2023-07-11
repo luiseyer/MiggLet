@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { Box } from '@mui/material'
-import { LoginForm, FirstLoginForm } from '@components'
+import { LoginForm } from '@components'
 import { useAuthContext } from '@hooks'
 
 function LoginPage () {
@@ -13,12 +13,10 @@ function LoginPage () {
       minHeight: '100dvh',
       display: 'grid',
       placeItems: 'center',
-      background: (theme) => theme.gradient.light
+      background: ({ gradient }) => gradient.light
     }}
     >
-      {!user
-        ? <LoginForm />
-        : <FirstLoginForm />}
+      <LoginForm />
     </Box>
   )
 }

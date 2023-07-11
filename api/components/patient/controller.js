@@ -86,11 +86,13 @@ const updatePatient = async (req, res, next) => {
   try {
     const { id } = req.params
 
-    const { dni } = req.body
+    const { consultation } = req.body
 
-    await Patient.findByIdAndUpdate(id, {
-      $set: { dni }
-    })
+    await Patient.findByIdAndUpdate(id,
+      {
+        $push: { consultations: consultation }
+      },
+      { new: true, upsert: true })
 
     const updatedPatient = await Patient.findById(id)
 

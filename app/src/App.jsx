@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { DashboardPage, PatientsPage, SinglePatientPage, UsersPage, SingleUserPage, UserProfilePage, LoginPage, HomePage, AboutPage } from '@pages'
+import { DashboardPage, PatientsPage, SinglePatientPage, UsersPage, SingleUserPage, UserProfilePage, LoginPage, HomePage, AboutPage, SettingsPage } from '@pages'
 import { PrivateRoute } from '@components'
 
 const App = () => {
@@ -21,6 +21,7 @@ const App = () => {
         <Route path=':hash' element={<AboutPage />} />
       </Route>
       <Route path='/profile' element={<PrivateRoute page={<UserProfilePage />} />} />
+      <Route path='/settings' element={<PrivateRoute page={<SettingsPage />} requireAdmin />} />
     </Routes>
   )
 }

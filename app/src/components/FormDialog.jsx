@@ -8,23 +8,28 @@ const Transition = forwardRef(function Transition (props, ref) {
 const FormDialog = ({
   children,
   open,
-  isLoading,
+  mutationObject = {},
   handleClose,
   field,
   value,
   action = () => {},
   ...props
 }) => {
+  const { mutate, isLoading, isSuccess } = mutationObject
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget).get(field)
+    const data = new FormData(event.currentTarget).get(field).trim()
 
-    if (value !== data) {
-      action({ [field]: data })
-    }
-
-    handleClose()
+    if (data && data.trim('').length !== 0 && data !== value) {
+      mutate({ [field]: data })
+    } else handleClose()
   }
+
+  useEffect(() => {
+    if (isSuccess) handleClose()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSuccess])
 
   useEffect(() => {
     document.querySelectorAll('.section').forEach(section => {
@@ -38,7 +43,7 @@ const FormDialog = ({
   return (
     <>
       {isLoading &&
-        <Backdrop sx={{ color: '#fff', zIndex: 9999, bgcolor: 'rgba(0,0,0, 0.1)' }} open={isLoading}>
+        <Backdrop sx={{ color: 'primary.light', bgcolor: 'transparent', zIndex: 9999 }} open={isLoading}>
           <CircularProgress color='inherit' />
         </Backdrop>}
 

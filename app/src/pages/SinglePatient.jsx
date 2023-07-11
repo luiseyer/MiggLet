@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { marked } from 'marked'
 import { Accordion, AccordionDetails, AccordionSummary, Box, FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select, Skeleton, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section, UpdatePatient } from '@components'
 import { useGetPatient } from '@hooks/usePatients'
-import { formatDate } from '@helpers'
+import { formatDate, markdownToHtml } from '@helpers'
 
 const TextSkeleton = (props) => (
   <Typography {...props}>
@@ -27,8 +26,6 @@ const ListItemSkeleton = ({ w1 = 200, w2 = 100, sx }) => (
 const SinglePatient = () => {
   const { id } = useParams()
   const { data, isLoading } = useGetPatient(id)
-
-  console.log(data?.medicalBackgrounds)
 
   const generatePersonalData = (data) => [
     { name: 'Número de historia:', value: data?.medicalRecordNumber, icon: <LocalHospitalIcon color='primary' /> },
@@ -113,15 +110,19 @@ const SinglePatient = () => {
               </Stack>
             </AccordionSummary>
             <AccordionDetails>
-              <List disablePadding>
+              <List component='div' disablePadding>
                 {data?.medicalBackgrounds?.map(({ name, description }, i) => (
                   <ListItem key={i}>
                     <ListItemText
-                      primary={<Typography mb={1} variant='subtitle1' textTransform='capitalize' fontWeight={500}>{name}</Typography>}
+                      primary={<Typography mb={1} variant='subtitle1' textTransform='capitalize' fontSize='1.15rem' fontWeight={500}>{name}</Typography>}
                       secondary={
                         <Typography
-                          sx={{ '& ul': { pl: 3, listStyleType: 'square' }, '& ::marker': { color: 'secondary.main' } }}
-                          dangerouslySetInnerHTML={{ __html: marked.parse(description, { mangle: false, headerIds: false }) }}
+                          sx={{
+                            '& :is(ul, ol)': { pl: 4, m: 0 },
+                            '& ul': { listStyleType: 'square' },
+                            '& ::marker': { color: 'secondary.main' }
+                          }}
+                          dangerouslySetInnerHTML={{ __html: markdownToHtml(description) }}
                         />
                         }
                       sx={{ '& .MuiListItemText-secondary': { color: 'dark.main' } }}
@@ -148,7 +149,7 @@ const SinglePatient = () => {
             <AccordionDetails>
               <Stack spacing='0.5rem'>
                 {date &&
-                  <FormControl variant='outlined' sx={{ mx: 3, mt: 3 }}>
+                  <FormControl variant='outlined' sx={{ mx: 2, mt: 3 }}>
                     <InputLabel id='consultations-dates-label'>Fecha de consulta</InputLabel>
                     <Select
                       id='consultations-dates'
@@ -162,33 +163,34 @@ const SinglePatient = () => {
                     </Select>
                   </FormControl>}
 
-                {isLoading && <Skeleton component={Box} variant='rectangular' height={60} sx={{ mx: 3, mt: 3 }} />}
+                {isLoading && <Skeleton component={Box} variant='rectangular' height={60} sx={{ mx: 2, mt: 3 }} />}
 
                 <List>
                   {currentConsultation &&
-                    <ListItem sx={{ gap: 2, px: 3 }}>
+                    <ListItem sx={{ gap: 2, px: 2 }}>
                       <ListItemIcon sx={{ minWidth: 'auto' }}>
                         <PersonIcon color='tertiary' />
                       </ListItemIcon>
                       <ListItemText primary='Médico:' secondary={currentConsultation.medic} />
                     </ListItem>}
 
-                  {isLoading && <ListItemSkeleton sx={{ px: 3 }} w1={100} w2={200} />}
+                  {isLoading && <ListItemSkeleton sx={{ px: 2 }} w1={100} w2={200} />}
 
                   {!isLoading && !currentConsultation &&
                     <Typography variant='h5' textAlign='center' py={6}>No hay consultas</Typography>}
-
                 </List>
 
                 {currentConsultation &&
                   <Typography
+                    component='div'
                     sx={{
-                      '& ul': { pl: 2.5, m: 0, listStyleType: 'square' },
-                      '& ul li': { mb: 3 },
-                      '& ::marker': { color: 'tertiary.main' }
+                      '& :is(ul, ol)': { pl: 4, m: 0 },
+                      '& ul': { listStyleType: 'square' },
+                      '& :is(ul, ol) li': { mb: 2 },
+                      '& ::marker': { color: 'tertiary.dark' },
+                      px: 2
                     }}
-                    px={3}
-                    dangerouslySetInnerHTML={{ __html: marked.parse(currentConsultation.description, { mangle: false, headerIds: false }) }}
+                    dangerouslySetInnerHTML={{ __html: markdownToHtml(currentConsultation.description) }}
                   />}
 
                 {isLoading && <TextSkeleton px={3} />}

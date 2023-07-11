@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Dialog, DialogContent, DialogTitle, IconButton, ListItemIcon, ListItemText, Menu, MenuItem, TextField } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, EventNote as EventNoteIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material'
+import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
+import { LocalHospital as LocalHospitalIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
+import { RegisterConsultationForm } from '@components'
 
 const UpdatePatient = ({ medicalBackgrounds }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -56,23 +57,8 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
         </MenuItem>
       </Menu>
 
-      <Dialog
-        open={openConsultationForm}
-        onClose={handleConsultationFormClose}
-        fullScreen
-      >
-        <DialogTitle>
-          <IconButton color='dark' onClick={handleConsultationFormClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <ArrowBackIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <TextField
-            id='outlined-multiline-static'
-            fullWidth
-          />
-        </DialogContent>
-      </Dialog>
+      {openConsultationForm &&
+        <RegisterConsultationForm open={openConsultationForm} handleClose={handleConsultationFormClose} />}
     </>
   )
 }

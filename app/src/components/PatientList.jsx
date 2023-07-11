@@ -12,7 +12,8 @@ const PatientList = ({ data, isLoading, limit }) => {
   return (
     <>
       {!isLoading && data?.count === 0 &&
-        <Stack justifyContent='center' height='100%' px='2rem'>
+        <Stack justifyContent='center' alignItems='center' height='100%' px='2rem'>
+          <TextSnippetIcon color='secondary' sx={{ width: '8rem', height: '8rem' }} />
           <Typography variant='h2' textAlign='center'>Sin resultados</Typography>
         </Stack>}
 

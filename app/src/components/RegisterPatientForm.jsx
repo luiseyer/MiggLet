@@ -1,11 +1,7 @@
-import { forwardRef, useEffect, useState } from 'react'
-import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Fab, TextField, Slide, DialogActions } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Fab, TextField, DialogActions } from '@mui/material'
 import { Add as AddIcon, ArrowBack as ArrowBackIcon, Send as SendIcon } from '@mui/icons-material'
 import { useCreatePatient } from '@hooks/usePatients'
-
-const Transition = forwardRef(function Transition (props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />
-})
 
 const RegisterPatientForm = ({
   count,
@@ -13,7 +9,7 @@ const RegisterPatientForm = ({
 }) => {
   const fields = ['firstnames', 'lastnames', 'birthdate', 'dni', 'location', 'medicalRecordNumber']
 
-  const { mutate, isLoading, data: mutateData } = useCreatePatient()
+  const { mutate, isLoading, isSuccess } = useCreatePatient()
 
   const [open, setOpen] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
@@ -27,15 +23,15 @@ const RegisterPatientForm = ({
   }
 
   useEffect(() => {
-    if (mutateData) {
-      setOpen(false)
+    if (isSuccess) {
       refetchFn()
+      setOpen(false)
     }
-  }, [mutateData, refetchFn])
+  }, [isSuccess, refetchFn])
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
+    const formData = new window.FormData(event.currentTarget)
     const data = {}
     fields.forEach(field => {
       data[field] = formData.get(field)
@@ -44,7 +40,7 @@ const RegisterPatientForm = ({
   }
 
   const handleInput = (event) => {
-    const formData = new FormData(event.currentTarget)
+    const formData = new window.FormData(event.currentTarget)
     const values = fields.map(field => formData.get(field))
 
     if (values.every(value => value && value.trim('').length !== 0)) {
@@ -57,12 +53,12 @@ const RegisterPatientForm = ({
   return (
     <>
       {open && isLoading &&
-        <Backdrop sx={{ color: '#fff', zIndex: 9999999, bgcolor: 'rgba(0,0,0, 0.5)' }} open={isLoading}>
+        <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
           <CircularProgress color='inherit' />
         </Backdrop>}
 
       {open &&
-        <Backdrop sx={{ color: '#fff', zIndex: 9999999, bgcolor: 'rgba(0,0,0, 0.5)' }} open={!count}>
+        <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={!count}>
           <CircularProgress color='inherit' />
         </Backdrop>}
 
@@ -74,7 +70,6 @@ const RegisterPatientForm = ({
           onClose={handleClose}
           onInput={handleInput}
           onSubmit={handleSubmit}
-          TransitionComponent={Transition}
           fullScreen
         >
           <DialogTitle component='header' sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}>

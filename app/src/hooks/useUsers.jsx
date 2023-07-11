@@ -52,7 +52,7 @@ export const useGetUser = (id) => {
 }
 
 export const useUpdateUser = (id) => {
-  const { user: { token } } = useAuthContext()
+  const { user: { token, id: userID }, dispatch } = useAuthContext()
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -66,13 +66,18 @@ export const useUpdateUser = (id) => {
       return data
     },
 
-    onSuccess: (data, id) => {
-      queryClient.setQueryData(['users', { id }], data)
+    onSuccess: (data) => {
+      queryClient.setQueryData(['users', { id: data.id }], data)
+
+      if (data.id === userID) {
+        window.localStorage.setItem('user', JSON.stringify({ ...data, token }))
+        dispatch({ type: 'LOGIN', payload: { ...data, token } })
+      }
     }
   })
 }
 
-export const useDeleteUser = (id) => {
+export const useManageActiveUser = (id) => {
   const { user: { token } } = useAuthContext()
   const queryClient = useQueryClient()
 
@@ -87,8 +92,34 @@ export const useDeleteUser = (id) => {
       return data
     },
 
-    onSuccess: (data, id) => {
-      queryClient.setQueryData(['users', { id }], data)
+    onSuccess: (data) => {
+      queryClient.setQueryData(['users', { id: data.id }], data)
+    }
+  })
+}
+
+export const useManageAdminUser = (id) => {
+  const { user: { token, id: userID }, dispatch } = useAuthContext()
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationKey: ['users', { id }],
+
+    mutationFn: async () => {
+      const { data } = await axios.patch(
+        `/api/users/set-remove-admin/${id}`, {},
+        { headers: { Authorization: `Bearer ${token}` } })
+
+      return data
+    },
+
+    onSuccess: (data) => {
+      queryClient.setQueryData(['users', { id: data.id }], data)
+
+      if (data.id === userID) {
+        window.localStorage.setItem('user', JSON.stringify({ ...data, token }))
+        dispatch({ type: 'LOGIN', payload: { ...data, token } })
+      }
     }
   })
 }

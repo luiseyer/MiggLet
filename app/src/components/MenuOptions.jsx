@@ -19,12 +19,6 @@ const MenuOptions = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
-  const viewProfile = () => {
-    navigate('/profile')
-  }
-  const about = () => {
-    navigate('/about')
-  }
 
   return (
     <>
@@ -52,7 +46,7 @@ const MenuOptions = () => {
         }}
       >
         {isAdmin && !pathnames.includes('settings') &&
-          <MenuItem onClick={handleClose} divider>
+          <MenuItem onClick={() => navigate('/settings')} divider>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
@@ -60,7 +54,7 @@ const MenuOptions = () => {
           </MenuItem>}
 
         {!pathnames.includes('about') &&
-          <MenuItem onClick={about} divider>
+          <MenuItem onClick={() => navigate('/about')} divider>
             <ListItemIcon>
               <InfoIcon />
             </ListItemIcon>
@@ -68,7 +62,7 @@ const MenuOptions = () => {
           </MenuItem>}
 
         {!pathnames.includes('profile') &&
-          <MenuItem onClick={viewProfile} divider>
+          <MenuItem onClick={() => navigate('/profile')} divider>
             <ListItemIcon>
               <AccountIcon />
             </ListItemIcon>

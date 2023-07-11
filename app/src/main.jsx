@@ -10,7 +10,13 @@ import { SearchContextProvider } from '@contexts/SearchContext'
 import theme from './theme'
 import App from './App.jsx'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60 * 24
+    }
+  }
+})
 
 const Root = document.getElementById('root')
 

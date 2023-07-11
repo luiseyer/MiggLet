@@ -1,10 +1,12 @@
 import { useParams } from 'react-router-dom'
-import { Avatar, Box, List, ListItemIcon, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section, ListActionButton, DeleteUserDialog } from '@components'
-import { useGetUser } from '../hooks/useUsers'
+import { Avatar, Badge, Box, List, ListItemIcon, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
+import { ManageAccounts as ManageAccountsIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
+import { PageContainer, NavigationMenu, Section, ListActionButton, DeleteUserDialog, ManageAdminDialog } from '@components'
+import { useGetUser } from '@hooks/useUsers'
+import { useAuthContext } from '@hooks'
 
 const SingleUserPage = () => {
+  const { user } = useAuthContext()
   const { id } = useParams()
   const { data } = useGetUser(id)
 
@@ -19,18 +21,29 @@ const SingleUserPage = () => {
 
       <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
         <Stack spacing='2rem' alignItems='center'>
-          <Box sx={{ p: '0.25rem', width: '50%', aspectRatio: 1, borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
-            {data
-              ? <Avatar
+          <Box sx={{ display: 'block', p: '0.25rem', width: '50%', aspectRatio: 1, borderRadius: '100%', border: '0.25rem solid rgba(0, 0, 0, 0.25)' }}>
+            {data &&
+              <Badge
+                color='primary'
+                overlap='circular'
+                badgeContent={<ManageAccountsIcon />}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                sx={{
+                  '& .MuiBadge-badge': {
+                    width: '3rem',
+                    height: '3rem',
+                    borderRadius: '50%',
+                    ...((!data.isAdmin || (data.isAdmin && !user.isAdmin)) && { display: 'none' })
+                  }
+                }}
+              >
+                <Avatar
                   src={data.profilePictureURL}
-                  sx={{
-                    bgcolor: 'secondary.main',
-                    aspectRatio: '1',
-                    width: '100%',
-                    height: '100%'
-                  }}
+                  sx={{ bgcolor: 'secondary.main', aspectRatio: '1', width: '100%', height: '100%' }}
                 />
-              : <Skeleton variant='circular' width='100%' height='100%' />}
+              </Badge>}
+
+            {!data && <Skeleton variant='circular' width='100%' height='100%' />}
           </Box>
 
           <Typography variant='h4' textAlign='center' width='100%'>
@@ -56,36 +69,6 @@ const SingleUserPage = () => {
           <List sx={{ display: 'grid', gridTemplateColumns: 'minmax(min(500px, 100%), 500px)', gap: '1rem' }}>
             {data &&
               <>
-                {/* <Stack
-                  direction='row'
-                  spacing={4}
-                  justifyContent='center'
-                  sx={{ '& .MuiButton-startIcon': { m: 0 } }}
-                >
-                  <Button
-                    href={`tel:${data.phone}`}
-                    startIcon={<CallIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-                    sx={{ flexDirection: 'column' }}
-                  >
-                    Llamar
-                  </Button>
-
-                  <Button
-                    href={`sms:${data.phone}`}
-                    startIcon={<SmsIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-                    sx={{ flexDirection: 'column' }}
-                  >
-                    Mensaje
-                  </Button>
-
-                  <Button
-                    href={`mailto:${data.email}`}
-                    startIcon={<EmailIcon color='primary' sx={{ width: '2rem', height: '2rem' }} />}
-                    sx={{ flexDirection: 'column' }}
-                  >
-                    Correo
-                  </Button>
-                </Stack> */}
                 <ListActionButton
                   component='a'
                   href={`tel:${data.phone}`}
@@ -131,7 +114,8 @@ const SingleUserPage = () => {
         </Stack>
       </Section>
 
-      <DeleteUserDialog id={id} />
+      {user && user.isAdmin && <DeleteUserDialog id={id} />}
+      {user && user.isAdmin && <ManageAdminDialog id={id} />}
     </PageContainer>
   )
 }

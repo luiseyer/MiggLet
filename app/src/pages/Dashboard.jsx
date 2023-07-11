@@ -54,7 +54,7 @@ const DashboardPage = () => {
             variant='contained'
             size='small'
             component={Link}
-            to='/recentPatients'
+            to='/patients'
             sx={{
               color: 'dark.main',
               background: ({ gradient }) => gradient.surface

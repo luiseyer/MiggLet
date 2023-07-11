@@ -1,9 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate, Outlet } from 'react-router-dom'
 import { useAuthContext } from '@hooks'
 
-const PrivateRoute = ({ page }) => {
+const PrivateRoute = ({ page, requireAdmin }) => {
+  const navigate = useNavigate()
   const { user } = useAuthContext()
-  if (!user) return (<Navigate to='/login' replace />)
+
+  useEffect(() => {
+    if (!user) navigate('/login')
+    if (requireAdmin && !user.isAdmin) navigate(-1)
+  }, [user, requireAdmin, navigate])
+
+  if (!user) return
+  if (requireAdmin && !user.isAdmin) return
   return page || <Outlet />
 }
 

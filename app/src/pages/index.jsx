@@ -7,6 +7,7 @@ import PatientsPage from './Patients'
 import SinglePatientPage from './SinglePatient'
 import LoginPage from './Login'
 import AboutPage from './About'
+import SettingsPage from './Settings'
 
 export {
   HomePage,
@@ -17,5 +18,6 @@ export {
   PatientsPage,
   SinglePatientPage,
   LoginPage,
-  AboutPage
+  AboutPage,
+  SettingsPage
 }

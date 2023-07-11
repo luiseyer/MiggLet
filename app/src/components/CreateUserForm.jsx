@@ -8,7 +8,7 @@ const CreateUserForm = ({
 }) => {
   return (
     <>
-      <Backdrop sx={{ color: '#fff', zIndex: 999 }} open={false}>
+      <Backdrop sx={{ color: 'primary.main', zIndex: 9999 }} open={false}>
         <CircularProgress color='inherit' />
       </Backdrop>
 

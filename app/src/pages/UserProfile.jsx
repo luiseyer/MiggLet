@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Avatar, Badge, Box, DialogContent, DialogTitle, IconButton, List, ListItemIcon, ListItemText, Skeleton, Stack, TextField } from '@mui/material'
 import { Person as PersonIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon, Edit as EditIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material'
-import { PageContainer, NavigationMenu, Section, ListActionButton, FormDialog, DeleteUserDialog } from '@components'
+import { PageContainer, NavigationMenu, Section, ListActionButton, FormDialog } from '@components'
 import { useAuthContext } from '@hooks'
 
 import { useGetUser, useUpdateUser } from '@hooks/useUsers'
@@ -10,9 +10,9 @@ const UserProfilePage = () => {
   const colors = ['primary', 'secondary', 'tertiary']
   let color = -1
 
-  const { user: session, dispatch } = useAuthContext()
+  const { user: session } = useAuthContext()
   const { data } = useGetUser(session.id)
-  const { mutate, data: mutateData, isLoading } = useUpdateUser(session.id)
+  const updateUser = useUpdateUser(session.id)
 
   const [user, setUser] = useState(null)
 
@@ -23,14 +23,6 @@ const UserProfilePage = () => {
       setUser(data)
     }
   }, [data, session])
-
-  useEffect(() => {
-    if (mutateData) {
-      window.localStorage.setItem('user', JSON.stringify({ ...mutateData, token: session.token }))
-      dispatch({ type: 'LOGIN', payload: { ...mutateData, token: session.token } })
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mutateData, dispatch])
 
   const generatePersonalData = (data) => [
     { name: 'Nombres', value: data?.firstnames, field: 'firstnames', icon: color => <PersonIcon color={color} />, plural: true },
@@ -49,17 +41,9 @@ const UserProfilePage = () => {
     }
   }, [user])
 
-  useEffect(() => {
-    if (mutateData) {
-      setPersonalData(generatePersonalData(mutateData))
-    }
-  }, [mutateData])
-
   const [openFormDialog, setOpenFormDialog] = useState('')
-  const [formDialogInputValue, setFormDialogInputValue] = useState('')
 
   const handleClickOpenFormDialog = (value, dialog) => () => {
-    setFormDialogInputValue(value)
     setOpenFormDialog(dialog)
   }
 
@@ -67,15 +51,9 @@ const UserProfilePage = () => {
     setOpenFormDialog(false)
   }
 
-  const handleChange = ({ target }) => {
-    setFormDialogInputValue(target.value)
-  }
-
   return (
     <PageContainer>
-      <NavigationMenu
-        variant='toolbar' title='usuario' manageAdminButton deleteButton
-      />
+      <NavigationMenu variant='toolbar' title='perfil' />
 
       <Section spacing='2rem' sx={{ display: 'grid', gridTemplateColumns: 'min(600px, 100%)', justifyContent: 'center' }}>
         <Stack spacing='2rem' alignItems='center'>
@@ -85,10 +63,7 @@ const UserProfilePage = () => {
                 color='primary'
                 overlap='circular'
                 badgeContent={<PhotoCameraIcon />}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right'
-                }}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 sx={{
                   '& .MuiBadge-badge': {
                     width: '3rem',
@@ -99,12 +74,7 @@ const UserProfilePage = () => {
               >
                 <Avatar
                   src={user.profilePictureURL}
-                  sx={{
-                    bgcolor: 'secondary.main',
-                    aspectRatio: '1',
-                    width: '100%',
-                    height: '100%'
-                  }}
+                  sx={{ bgcolor: 'secondary.main', aspectRatio: '1', width: '100%', height: '100%' }}
                 />
               </Badge>}
 
@@ -142,8 +112,7 @@ const UserProfilePage = () => {
                   {value &&
                     <FormDialog
                       open={openFormDialog === `dialog-${i}`}
-                      action={(data) => { mutate(data) }}
-                      isLoading={isLoading}
+                      mutationObject={updateUser}
                       handleClose={handleCloseFormDialog}
                       field={field}
                       value={value}
@@ -155,8 +124,7 @@ const UserProfilePage = () => {
                           id='data-profile'
                           name={field}
                           type='text'
-                          value={formDialogInputValue || value}
-                          onChange={handleChange}
+                          defaultValue={value}
                           autoComplete='off'
                           variant='standard'
                           margin='none'
@@ -170,8 +138,6 @@ const UserProfilePage = () => {
           </List>
         </Stack>
       </Section>
-
-      {user && <DeleteUserDialog id={user.id} />}
 
     </PageContainer>
   )

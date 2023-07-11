@@ -104,7 +104,7 @@ const NavigationMenu = ({
           <Stack direction='row' spacing={1} justifyContent='flex-end' alignItems='center'>
             {isAdmin && manageAdminButton &&
               <Tooltip title='Configurar tipo de usuario' arrow>
-                <IconButton>
+                <IconButton id='manage-admin-button'>
                   <ManageAccountsIcon />
                 </IconButton>
               </Tooltip>}

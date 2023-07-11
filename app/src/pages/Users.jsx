@@ -12,7 +12,7 @@ const UsersPage = () => {
   const [page, setPage] = useState(1)
   const limit = 10
 
-  const { data, isLoading } = useGetUsers({ page, limit, search: searchQuery })
+  const { data, isLoading, refetch } = useGetUsers({ page, limit, search: searchQuery })
 
   const handlePageChange = (_, newPage) => {
     setPage(newPage)
@@ -31,7 +31,7 @@ const UsersPage = () => {
       <NavigationMenu title='usuarios' />
       <Section sx={{ display: 'grid', gridTemplateColumns: '100%', gridTemplateRows: '1fr', px: 0 }}>
         <List disablePadding>
-          <UserList data={data} isLoading={isLoading} limit={limit} />
+          <UserList data={data} isLoading={isLoading} limit={limit} refetchFn={refetch} />
         </List>
 
         {data?.count > limit &&

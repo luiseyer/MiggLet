@@ -174,6 +174,7 @@ const setRemoveAdmin = async (req, res, next) => {
     await User.findByIdAndUpdate(id, { $set: { isAdmin: !isAdmin } })
 
     const updatedUser = await User.findById(id)
+
     return res.status(200).json(DTO.single(updatedUser))
   } catch (error) { next(error) }
 }

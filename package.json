@@ -13,15 +13,17 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=app",
-    "preview": "npm run preview --workspace=app",
+    "start:api": "npm run preview --workspace=app",
+    "start:app": "npm run start --workspace=api",
     "dev:api": "npm run dev --workspace=api",
     "dev:app": "npm run dev --workspace=app",
     "test:api": "npm run test --workspace=api",
+    "test:app": "echo \"aún no existe este test\"",
     "reset-data-base": "npm run reset-data-base --workspace=api"
   },
   "devDependencies": {
     "cross-env": "7.0.3",
-    "standard": "16.0.4"
+    "standard": "17.1.0"
   },
   "eslintConfig": {
     "plugins": [

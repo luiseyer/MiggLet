@@ -5,12 +5,12 @@ const consultationSchema = new Schema({
   date: { type: Date },
   medic: { type: Types.ObjectId, ref: 'User' },
   description: { type: String }
-})
+}, { timestamps: true })
 
 const MedicalBackgroundSchema = new Schema({
   name: { type: String },
   description: { type: String }
-})
+}, { timestamps: true })
 
 const PatientSchema = new Schema({
   dni: { type: String, required: true, unique: true },

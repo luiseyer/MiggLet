@@ -11,11 +11,12 @@ const single = (resource, authUser) => ({
 })
 
 const consultations = (consultations) =>
-  consultations.map(({ medic, date, description }) => ({
+  consultations.map(({ medic, date, description, _id }) => ({
+    id: _id,
     date,
     description,
     medic: `${medic.firstnames} ${medic.lastnames}`
-  }))
+  })).sort((a, b) => new Date(b.date) - new Date(a.date))
 
 const multiple = (resources, authUser) =>
   resources.map(resource => single(resource, authUser))
