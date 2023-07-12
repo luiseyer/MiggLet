@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Backdrop, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material'
 import { useGetUser, useManageAdminUser } from '@hooks/useUsers'
@@ -60,4 +60,4 @@ const ManageAdminDialog = ({ id }) => {
   )
 }
 
-export default ManageAdminDialog
+export default memo(ManageAdminDialog)

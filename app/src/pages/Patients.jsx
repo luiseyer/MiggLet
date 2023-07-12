@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { List, Pagination } from '@mui/material'
 import { PageContainer, Section, NavigationMenu, PatientList, RegisterPatientForm } from '@components'
 import { useSearchContext } from '@hooks'
@@ -42,4 +42,4 @@ const PatientsPage = () => {
   )
 }
 
-export default PatientsPage
+export default memo(PatientsPage)

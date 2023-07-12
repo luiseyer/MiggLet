@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Accordion, AccordionDetails, AccordionSummary, Box, FormControl, InputLabel, List, ListItem, ListItemIcon, ListItemText, MenuItem, Select, Skeleton, Stack, Typography } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, CalendarMonth as CalendarMonthIcon, AccountBox as AccountBoxIcon, LocationOn as LocationOnIcon, ExpandMore as ExpandMoreIcon, Person as PersonIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
@@ -6,22 +6,22 @@ import { PageContainer, NavigationMenu, Section, UpdatePatient } from '@componen
 import { useGetPatient } from '@hooks/usePatients'
 import { formatDate, markdownToHtml } from '@helpers'
 
-const TextSkeleton = (props) => (
+const TextSkeleton = memo((props) => (
   <Typography {...props}>
     {[100, 85, 100, 80, 90, 100, 85, 100, 80, 90, 100].map((w, i) => (
       <Skeleton key={i} width={`${w}%`} />
     ))}
   </Typography>
-)
+))
 
-const ListItemSkeleton = ({ w1 = 200, w2 = 100, sx }) => (
+const ListItemSkeleton = memo(({ w1 = 200, w2 = 100, sx }) => (
   <ListItem sx={{ gap: 2, ...sx }}>
     <ListItemIcon sx={{ minWidth: 'auto' }}>
       <Skeleton variant='rectangular' width={32} height={32} />
     </ListItemIcon>
     <ListItemText primary={<Skeleton width={w1} />} secondary={<Skeleton width={w2} />} />
   </ListItem>
-)
+))
 
 const SinglePatient = () => {
   const { id } = useParams()
@@ -205,4 +205,4 @@ const SinglePatient = () => {
   )
 }
 
-export default SinglePatient
+export default memo(SinglePatient)

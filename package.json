@@ -13,8 +13,8 @@
   ],
   "scripts": {
     "build": "npm run build --workspace=app",
-    "start:api": "npm run preview --workspace=app",
-    "start:app": "npm run start --workspace=api",
+    "start:api": "npm run start --workspace=api",
+    "start:app": "npm run preview --workspace=app",
     "dev:api": "npm run dev --workspace=api",
     "dev:app": "npm run dev --workspace=app",
     "test:api": "npm run test --workspace=api",

@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Avatar, Badge, Box, DialogContent, DialogTitle, IconButton, List, ListItemIcon, ListItemText, Skeleton, Stack, TextField } from '@mui/material'
 import { Person as PersonIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon, Edit as EditIcon, PhotoCamera as PhotoCameraIcon } from '@mui/icons-material'
 import { PageContainer, NavigationMenu, Section, ListActionButton, FormDialog } from '@components'
 import { useAuthContext } from '@hooks'
-
 import { useGetUser, useUpdateUser } from '@hooks/useUsers'
 
 const UserProfilePage = () => {
@@ -143,4 +142,4 @@ const UserProfilePage = () => {
   )
 }
 
-export default UserProfilePage
+export default memo(UserProfilePage)

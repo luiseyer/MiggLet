@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { Typography } from '@mui/material'
 import { PageContainer, NavigationMenu, Section } from '@components'
@@ -78,4 +78,4 @@ const AboutPage = () => {
   )
 }
 
-export default AboutPage
+export default memo(AboutPage)

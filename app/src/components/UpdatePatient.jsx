@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
 import { LocalHospital as LocalHospitalIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
-import { RegisterConsultationForm } from '@components'
+import { RegisterConsultationForm, RegisterMedicalBackgroundForm } from '@components'
 
 const UpdatePatient = ({ medicalBackgrounds }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -21,10 +21,7 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
   }, [])
 
   const [openConsultationForm, setOpenConsultationForm] = useState(false)
-
-  const handleConsultationFormClose = () => {
-    setOpenConsultationForm(false)
-  }
+  const [openMedicalBackgroundForm, setOpenMedicalBackgroundForm] = useState(false)
 
   return (
     <>
@@ -46,7 +43,7 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
           }
         }}
       >
-        <MenuItem onClick={handleClose} divider>
+        <MenuItem onClick={() => setOpenMedicalBackgroundForm(true)} divider>
           <ListItemIcon><EventNoteIcon /></ListItemIcon>
           <ListItemText primary='Registrar antecedente' />
         </MenuItem>
@@ -57,10 +54,13 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
         </MenuItem>
       </Menu>
 
+      {openMedicalBackgroundForm &&
+        <RegisterMedicalBackgroundForm open={openMedicalBackgroundForm} handleClose={() => setOpenMedicalBackgroundForm(false)} />}
+
       {openConsultationForm &&
-        <RegisterConsultationForm open={openConsultationForm} handleClose={handleConsultationFormClose} />}
+        <RegisterConsultationForm open={openConsultationForm} handleClose={() => setOpenConsultationForm(false)} />}
     </>
   )
 }
 
-export default UpdatePatient
+export default memo(UpdatePatient)

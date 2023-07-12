@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useParams } from 'react-router-dom'
 import { Avatar, Badge, Box, List, ListItemIcon, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
 import { ManageAccounts as ManageAccountsIcon, LocalHospital as LocalHospitalIcon, Business as BusinessIcon, Email as EmailIcon, Call as CallIcon } from '@mui/icons-material'
@@ -120,4 +121,4 @@ const SingleUserPage = () => {
   )
 }
 
-export default SingleUserPage
+export default memo(SingleUserPage)

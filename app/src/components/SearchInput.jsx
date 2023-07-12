@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { InputBase } from '@mui/material'
 import { useSearchContext } from '@hooks'
 
@@ -16,4 +17,4 @@ const SearchInput = () => {
   )
 }
 
-export default SearchInput
+export default memo(SearchInput)

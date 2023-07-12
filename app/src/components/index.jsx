@@ -17,6 +17,7 @@ import SearchInput from './SearchInput'
 import UpdatePatient from './UpdatePatient'
 import RegisterPatientForm from './RegisterPatientForm'
 import RegisterConsultationForm from './RegisterConsultationForm'
+import RegisterMedicalBackgroundForm from './RegisterMedicalBackgroundForm'
 
 export {
   PageContainer,
@@ -37,5 +38,6 @@ export {
   SearchInput,
   UpdatePatient,
   RegisterPatientForm,
-  RegisterConsultationForm
+  RegisterConsultationForm,
+  RegisterMedicalBackgroundForm
 }

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Box, Typography } from '@mui/material'
 
 const AppTitle = (props) => {
@@ -10,4 +11,4 @@ const AppTitle = (props) => {
   )
 }
 
-export default AppTitle
+export default memo(AppTitle)

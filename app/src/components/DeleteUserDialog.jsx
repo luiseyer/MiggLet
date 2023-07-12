@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Backdrop, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material'
 import { useManageActiveUser } from '@hooks/useUsers'
@@ -64,4 +64,4 @@ const DeleteUserDialog = ({ id }) => {
   )
 }
 
-export default DeleteUserDialog
+export default memo(DeleteUserDialog)

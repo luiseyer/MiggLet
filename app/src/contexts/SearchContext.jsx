@@ -1,11 +1,11 @@
-import { createContext, useState } from 'react'
+import { createContext, memo, useState } from 'react'
 
 const SearchContext = createContext({
   searchQuery: '',
   setSearchQuery: () => {}
 })
 
-const SearchContextProvider = ({ children }) => {
+const SearchContextProvider = memo(({ children }) => {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
@@ -13,6 +13,6 @@ const SearchContextProvider = ({ children }) => {
       {children}
     </SearchContext.Provider>
   )
-}
+})
 
 export { SearchContext, SearchContextProvider }

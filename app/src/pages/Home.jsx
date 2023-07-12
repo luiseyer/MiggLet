@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Box } from '@mui/material'
 
@@ -33,4 +34,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default memo(HomePage)

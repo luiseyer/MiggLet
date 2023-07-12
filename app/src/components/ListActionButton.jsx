@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@mui/material'
 import { ChevronRight as ChevronRightIcon } from '@mui/icons-material'
 
@@ -38,4 +39,4 @@ const ListActionButton = ({
   )
 }
 
-export default ListActionButton
+export default memo(ListActionButton)

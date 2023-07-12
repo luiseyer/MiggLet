@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { List, Pagination, Typography } from '@mui/material'
 import { PageContainer, NavigationMenu, Section, UserList } from '@components'
 import { useSearchContext } from '@hooks'
@@ -43,4 +43,4 @@ const SettingsPage = () => {
   )
 }
 
-export default SettingsPage
+export default memo(SettingsPage)

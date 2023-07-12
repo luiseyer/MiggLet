@@ -3,6 +3,7 @@ import { Paper, styled, Typography, Box, List, Stack, Button, CircularProgress }
 import { PageContainer, Section, NavigationMenu, PatientList } from '@components'
 import { useGetUsers } from '@hooks/useUsers'
 import { useGetPatients } from '@hooks/usePatients'
+import { memo } from 'react'
 
 const Item = styled(Paper)(({ theme }) => ({
   padding: '1rem',
@@ -72,4 +73,4 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default memo(DashboardPage)

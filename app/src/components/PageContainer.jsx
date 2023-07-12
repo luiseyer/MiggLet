@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Box } from '@mui/material'
 
 const PageContainer = ({ children }) => {
@@ -16,4 +17,4 @@ const PageContainer = ({ children }) => {
   )
 }
 
-export default PageContainer
+export default memo(PageContainer)

@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Navigate } from 'react-router-dom'
 import { Box } from '@mui/material'
 import { LoginForm } from '@components'
@@ -21,4 +22,4 @@ function LoginPage () {
   )
 }
 
-export default LoginPage
+export default memo(LoginPage)

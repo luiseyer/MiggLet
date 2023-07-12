@@ -1,9 +1,9 @@
-import { forwardRef, useEffect } from 'react'
+import { forwardRef, memo, useEffect } from 'react'
 import { Backdrop, Button, CircularProgress, Dialog, DialogActions, Slide } from '@mui/material'
 
-const Transition = forwardRef(function Transition (props, ref) {
+const Transition = memo(forwardRef(function Transition (props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
-})
+}))
 
 const FormDialog = ({
   children,
@@ -12,7 +12,6 @@ const FormDialog = ({
   handleClose,
   field,
   value,
-  action = () => {},
   ...props
 }) => {
   const { mutate, isLoading, isSuccess } = mutationObject
@@ -78,4 +77,4 @@ const FormDialog = ({
   )
 }
 
-export default FormDialog
+export default memo(FormDialog)

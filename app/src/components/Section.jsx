@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Box } from '@mui/material'
 
 const Section = ({ children, color, spacing, sx }) => {
@@ -19,4 +20,4 @@ const Section = ({ children, color, spacing, sx }) => {
   )
 }
 
-export default Section
+export default memo(Section)

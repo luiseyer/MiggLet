@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Backdrop, CircularProgress, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from '@mui/material'
 import { FormDialog } from '@components'
@@ -37,4 +38,4 @@ const CreateUserForm = ({
   )
 }
 
-export default CreateUserForm
+export default memo(CreateUserForm)

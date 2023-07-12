@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Link } from 'react-router-dom'
 import { Tab, Tabs } from '@mui/material'
 
@@ -10,7 +11,7 @@ const pages = [
 const NavigationTabs = ({ value }) => {
   return (
     <Tabs
-      value={value}
+      value={`/${value.split('/')[1]}`}
       variant='fullWidth'
     >
       {pages.map(({ text, path }) => (
@@ -24,4 +25,4 @@ const NavigationTabs = ({ value }) => {
   )
 }
 
-export default NavigationTabs
+export default memo(NavigationTabs)

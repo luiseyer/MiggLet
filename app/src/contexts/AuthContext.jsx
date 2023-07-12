@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react'
+import { createContext, memo, useReducer } from 'react'
 
 const AuthContext = createContext()
 
@@ -14,7 +14,7 @@ const authReducer = (state, action) => {
   return handleAction({ state, action })
 }
 
-const AuthContextProvider = ({ children }) => {
+const AuthContextProvider = memo(({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: JSON.parse(window.localStorage.getItem('user')) ?? null
   })
@@ -24,6 +24,6 @@ const AuthContextProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   )
-}
+})
 
 export { AuthContext, AuthContextProvider, authReducer }

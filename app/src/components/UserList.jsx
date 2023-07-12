@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, Backdrop, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, ListItemAvatar, ListItemText, Skeleton, Stack, Typography } from '@mui/material'
 import { Groups as GroupsIcon, GroupRemove as GroupRemoveIcon } from '@mui/icons-material'
 import { ListActionButton } from '@components'
 import { useManageActiveUser } from '@hooks/useUsers'
 
-const RestoreUserDialog = ({ user, refetchFn = () => {}, handleClose = () => {} }) => {
+const RestoreUserDialog = memo(({ user, refetchFn = () => {}, handleClose = () => {} }) => {
   const { mutate, isLoading, isSuccess } = useManageActiveUser(user.id)
 
   const open = Boolean(user)
@@ -42,7 +42,7 @@ const RestoreUserDialog = ({ user, refetchFn = () => {}, handleClose = () => {} 
       </Dialog>
     </>
   )
-}
+})
 
 const UserList = ({ data, isLoading, limit, restoreUser, refetchFn = () => {} }) => {
   const navigate = useNavigate()
@@ -103,4 +103,4 @@ const UserList = ({ data, isLoading, limit, restoreUser, refetchFn = () => {} })
   )
 }
 
-export default UserList
+export default memo(UserList)

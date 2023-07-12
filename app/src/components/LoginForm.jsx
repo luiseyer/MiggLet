@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, Snackbar, TextField, Typography } from '@mui/material'
 import { AppTitle } from '@components'
@@ -90,4 +90,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default memo(LoginForm)

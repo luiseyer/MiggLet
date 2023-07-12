@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { List, Fab, Pagination } from '@mui/material'
 import { Add as AddIcon } from '@mui/icons-material'
 import { PageContainer, Section, NavigationMenu, UserList, CreateUserForm } from '@components'
@@ -70,4 +70,4 @@ const UsersPage = () => {
   )
 }
 
-export default UsersPage
+export default memo(UsersPage)

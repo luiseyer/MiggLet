@@ -4,7 +4,6 @@ import { memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, TextField, DialogActions, ToggleButtonGroup, ToggleButton, MenuItem, Menu, Typography, Divider } from '@mui/material'
 import { ArrowBack as ArrowBackIcon, Send as SendIcon, Undo as UndoIcon, Redo as RedoIcon, ArrowDropDown as ArrowDropDownIcon, FormatSize as FormatSizeIcon, FormatBold as FormatBoldIcon, FormatItalic as FormatItalicIcon, FormatListBulleted as FormatListBulletedIcon, FormatListNumbered as FormatListNumberedIcon } from '@mui/icons-material'
-import { useAuthContext } from '@hooks'
 import { useGetPatient, useUpdatePatient } from '@hooks/usePatients'
 import { htmlToMarkdown } from '@helpers'
 
@@ -20,6 +19,7 @@ const EditorButtons = memo(({ editor }) => {
             direction='row'
             justifyContent='space-between'
             sx={{
+              mt: 4,
               overflowY: 'auto',
               px: 1,
               bgcolor: 'primary.surface',
@@ -127,12 +127,13 @@ const EditorButtons = memo(({ editor }) => {
   )
 })
 
-const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = () => {} }) => {
+const RegisterMedicalBackgroundForm = ({ open, handleClose = () => {}, refetchFn = () => {} }) => {
   const { id } = useParams()
-  const { user } = useAuthContext()
 
   const { refetch } = useGetPatient(id)
-  const { isLoading, isSuccess, mutate } = useUpdatePatient(id)
+  const { /* isLoading, */ isSuccess /*, mutate */ } = useUpdatePatient(id)
+
+  const [isLoading, setIsLoading] = useState(false) // TEMPORAL
 
   useEffect(() => {
     if (isSuccess) {
@@ -154,32 +155,42 @@ const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = ()
   })
 
   const [isCompleted, setIsCompleted] = useState(false)
-  const [value, setValue] = useState('')
+  const [nameValue, setNameValue] = useState('')
+  const [descriptionValue, setDescriptionValue] = useState('')
 
   const handleSubmit = (event) => {
     event.preventDefault()
     const formData = new window.FormData(event.currentTarget)
-    const consultation = {
-      medic: user.id,
-      date: new Date(Date.now()),
-      description: formData.get('consultation')
+    const medicalBackground = {
+      name: formData.get('name'),
+      description: formData.get('description')
     }
 
-    mutate({ consultation })
+    // mutate({ medicalBackground })
+
+    // TEMPORAL
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      handleClose(medicalBackground)
+    }, 1000) // TEMPORAL
   }
 
   const handleEditContent = (event) => {
     const editor = event.currentTarget.firstChild
-    setValue(htmlToMarkdown(editor.innerHTML))
+    setDescriptionValue(htmlToMarkdown(editor.innerHTML))
   }
 
   useEffect(() => {
-    if (value && value.trim('').length !== 0) {
+    if (
+      (descriptionValue && descriptionValue.trim('').length !== 0) &&
+      (nameValue && nameValue.trim('').length !== 0)
+    ) {
       return setIsCompleted(true)
     }
 
     setIsCompleted(false)
-  }, [value])
+  }, [nameValue, descriptionValue])
 
   return (
     <>
@@ -199,7 +210,7 @@ const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = ()
         <DialogTitle component='header' sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}>
           <Button color='dark' onClick={handleClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <ArrowBackIcon />
-            Registrar Consulta
+            Registrar Antecedentes
           </Button>
         </DialogTitle>
         <DialogContent>
@@ -215,6 +226,8 @@ const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = ()
               pb: 2
             }}
           >
+            <TextField name='name' label='Tipo de Antecedente' value={nameValue} onChange={({ currentTarget }) => setNameValue(currentTarget.value)} required />
+
             <EditorButtons editor={editor} />
 
             <EditorContent
@@ -224,7 +237,7 @@ const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = ()
               onFocus={handleEditContent}
             />
 
-            <TextField name='consultation' value={value} sx={{ display: 'none' }} multiline required />
+            <TextField name='description' value={descriptionValue} sx={{ display: 'none' }} multiline required />
           </Stack>
         </DialogContent>
         <DialogActions sx={{ pb: '1.5rem !important' }}>
@@ -243,4 +256,4 @@ const RegisterConsultationForm = ({ open, handleClose = () => {}, refetchFn = ()
   )
 }
 
-export default memo(RegisterConsultationForm)
+export default memo(RegisterMedicalBackgroundForm)

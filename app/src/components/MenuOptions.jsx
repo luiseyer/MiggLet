@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
 import { MoreVert as MoreVertIcon, Settings as SettingsIcon, Info as InfoIcon, AccountCircle as AccountIcon, Logout as LogoutIcon } from '@mui/icons-material'
@@ -82,4 +82,4 @@ const MenuOptions = () => {
   )
 }
 
-export default MenuOptions
+export default memo(MenuOptions)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Fab, TextField, DialogActions } from '@mui/material'
 import { Add as AddIcon, ArrowBack as ArrowBackIcon, Send as SendIcon } from '@mui/icons-material'
 import { useCreatePatient } from '@hooks/usePatients'
@@ -167,4 +167,4 @@ const RegisterPatientForm = ({
   )
 }
 
-export default RegisterPatientForm
+export default memo(RegisterPatientForm)

@@ -1,7 +1,8 @@
-import { ListActionButton } from '@components'
+import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Skeleton, Stack, Typography } from '@mui/material'
 import { TextSnippet as TextSnippetIcon } from '@mui/icons-material'
+import { ListActionButton } from '@components'
 
 const PatientList = ({ data, isLoading, limit }) => {
   const colors = ['primary', 'secondary', 'tertiary']
@@ -55,4 +56,4 @@ const PatientList = ({ data, isLoading, limit }) => {
   )
 }
 
-export default PatientList
+export default memo(PatientList)

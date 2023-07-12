@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useScrollTrigger, AppBar, Toolbar, Stack, IconButton, Tooltip, Button } from '@mui/material'
 import { Search as SearchIcon, ArrowBack as ArrowBackIcon, Delete as DeleteIcon, ManageAccounts as ManageAccountsIcon, EditNote as EditNoteIcon } from '@mui/icons-material'
@@ -130,4 +130,4 @@ const NavigationMenu = ({
   )
 }
 
-export default NavigationMenu
+export default memo(NavigationMenu)
