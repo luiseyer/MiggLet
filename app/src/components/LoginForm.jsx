@@ -52,12 +52,12 @@ const LoginForm = () => {
       >
         <AppTitle variant='h4' sx={{ mb: '1rem' }} />
 
-        <Box component='form' onSubmit={handleSubmit}>
+        <Box component='form' autoComplete='off' onSubmit={handleSubmit}>
           <TextField
             fullWidth
             margin='normal'
             name='username'
-            type='text'
+            type='email'
             id='username'
             label='Correo o cédula'
           />

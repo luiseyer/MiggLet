@@ -221,7 +221,6 @@ const RegisterMedicalBackgroundForm = ({ open, handleClose = () => {}, refetchFn
               '& ul': { listStyleType: 'square' },
               '& :is(ul, ol) li': { mb: 2 },
               '& ::marker': { color: 'tertiary.dark' },
-              px: 2,
               pt: 4,
               pb: 2
             }}

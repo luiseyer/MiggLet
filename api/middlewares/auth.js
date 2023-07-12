@@ -7,10 +7,12 @@ const login = async (req, res, next) => {
   try {
     const { username, password } = req.body
 
+    const userName = username && username.toLowerCase()
+
     const user = await Promise.allSettled([
-      User.findOne({ dni: username }),
-      User.findOne({ email: username }),
-      User.findOne({ code: username })
+      User.findOne({ dni: userName }),
+      User.findOne({ email: userName }),
+      User.findOne({ code: userName })
     ])
       .then(results => results.find(result => result.value).value)
       .catch(() => null)
