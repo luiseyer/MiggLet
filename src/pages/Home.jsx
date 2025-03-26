@@ -7,7 +7,7 @@ const SVGLogo = '/images/logotipo.svg'
 const HomePage = () => {
   return (
     <Box
-      component='main'
+      component="main"
       sx={{
         p: 2,
         display: 'grid',
@@ -18,15 +18,15 @@ const HomePage = () => {
     >
       <Box>
         <img
-          alt='Migglet Logo'
-          className='logo'
+          alt="Migglet Logo"
+          className="logo"
           src={SVGLogo}
-          loading='lazy'
+          loading="lazy"
           width={512}
           height={256}
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '2rem' }}>
-          <Button size='large' variant='contained' component={Link} to='/login'>
+          <Button size="large" variant="contained" component={Link} to="/login">
             Comenzar
           </Button>
         </Box>

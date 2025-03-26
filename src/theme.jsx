@@ -1,9 +1,9 @@
+import { blue, indigo, purple } from '@mui/material/colors'
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-import { indigo, blue, purple } from '@mui/material/colors'
 
 // SETTINGS
 const palette = {
-  type: ('light'),
+  type: 'light',
   primary: indigo,
   secondary: blue,
   tertiary: purple,

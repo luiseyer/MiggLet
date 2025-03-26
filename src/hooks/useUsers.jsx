@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import pb from '@lib/pocketbase'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useGetUsers = ({ page = 1, limit = 10, isActive = true, search = '' }) => {
   const queryClient = useQueryClient()
@@ -8,10 +8,12 @@ export const useGetUsers = ({ page = 1, limit = 10, isActive = true, search = ''
     queryKey: ['users', { page, limit, isActive, search }],
 
     queryFn: async () => {
-      const searchQuery = search ? ` && (firstnames ~ "${search}" || lastnames ~ "${search}" || dni ~ "${search}")` : ''
+      const searchQuery = ['firstnames', 'lastnames', 'dni', 'specialty']
+        .map((prop) => `${prop} ~ '${search}'`)
+        .join(' || ')
 
       const data = await pb.collection('users').getList(page, limit, {
-        filter: `isActive = ${isActive}` + searchQuery,
+        filter: `isActive = ${isActive} && (${searchQuery})`,
         sort: '-updated'
       })
 
@@ -19,9 +21,9 @@ export const useGetUsers = ({ page = 1, limit = 10, isActive = true, search = ''
     },
 
     onSuccess: (data) => {
-      data.items?.forEach(user => {
+      for (const user of data.items) {
         queryClient.setQueryData(['users', { id: user.id }], user)
-      })
+      }
     }
   })
 }

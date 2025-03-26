@@ -11,8 +11,8 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
-    "@mui/icons-material": "6.4.8",
-    "@mui/material": "6.4.8",
+    "@mui/icons-material": "5.17.1",
+    "@mui/material": "5.17.1",
     "@tanstack/react-query": "5.69.0",
     "@tiptap/pm": "2.11.5",
     "@tiptap/react": "2.11.5",
@@ -25,21 +25,11 @@
     "react-router-dom": "7.4.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
     "@vitejs/plugin-react": "4.3.4",
-    "concurrently": "9.1.2",
-    "eslint-plugin-react-hooks": "5.2.0",
-    "standard": "17.1.2",
-    "vite": "6.2.2",
+    "vite": "6.2.3",
     "vite-plugin-pwa": "0.21.2"
-  },
-  "eslintConfig": {
-    "plugins": ["react-hooks"],
-    "extends": ["./node_modules/standard/eslintrc.json", "plugin:react-hooks/recommended"],
-    "rules": {
-      "import/no-absolute-path": "off",
-      "camelcase": "off"
-    }
   }
 }

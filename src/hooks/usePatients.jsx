@@ -1,5 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import pb from '@lib/pocketbase'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const useGetPatients = ({ page = 1, limit = 10, search = '' }) => {
   const queryClient = useQueryClient()
@@ -8,16 +8,21 @@ export const useGetPatients = ({ page = 1, limit = 10, search = '' }) => {
     queryKey: ['patients', { page, limit, search }],
 
     queryFn: async () => {
+      const searchQuery = ['firstnames', 'lastnames', 'dni']
+        .map((prop) => `${prop} ~ '%${search}%'`)
+        .join(' || ')
+
       const data = await pb.collection('patients').getList(page, limit, {
+        filter: `${searchQuery}`,
         sort: '-updated'
       })
       return data
     },
 
     onSuccess: (data) => {
-      data.items?.forEach(patient => {
+      for (const patient of data.items) {
         queryClient.setQueryData(['patients', { id: patient.id }], patient)
-      })
+      }
     }
   })
 }
@@ -33,9 +38,10 @@ export const useGetPatient = (id) => {
 
       data.medicalBackgrounds = data.expand?.medicalBackgrounds || []
       data.consultations = data.expand?.consultations?.reverse() || []
-      data.consultations.forEach(consultation => {
+
+      for (const consultation of data.consultations) {
         consultation.medic = `${consultation.expand.medic.firstnames} ${consultation.expand.medic.lastnames}`
-      })
+      }
 
       return data
     }

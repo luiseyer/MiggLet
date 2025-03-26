@@ -2,6 +2,7 @@ import { createContext, memo, useState } from 'react'
 
 const SearchContext = createContext({
   searchQuery: '',
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: default props are not empty
   setSearchQuery: () => {}
 })
 

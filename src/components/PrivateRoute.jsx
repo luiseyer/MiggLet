@@ -1,6 +1,6 @@
-import { memo, useEffect } from 'react'
-import { useNavigate, Outlet } from 'react-router-dom'
 import { useAuthContext } from '@hooks'
+import { memo, useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 const PrivateRoute = ({ page, requireAdmin }) => {
   const navigate = useNavigate()

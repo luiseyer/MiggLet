@@ -1,7 +1,7 @@
+import { resolve } from 'node:path'
+import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
-import { resolve } from 'path'
-import react from '@vitejs/plugin-react'
 
 const createCache = ({ name, pattern, handlerType = 'CacheFirst' }) => ({
   urlPattern: pattern,
@@ -67,14 +67,6 @@ export default defineConfig({
       }
     })
   ],
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
-      }
-    }
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),
@@ -85,7 +77,6 @@ export default defineConfig({
       '@hooks': resolve(__dirname, './src/hooks'),
       '@pages': resolve(__dirname, './src/pages'),
       '@lib': resolve(__dirname, './lib')
-
     }
   }
 })

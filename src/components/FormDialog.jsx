@@ -1,9 +1,11 @@
-import { forwardRef, memo, useEffect } from 'react'
 import { Backdrop, Button, CircularProgress, Dialog, DialogActions, Slide } from '@mui/material'
+import { forwardRef, memo, useEffect } from 'react'
 
-const Transition = memo(forwardRef(function Transition (props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />
-}))
+const Transition = memo(
+  forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />
+  })
+)
 
 const FormDialog = ({
   children,
@@ -27,28 +29,28 @@ const FormDialog = ({
 
   useEffect(() => {
     if (isSuccess) handleClose()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess])
 
   useEffect(() => {
-    document.querySelectorAll('.section').forEach(section => {
-      open
-        ? section.classList.add('no-scrollable')
-        : section.classList.remove('no-scrollable')
+    for (const section of document.querySelectorAll('.section')) {
+      open ? section.classList.add('no-scrollable') : section.classList.remove('no-scrollable')
     }
-    )
   }, [open])
 
   return (
     <>
-      {isLoading &&
-        <Backdrop sx={{ color: 'primary.light', bgcolor: 'transparent', zIndex: 9999 }} open={isLoading}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+      {isLoading && (
+        <Backdrop
+          sx={{ color: 'primary.light', bgcolor: 'transparent', zIndex: 9999 }}
+          open={isLoading}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
       <Dialog
-        component='form'
-        autoComplete='off'
+        component="form"
+        autoComplete="off"
         onSubmit={handleSubmit}
         open={open}
         onClose={handleClose}
@@ -58,7 +60,6 @@ const FormDialog = ({
             position: 'fixed',
             inset: 0,
             alignItems: 'flex-end'
-
           },
           '& .MuiPaper-root': {
             m: 0,
@@ -69,8 +70,10 @@ const FormDialog = ({
       >
         {children}
         <DialogActions>
-          <Button type='button' onClick={handleClose}>Cancelar</Button>
-          <Button type='submit'>Enviar</Button>
+          <Button type="button" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button type="submit">Enviar</Button>
         </DialogActions>
       </Dialog>
     </>

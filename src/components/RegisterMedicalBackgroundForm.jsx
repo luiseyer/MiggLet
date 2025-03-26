@@ -1,11 +1,38 @@
-import StarterKit from '@tiptap/starter-kit'
+import { htmlToMarkdown } from '@helpers'
+import { useGetPatient, useUpdatePatient } from '@hooks/usePatients'
+import {
+  ArrowBack as ArrowBackIcon,
+  ArrowDropDown as ArrowDropDownIcon,
+  FormatBold as FormatBoldIcon,
+  FormatItalic as FormatItalicIcon,
+  FormatListBulleted as FormatListBulletedIcon,
+  FormatListNumbered as FormatListNumberedIcon,
+  FormatSize as FormatSizeIcon,
+  Redo as RedoIcon,
+  Send as SendIcon,
+  Undo as UndoIcon
+} from '@mui/icons-material'
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Menu,
+  MenuItem,
+  Stack,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography
+} from '@mui/material'
 import { EditorContent, useEditor } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 import { memo, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, TextField, DialogActions, ToggleButtonGroup, ToggleButton, MenuItem, Menu, Typography, Divider } from '@mui/material'
-import { ArrowBack as ArrowBackIcon, Send as SendIcon, Undo as UndoIcon, Redo as RedoIcon, ArrowDropDown as ArrowDropDownIcon, FormatSize as FormatSizeIcon, FormatBold as FormatBoldIcon, FormatItalic as FormatItalicIcon, FormatListBulleted as FormatListBulletedIcon, FormatListNumbered as FormatListNumberedIcon } from '@mui/icons-material'
-import { useGetPatient, useUpdatePatient } from '@hooks/usePatients'
-import { htmlToMarkdown } from '@helpers'
 
 const EditorButtons = memo(({ editor }) => {
   const [anchorEl, setAnchorEl] = useState(null)
@@ -13,11 +40,11 @@ const EditorButtons = memo(({ editor }) => {
 
   return (
     <>
-      {editor &&
+      {editor && (
         <>
           <Stack
-            direction='row'
-            justifyContent='space-between'
+            direction="row"
+            justifyContent="space-between"
             sx={{
               mt: 4,
               overflowY: 'auto',
@@ -35,14 +62,14 @@ const EditorButtons = memo(({ editor }) => {
           >
             <ToggleButtonGroup>
               <ToggleButton
-                value='undo'
+                value="undo"
                 onClick={() => editor.chain().focus().undo().run()}
                 disabled={!editor.can().undo()}
               >
                 <UndoIcon />
               </ToggleButton>
               <ToggleButton
-                value='redo'
+                value="redo"
                 onClick={() => editor.chain().focus().redo().run()}
                 disabled={!editor.can().redo()}
               >
@@ -50,27 +77,30 @@ const EditorButtons = memo(({ editor }) => {
               </ToggleButton>
             </ToggleButtonGroup>
 
-            <Divider flexItem orientation='vertical' sx={{ my: 1 }} />
+            <Divider flexItem orientation="vertical" sx={{ my: 1 }} />
 
             <ToggleButtonGroup>
-              <ToggleButton value='font' onClick={({ currentTarget }) => setAnchorEl(currentTarget)}>
+              <ToggleButton
+                value="font"
+                onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
+              >
                 <FormatSizeIcon />
                 <ArrowDropDownIcon />
               </ToggleButton>
             </ToggleButtonGroup>
 
-            <Divider flexItem orientation='vertical' sx={{ my: 1 }} />
+            <Divider flexItem orientation="vertical" sx={{ my: 1 }} />
 
             <ToggleButtonGroup>
               <ToggleButton
-                value='bold'
+                value="bold"
                 onClick={() => editor.chain().focus().toggleBold().run()}
                 selected={editor.isActive('bold')}
               >
                 <FormatBoldIcon />
               </ToggleButton>
               <ToggleButton
-                value='italic'
+                value="italic"
                 onClick={() => editor.chain().focus().toggleItalic().run()}
                 selected={editor.isActive('italic')}
               >
@@ -78,18 +108,18 @@ const EditorButtons = memo(({ editor }) => {
               </ToggleButton>
             </ToggleButtonGroup>
 
-            <Divider flexItem orientation='vertical' sx={{ my: 1 }} />
+            <Divider flexItem orientation="vertical" sx={{ my: 1 }} />
 
             <ToggleButtonGroup>
               <ToggleButton
-                value='bulletList'
+                value="bulletList"
                 onClick={() => editor.chain().focus().toggleBulletList().run()}
                 selected={editor.isActive('bulletList')}
               >
                 <FormatListBulletedIcon />
               </ToggleButton>
               <ToggleButton
-                value='orderedList'
+                value="orderedList"
                 onClick={() => editor.chain().focus().toggleOrderedList().run()}
                 selected={editor.isActive('orderedList')}
               >
@@ -98,11 +128,7 @@ const EditorButtons = memo(({ editor }) => {
             </ToggleButtonGroup>
           </Stack>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={openHeadings}
-            onClose={() => setAnchorEl(null)}
-          >
+          <Menu anchorEl={anchorEl} open={openHeadings} onClose={() => setAnchorEl(null)}>
             <MenuItem
               onClick={() => {
                 editor.chain().focus().toggleHeading({ level: 6 }).run()
@@ -110,7 +136,9 @@ const EditorButtons = memo(({ editor }) => {
               }}
               selected={editor.isActive('heading', { level: 6 })}
             >
-              <Typography variant='subtitle1' fontSize='1.15rem' fontWeight={500}>Encabezado</Typography>
+              <Typography variant="subtitle1" fontSize="1.15rem" fontWeight={500}>
+                Encabezado
+              </Typography>
             </MenuItem>
             <MenuItem
               onClick={() => {
@@ -122,12 +150,14 @@ const EditorButtons = memo(({ editor }) => {
               <Typography>Normal</Typography>
             </MenuItem>
           </Menu>
-        </>}
+        </>
+      )}
     </>
   )
 })
 
-const RegisterMedicalBackgroundForm = ({ open, handleClose = () => { }, refetchFn = () => { } }) => {
+// biome-ignore lint/suspicious/noEmptyBlockStatements: default props are not empty
+const RegisterMedicalBackgroundForm = ({ open, handleClose = () => {} }) => {
   const { id } = useParams()
 
   const { refetch } = useGetPatient(id)
@@ -145,7 +175,8 @@ const RegisterMedicalBackgroundForm = ({ open, handleClose = () => { }, refetchF
       StarterKit.configure({
         heading: {
           HTMLAttributes: {
-            style: 'margin: 0; font-family: "Roboto","Helvetica","Arial",sans-serif; line-height: 1.75; letter-spacing: 0.00938em; font-size: 1.15rem; font-weight: 500;'
+            style:
+              'margin: 0; font-family: "Roboto","Helvetica","Arial",sans-serif; line-height: 1.75; letter-spacing: 0.00938em; font-size: 1.15rem; font-weight: 500;'
           }
         }
       })
@@ -174,8 +205,10 @@ const RegisterMedicalBackgroundForm = ({ open, handleClose = () => { }, refetchF
 
   useEffect(() => {
     if (
-      (descriptionValue && descriptionValue.trim('').length !== 0) &&
-      (nameValue && nameValue.trim('').length !== 0)
+      descriptionValue &&
+      descriptionValue.trim('').length !== 0 &&
+      nameValue &&
+      nameValue.trim('').length !== 0
     ) {
       return setIsCompleted(true)
     }
@@ -185,28 +218,36 @@ const RegisterMedicalBackgroundForm = ({ open, handleClose = () => { }, refetchF
 
   return (
     <>
-      {open && isLoading &&
+      {open && isLoading && (
         <Backdrop sx={{ color: 'primary.main', zIndex: 9999 }} open={isLoading}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
       <Dialog
-        component='form'
-        autoComplete='off'
+        component="form"
+        autoComplete="off"
         open={open}
         onClose={handleClose}
         onSubmit={handleSubmit}
         fullScreen
       >
-        <DialogTitle component='header' sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}>
-          <Button color='dark' onClick={handleClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <DialogTitle
+          component="header"
+          sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}
+        >
+          <Button
+            color="dark"
+            onClick={handleClose}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             <ArrowBackIcon />
             Registrar Antecedentes
           </Button>
         </DialogTitle>
         <DialogContent>
           <Stack
-            height='100%'
+            height="100%"
             sx={{
               '& :is(ul, ol)': { pl: 4, m: 0 },
               '& ul': { listStyleType: 'square' },
@@ -216,26 +257,38 @@ const RegisterMedicalBackgroundForm = ({ open, handleClose = () => { }, refetchF
               pb: 2
             }}
           >
-            <TextField name='name' label='Tipo de Antecedente' value={nameValue} onChange={({ currentTarget }) => setNameValue(currentTarget.value)} required />
+            <TextField
+              name="name"
+              label="Tipo de Antecedente"
+              value={nameValue}
+              onChange={({ currentTarget }) => setNameValue(currentTarget.value)}
+              required
+            />
 
             <EditorButtons editor={editor} />
 
             <EditorContent
               editor={editor}
-              id='editor'
+              id="editor"
               onInput={handleEditContent}
               onFocus={handleEditContent}
             />
 
-            <TextField name='description' value={descriptionValue} sx={{ display: 'none' }} multiline required />
+            <TextField
+              name="description"
+              value={descriptionValue}
+              sx={{ display: 'none' }}
+              multiline
+              required
+            />
           </Stack>
         </DialogContent>
         <DialogActions sx={{ pb: '1.5rem !important' }}>
           <Button
             disabled={!isCompleted}
-            type='submit'
-            variant='contained'
-            size='large'
+            type="submit"
+            variant="contained"
+            size="large"
             endIcon={<SendIcon />}
           >
             Registrar

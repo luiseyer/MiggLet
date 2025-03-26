@@ -1,8 +1,19 @@
-import { memo, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Paper, Snackbar, TextField, Typography } from '@mui/material'
 import { AppTitle } from '@components'
 import { useLogin } from '@hooks'
+import {
+  Alert,
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Container,
+  Paper,
+  Snackbar,
+  TextField,
+  Typography
+} from '@mui/material'
+import { memo, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const LoginForm = () => {
   const { login, isLoading, error } = useLogin()
@@ -27,7 +38,7 @@ const LoginForm = () => {
   return (
     <>
       <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
-        <CircularProgress color='inherit' />
+        <CircularProgress color="inherit" />
       </Backdrop>
 
       <Snackbar
@@ -37,12 +48,12 @@ const LoginForm = () => {
         onClose={handleClose}
         sx={{ width: 'calc(100% - 1rem)' }}
       >
-        <Alert severity='error'>{error}</Alert>
+        <Alert severity="error">{error}</Alert>
       </Snackbar>
 
       <Container
         component={Paper}
-        maxWidth='xs'
+        maxWidth="xs"
         sx={{
           padding: '2rem',
           display: 'flex',
@@ -50,39 +61,39 @@ const LoginForm = () => {
           alignItems: 'center'
         }}
       >
-        <AppTitle variant='h4' sx={{ mb: '1rem' }} />
+        <AppTitle variant="h4" sx={{ mb: '1rem' }} />
 
-        <Box component='form' autoComplete='off' onSubmit={handleSubmit}>
+        <Box component="form" autoComplete="off" onSubmit={handleSubmit}>
           <TextField
             fullWidth
-            margin='normal'
-            name='username'
-            type='email'
-            id='username'
-            label='Correo o cédula'
+            margin="normal"
+            name="username"
+            type="email"
+            id="username"
+            label="Correo o cédula"
           />
 
           <TextField
             fullWidth
-            margin='normal'
-            name='password'
-            type='password'
-            id='password'
-            label='Contraseña'
+            margin="normal"
+            name="password"
+            type="password"
+            id="password"
+            label="Contraseña"
           />
 
           <Button
             fullWidth
             disabled={isLoading}
-            type='submit'
-            variant='contained'
+            type="submit"
+            variant="contained"
             sx={{ mt: '1rem' }}
           >
             Iniciar
           </Button>
 
-          <Typography variant='caption' display='block' textAlign='center' mt={2}>
-            <Link to='#'>Recuperar contraseña</Link>
+          <Typography variant="caption" display="block" textAlign="center" mt={2}>
+            <Link to="#">Recuperar contraseña</Link>
           </Typography>
         </Box>
       </Container>

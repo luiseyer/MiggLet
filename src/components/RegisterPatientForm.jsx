@@ -1,10 +1,22 @@
-import { memo, useEffect, useState } from 'react'
-import { Backdrop, Stack, Button, CircularProgress, Dialog, DialogContent, DialogTitle, Fab, TextField, DialogActions } from '@mui/material'
-import { Add as AddIcon, ArrowBack as ArrowBackIcon, Send as SendIcon } from '@mui/icons-material'
 import { useCreatePatient } from '@hooks/usePatients'
+import { Add as AddIcon, ArrowBack as ArrowBackIcon, Send as SendIcon } from '@mui/icons-material'
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Fab,
+  Stack,
+  TextField
+} from '@mui/material'
+import { memo, useEffect, useState } from 'react'
 
 const RegisterPatientForm = ({
   count,
+  // biome-ignore lint/suspicious/noEmptyBlockStatements: default props are not empty
   refetchFn = () => {}
 }) => {
   const fields = ['firstnames', 'lastnames', 'birthdate', 'dni', 'location', 'medicalRecordNumber']
@@ -33,17 +45,17 @@ const RegisterPatientForm = ({
     event.preventDefault()
     const formData = new window.FormData(event.currentTarget)
     const data = {}
-    fields.forEach(field => {
+    for (const field of fields) {
       data[field] = formData.get(field)
-    })
+    }
     mutate(data)
   }
 
   const handleInput = (event) => {
     const formData = new window.FormData(event.currentTarget)
-    const values = fields.map(field => formData.get(field))
+    const values = fields.map((field) => formData.get(field))
 
-    if (values.every(value => value && value.trim('').length !== 0)) {
+    if (values.every((value) => value && value.trim('').length !== 0)) {
       setIsCompleted(true)
     } else {
       setIsCompleted(false)
@@ -52,29 +64,34 @@ const RegisterPatientForm = ({
 
   return (
     <>
-      {open && isLoading &&
+      {open && isLoading && (
         <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
-      {open &&
+      {open && (
         <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={!count}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
-      {count &&
+      {count && (
         <Dialog
-          component='form'
-          autoComplete='off'
+          component="form"
+          autoComplete="off"
           open={open}
           onClose={handleClose}
           onInput={handleInput}
           onSubmit={handleSubmit}
           fullScreen
         >
-          <DialogTitle component='header' sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}>
+          <DialogTitle
+            component="header"
+            sx={{ background: ({ gradient }) => gradient.surface, py: '8px !important', px: 1 }}
+          >
             <Button
-              color='dark'
+              color="dark"
               onClick={handleClose}
               sx={{
                 display: 'flex',
@@ -87,71 +104,58 @@ const RegisterPatientForm = ({
             </Button>
           </DialogTitle>
           <DialogContent>
-            <Stack sx={{
-              pt: 1,
-              '& .MuiTextField-root': { mt: 4, width: '100%' },
-              '& .MuiTextField-root fieldset': { borderWidth: '2px' }
-            }}
+            <Stack
+              sx={{
+                pt: 1,
+                '& .MuiTextField-root': { mt: 4, width: '100%' },
+                '& .MuiTextField-root fieldset': { borderWidth: '2px' }
+              }}
             >
               <TextField
-                label='Número de historia'
-                name='medicalRecordNumber'
-                type='number'
+                label="Número de historia"
+                name="medicalRecordNumber"
+                type="number"
                 defaultValue={count + 1}
-                variant='outlined'
+                variant="outlined"
                 required
               />
+              <TextField label="Nombres" name="firstnames" variant="outlined" required />
+              <TextField label="Apellidos" name="lastnames" variant="outlined" required />
               <TextField
-                label='Nombres'
-                name='firstnames'
-                variant='outlined'
-                required
-              />
-              <TextField
-                label='Apellidos'
-                name='lastnames'
-                variant='outlined'
-                required
-              />
-              <TextField
-                label='Cédula de identidad'
-                name='dni'
-                type='number'
-                variant='outlined'
+                label="Cédula de identidad"
+                name="dni"
+                type="number"
+                variant="outlined"
                 required
               />
               <TextField
                 InputLabelProps={{ shrink: true }}
-                label='Fecha de Nacimiento'
-                name='birthdate'
-                type='date'
-                variant='outlined'
+                label="Fecha de Nacimiento"
+                name="birthdate"
+                type="date"
+                variant="outlined"
                 required
               />
-              <TextField
-                label='Lugar de residencia'
-                name='location'
-                variant='outlined'
-                required
-              />
+              <TextField label="Lugar de residencia" name="location" variant="outlined" required />
             </Stack>
           </DialogContent>
           <DialogActions sx={{ pb: '1.5rem !important' }}>
             <Button
               disabled={!isCompleted}
-              type='submit'
-              variant='contained'
-              size='large'
+              type="submit"
+              variant="contained"
+              size="large"
               endIcon={<SendIcon />}
             >
               Registrar
             </Button>
           </DialogActions>
-        </Dialog>}
+        </Dialog>
+      )}
 
       <Fab
         onClick={handleOpen}
-        color='primary'
+        color="primary"
         sx={{
           position: 'sticky',
           bottom: 0,

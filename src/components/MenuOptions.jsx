@@ -1,11 +1,19 @@
+import { useAuthContext, useLogout } from '@hooks'
+import {
+  AccountCircle as AccountIcon,
+  Info as InfoIcon,
+  Logout as LogoutIcon,
+  MoreVert as MoreVertIcon,
+  Settings as SettingsIcon
+} from '@mui/icons-material'
+import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
 import { memo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { IconButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material'
-import { MoreVert as MoreVertIcon, Settings as SettingsIcon, Info as InfoIcon, AccountCircle as AccountIcon, Logout as LogoutIcon } from '@mui/icons-material'
-import { useLogout, useAuthContext } from '@hooks'
 
 const MenuOptions = () => {
-  const { user: { isAdmin } } = useAuthContext()
+  const {
+    user: { isAdmin }
+  } = useAuthContext()
 
   const { logout } = useLogout()
   const [anchorEl, setAnchorEl] = useState(null)
@@ -22,7 +30,7 @@ const MenuOptions = () => {
 
   return (
     <>
-      <Tooltip title='Más opciones' arrow>
+      <Tooltip title="Más opciones" arrow>
         <IconButton onClick={handleClick}>
           <MoreVertIcon />
         </IconButton>
@@ -45,39 +53,40 @@ const MenuOptions = () => {
           }
         }}
       >
-        {isAdmin && !pathnames.includes('settings') &&
+        {isAdmin && !pathnames.includes('settings') && (
           <MenuItem onClick={() => navigate('/settings')} divider>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
-            <ListItemText primary='Ajustes' />
-          </MenuItem>}
+            <ListItemText primary="Ajustes" />
+          </MenuItem>
+        )}
 
-        {!pathnames.includes('about') &&
+        {!pathnames.includes('about') && (
           <MenuItem onClick={() => navigate('/about')} divider>
             <ListItemIcon>
               <InfoIcon />
             </ListItemIcon>
-            <ListItemText primary='Acerca de' />
-          </MenuItem>}
+            <ListItemText primary="Acerca de" />
+          </MenuItem>
+        )}
 
-        {!pathnames.includes('profile') &&
+        {!pathnames.includes('profile') && (
           <MenuItem onClick={() => navigate('/profile')} divider>
             <ListItemIcon>
               <AccountIcon />
             </ListItemIcon>
-            <ListItemText primary='Mi Perfil' />
-          </MenuItem>}
+            <ListItemText primary="Mi Perfil" />
+          </MenuItem>
+        )}
 
         <MenuItem onClick={logout}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>
-          <ListItemText primary='Salir' />
+          <ListItemText primary="Salir" />
         </MenuItem>
-
       </Menu>
-
     </>
   )
 }

@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { InputBase } from '@mui/material'
 import { useSearchContext } from '@hooks'
+import { InputBase } from '@mui/material'
+import { memo } from 'react'
 
 const SearchInput = () => {
   const { searchQuery, setSearchQuery } = useSearchContext()
@@ -8,11 +8,13 @@ const SearchInput = () => {
   return (
     <InputBase
       autoFocus
-      id='search'
+      id="search"
       sx={{ flex: '1' }}
-      placeholder='Buscar'
+      placeholder="Buscar"
       value={searchQuery}
-      onInput={({ target }) => { setSearchQuery(target.value) }}
+      onInput={({ target }) => {
+        setSearchQuery(target.value)
+      }}
     />
   )
 }

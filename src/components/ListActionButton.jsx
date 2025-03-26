@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@mui/material'
 import { ChevronRight as ChevronRightIcon } from '@mui/icons-material'
+import { ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@mui/material'
+import { memo } from 'react'
 
 const ListActionButton = ({
   children,
@@ -14,13 +14,14 @@ const ListActionButton = ({
 }) => {
   return (
     <ListItemButton
-      component='li'
+      component="li"
       sx={{
         bgcolor: color || 'light.main',
         pr: 6,
         gap: 2,
         '& :is(.MuiListItemText-primary, .MuiListItemText-secondary)': {
-          overflow: 'hidden', textOverflow: 'ellipsis'
+          overflow: 'hidden',
+          textOverflow: 'ellipsis'
         },
         '& :is(.MuiListItemIcon-root, .MuiListItemAvatar-root)': {
           minWidth: 'auto'
@@ -32,9 +33,7 @@ const ListActionButton = ({
       {children}
       {icon && <ListItemIcon>{icon}</ListItemIcon>}
       {(primary || secondary) && <ListItemText primary={primary} secondary={secondary} />}
-      <ListItemSecondaryAction>
-        {actionIcon || <ChevronRightIcon />}
-      </ListItemSecondaryAction>
+      <ListItemSecondaryAction>{actionIcon || <ChevronRightIcon />}</ListItemSecondaryAction>
     </ListItemButton>
   )
 }

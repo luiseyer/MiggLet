@@ -1,12 +1,12 @@
-import { memo } from 'react'
 import { Box } from '@mui/material'
+import { memo } from 'react'
 
 const Section = ({ children, color, spacing, sx }) => {
   return (
     <Box
       data-spacing={spacing || '1rem'}
-      component='section'
-      className='section'
+      component="section"
+      className="section"
       sx={{
         bgcolor: color || 'light.main',
         padding: '1rem',

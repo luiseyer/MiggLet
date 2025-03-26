@@ -1,7 +1,17 @@
+import { useGetUser, useManageAdminUser } from '@hooks/useUsers'
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography
+} from '@mui/material'
 import { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Backdrop, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material'
-import { useGetUser, useManageAdminUser } from '@hooks/useUsers'
 
 const ManageAdminDialog = ({ id, isAdmin }) => {
   const { mutate, isLoading } = useManageAdminUser(id)
@@ -29,13 +39,14 @@ const ManageAdminDialog = ({ id, isAdmin }) => {
 
   return (
     <>
-      {isLoading &&
+      {isLoading && (
         <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
-      {data &&
-        <Dialog open={open} onClose={handleClose} maxWidth='xs'>
+      {data && (
+        <Dialog open={open} onClose={handleClose} maxWidth="xs">
           <DialogTitle>
             {data.isAdmin
               ? '¿Desea quitar los permisos de administrador de este usuario?'
@@ -43,19 +54,23 @@ const ManageAdminDialog = ({ id, isAdmin }) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Los administradores pueden modificar ajustes de la aplicación, gestionar usuarios, entre otros
+              Los administradores pueden modificar ajustes de la aplicación, gestionar usuarios,
+              entre otros
             </DialogContentText>
             <DialogContentText>
-              <Typography variant='caption'>
-                <Link to='/about/manage-admin-users'>Más información</Link>
+              <Typography variant="caption">
+                <Link to="/about/manage-admin-users">Más información</Link>
               </Typography>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} autoFocus>Cancelar</Button>
+            <Button onClick={handleClose} autoFocus>
+              Cancelar
+            </Button>
             <Button onClick={handleClickSubmit}>Aceptar</Button>
           </DialogActions>
-        </Dialog>}
+        </Dialog>
+      )}
     </>
   )
 }

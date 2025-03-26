@@ -1,5 +1,5 @@
-import { createContext, memo, useReducer } from 'react'
 import pb from '@lib/pocketbase'
+import { createContext, memo, useReducer } from 'react'
 
 const AuthContext = createContext()
 
@@ -20,11 +20,7 @@ const AuthContextProvider = memo(({ children }) => {
     user: pb.authStore.model ?? null
   })
 
-  return (
-    <AuthContext.Provider value={{ ...state, dispatch }}>
-      {children}
-    </AuthContext.Provider>
-  )
+  return <AuthContext.Provider value={{ ...state, dispatch }}>{children}</AuthContext.Provider>
 })
 
 export { AuthContext, AuthContextProvider, authReducer }

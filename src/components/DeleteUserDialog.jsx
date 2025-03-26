@@ -1,7 +1,17 @@
+import { useManageActiveUser } from '@hooks/useUsers'
+import {
+  Backdrop,
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography
+} from '@mui/material'
 import { memo, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Backdrop, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material'
-import { useManageActiveUser } from '@hooks/useUsers'
 
 const DeleteUserDialog = ({ id, isActive }) => {
   const navigate = useNavigate()
@@ -35,28 +45,29 @@ const DeleteUserDialog = ({ id, isActive }) => {
 
   return (
     <>
-      {isLoading &&
+      {isLoading && (
         <Backdrop sx={{ color: 'primary.light', zIndex: 9999 }} open={isLoading}>
-          <CircularProgress color='inherit' />
-        </Backdrop>}
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      )}
 
-      <Dialog open={open} onClose={handleClose} maxWidth='xs'>
-        <DialogTitle>
-          ¿Seguro que desea eliminar este usuario?
-        </DialogTitle>
+      <Dialog open={open} onClose={handleClose} maxWidth="xs">
+        <DialogTitle>¿Seguro que desea eliminar este usuario?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Los datos del usuario no serán eliminados,
-            sin embargo este perderá todo acceso a la aplicación
+            Los datos del usuario no serán eliminados, sin embargo este perderá todo acceso a la
+            aplicación
           </DialogContentText>
           <DialogContentText>
-            <Typography variant='caption'>
-              <Link to='/about/delete-users'>Más información</Link>
+            <Typography variant="caption">
+              <Link to="/about/delete-users">Más información</Link>
             </Typography>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>Cancelar</Button>
+          <Button onClick={handleClose} autoFocus>
+            Cancelar
+          </Button>
           <Button onClick={handleClickSubmit}>Aceptar</Button>
         </DialogActions>
       </Dialog>

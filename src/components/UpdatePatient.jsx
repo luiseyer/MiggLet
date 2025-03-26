@@ -1,9 +1,9 @@
-import { memo, useEffect, useState } from 'react'
-import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
-import { LocalHospital as LocalHospitalIcon, EventNote as EventNoteIcon } from '@mui/icons-material'
 import { RegisterConsultationForm, RegisterMedicalBackgroundForm } from '@components'
+import { EventNote as EventNoteIcon, LocalHospital as LocalHospitalIcon } from '@mui/icons-material'
+import { ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material'
+import { memo, useEffect, useState } from 'react'
 
-const UpdatePatient = ({ medicalBackgrounds }) => {
+const UpdatePatient = () => {
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
 
@@ -44,21 +44,33 @@ const UpdatePatient = ({ medicalBackgrounds }) => {
         }}
       >
         <MenuItem onClick={() => setOpenMedicalBackgroundForm(true)} divider>
-          <ListItemIcon><EventNoteIcon /></ListItemIcon>
-          <ListItemText primary='Registrar antecedente' />
+          <ListItemIcon>
+            <EventNoteIcon />
+          </ListItemIcon>
+          <ListItemText primary="Registrar antecedente" />
         </MenuItem>
 
         <MenuItem onClick={() => setOpenConsultationForm(true)} divider>
-          <ListItemIcon><LocalHospitalIcon /></ListItemIcon>
-          <ListItemText primary='Registrar consulta' />
+          <ListItemIcon>
+            <LocalHospitalIcon />
+          </ListItemIcon>
+          <ListItemText primary="Registrar consulta" />
         </MenuItem>
       </Menu>
 
-      {openMedicalBackgroundForm &&
-        <RegisterMedicalBackgroundForm open={openMedicalBackgroundForm} handleClose={() => setOpenMedicalBackgroundForm(false)} />}
+      {openMedicalBackgroundForm && (
+        <RegisterMedicalBackgroundForm
+          open={openMedicalBackgroundForm}
+          handleClose={() => setOpenMedicalBackgroundForm(false)}
+        />
+      )}
 
-      {openConsultationForm &&
-        <RegisterConsultationForm open={openConsultationForm} handleClose={() => setOpenConsultationForm(false)} />}
+      {openConsultationForm && (
+        <RegisterConsultationForm
+          open={openConsultationForm}
+          handleClose={() => setOpenConsultationForm(false)}
+        />
+      )}
     </>
   )
 }
