@@ -5,9 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "pocketbase": "cd pocketbase && pocketbase serve",
-    "dev": "concurrently \"vite\" \"npm:pocketbase\"",
-    "preview": "concurrently \"vite preview\" \"npm:pocketbase\""
+    "dev": "vite",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",
@@ -36,13 +35,8 @@
     "vite-plugin-pwa": "0.21.2"
   },
   "eslintConfig": {
-    "plugins": [
-      "react-hooks"
-    ],
-    "extends": [
-      "./node_modules/standard/eslintrc.json",
-      "plugin:react-hooks/recommended"
-    ],
+    "plugins": ["react-hooks"],
+    "extends": ["./node_modules/standard/eslintrc.json", "plugin:react-hooks/recommended"],
     "rules": {
       "import/no-absolute-path": "off",
       "camelcase": "off"
